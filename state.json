@@ -1,0 +1,19 @@
+{
+  "profile": "공공조달관리사",
+  "book": "1권",
+  "chapter": "3장",
+  "profile_card": "profile-card.md",
+  "glossary": "glossary.md",
+  "template": "templates/six-block.md",
+  "glossary_locked": true,
+  "sections": [
+    {
+      "id": "3-1",
+      "source": "inputs/sections/3-1.md",
+      "stage": "pending",
+      "gates": {},
+      "attempts": {}
+    }
+  ],
+  "updated": "2026-08-27"
+}

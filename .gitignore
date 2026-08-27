@@ -1,0 +1,12 @@
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+.env.*
+*.pyc
+*.pem
+*.key
+inputs/sections/*.pdf
+outputs/
+state.json.tmp
+dry-run.json

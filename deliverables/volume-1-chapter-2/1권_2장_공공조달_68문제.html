@@ -1,0 +1,2489 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>공공조달관리사 1권 2장</title>
+  <style>
+    :root {
+      --blue: #155eef;
+      --blue-dark: #0b3b9c;
+      --blue-soft: #eef4ff;
+      --ink: #15233b;
+      --muted: #5e6b82;
+      --line: #d8e0ed;
+      --surface: #ffffff;
+      --background: #f4f7fb;
+      --success: #087a4b;
+      --success-soft: #e8f8f0;
+      --danger: #c43232;
+      --danger-soft: #fff0f0;
+      font-family: Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--background); line-height: 1.65; }
+    button, input { font: inherit; }
+    .page { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 80px; }
+    .hero { padding: 36px; color: #fff; background: linear-gradient(135deg, var(--blue-dark), var(--blue)); border-radius: 24px; box-shadow: 0 18px 50px rgba(24, 68, 145, .2); }
+    .eyebrow { margin: 0 0 8px; font-weight: 800; letter-spacing: .08em; opacity: .8; }
+    h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.25; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; }
+    .meta li { padding: 5px 12px; border: 1px solid rgba(255,255,255,.32); border-radius: 999px; background: rgba(255,255,255,.1); }
+    .progress-panel { position: sticky; top: 12px; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 24px 0; padding: 14px 18px; background: rgba(255,255,255,.94); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 8px 24px rgba(31, 55, 90, .08); backdrop-filter: blur(10px); }
+    .progress-panel p { margin: 0; font-weight: 700; }
+    #score { color: var(--blue-dark); }
+    .question-card { margin: 20px 0; padding: clamp(20px, 4vw, 34px); background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 10px 28px rgba(31, 55, 90, .06); }
+    fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+    legend { display: flex; gap: 14px; width: 100%; margin-bottom: 22px; font-size: 1.15rem; font-weight: 800; line-height: 1.55; }
+    .question-number { display: inline-grid; flex: 0 0 34px; width: 34px; height: 34px; place-items: center; color: #fff; background: var(--blue); border-radius: 10px; }
+    .options { display: grid; gap: 11px; }
+    .option { display: flex; align-items: flex-start; gap: 12px; padding: 15px; border: 2px solid var(--line); border-radius: 14px; cursor: pointer; transition: border-color .15s, background .15s, transform .15s; }
+    .option:hover { border-color: #8eaff8; background: var(--blue-soft); transform: translateY(-1px); }
+    .option:has(input:focus-visible) { outline: 3px solid rgba(21,94,239,.25); outline-offset: 2px; }
+    .option:has(input:checked) { border-color: var(--blue); background: var(--blue-soft); }
+    .option input { margin-top: 5px; accent-color: var(--blue); }
+    .option-number { display: inline-grid; flex: 0 0 26px; width: 26px; height: 26px; place-items: center; color: var(--blue-dark); background: #dce8ff; border-radius: 50%; font-weight: 800; }
+    .question-card.correct { border-color: #72c9a0; }
+    .question-card.incorrect { border-color: #ef9a9a; }
+    .feedback { margin: 18px 0 0; padding: 12px 15px; border-radius: 12px; font-weight: 800; }
+    .correct .feedback { color: var(--success); background: var(--success-soft); }
+    .incorrect .feedback { color: var(--danger); background: var(--danger-soft); }
+    .explanation { margin-top: 14px; padding: 14px 16px; background: #f8faff; border-radius: 12px; }
+    .explanation summary { cursor: pointer; color: var(--blue-dark); font-weight: 800; }
+    dl { margin: 12px 0 0; }
+    dl div { display: grid; grid-template-columns: 90px 1fr; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
+    dt { font-weight: 800; } dd { margin: 0; overflow-wrap: anywhere; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .button { min-height: 48px; padding: 0 22px; border: 0; border-radius: 12px; cursor: pointer; font-weight: 800; }
+    .button-primary { color: #fff; background: var(--blue); }
+    .button-primary:hover { background: var(--blue-dark); }
+    .button-secondary { color: var(--blue-dark); background: #e5edff; }
+    .footer { margin-top: 36px; color: var(--muted); text-align: center; font-size: .9rem; }
+    @media (max-width: 600px) {
+      .page { width: min(100% - 20px, 920px); padding-top: 16px; }
+      .hero { padding: 25px 20px; border-radius: 18px; }
+      .progress-panel { top: 6px; }
+      dl div { grid-template-columns: 1fr; gap: 2px; }
+      .actions .button { width: 100%; }
+    }
+    @media print {
+      body { background: #fff; } .page { width: 100%; padding: 0; }
+      .hero { color: var(--ink); background: #fff; border: 2px solid var(--ink); box-shadow: none; }
+      .progress-panel, .actions { display: none; } .question-card { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">MARK · VERIFIED EXAM</p>
+      <h1>공공조달관리사 1권 2장</h1>
+      <ul class="meta" aria-label="시험 정보">
+        <li>공공조달관리사</li>
+        <li>1권</li>
+        <li>2장</li>
+        <li>68문항</li>
+      </ul>
+    </header>
+
+    <section class="progress-panel" aria-live="polite">
+      <p>풀이 현황 <span id="answered-count">0</span> / 68</p>
+      <strong id="score">채점 전</strong>
+    </section>
+
+    <form id="exam-form">
+      <article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">1</span>공공조달의 기본 원칙에 해당하지 않는 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-001-option-1">
+              <input id="2-1-001-option-1" type="radio" name="2-1-001" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>투명성</span>
+            </label><label class="option" for="2-1-001-option-2">
+              <input id="2-1-001-option-2" type="radio" name="2-1-001" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>가격 대비 가치</span>
+            </label><label class="option" for="2-1-001-option-3">
+              <input id="2-1-001-option-3" type="radio" name="2-1-001" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>경쟁</span>
+            </label><label class="option" for="2-1-001-option-4">
+              <input id="2-1-001-option-4" type="radio" name="2-1-001" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>역량 개발</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>공공조달의 기본 원칙은 투명성, 가격 대비 가치, 경쟁, 차별 금지와 동등한 대우, 책임성이다. 역량 개발은 실행 원칙에 해당한다.</dd></div>
+          <div><dt>함정</dt><dd>기본 원칙과 실행 원칙을 혼동하지 않도록 한다.</dd></div>
+          <div><dt>근거</dt><dd>공공조달의 기본 원칙은 투명성, 가격 대비 가치, 경쟁, 차별 금지와 동등한 대우, 책임성이다. 역량 개발은 실행 원칙에 해당한다. [PDF 페이지 3]</dd></div>
+          <div><dt>원문 PDF</dt><dd>3페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">2</span>투명성에 관한 설명으로 가장 적절한 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-002-option-1">
+              <input id="2-1-002-option-1" type="radio" name="2-1-002" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>기밀보호 사유가 있어도 모든 정보를 예외 없이 공개하는 원칙이다.</span>
+            </label><label class="option" for="2-1-002-option-2">
+              <input id="2-1-002-option-2" type="radio" name="2-1-002" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>특정한 법적 요건이나 기밀보호 사유가 없다면 정책, 계획, 입찰공고, 계약 체결 정보 등의 공개와 접근을 보장하는 원칙이다.</span>
+            </label><label class="option" for="2-1-002-option-3">
+              <input id="2-1-002-option-3" type="radio" name="2-1-002" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>낙찰자에게만 입찰 관련 정보의 접근을 보장하는 원칙이다.</span>
+            </label><label class="option" for="2-1-002-option-4">
+              <input id="2-1-002-option-4" type="radio" name="2-1-002" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>구매 시점의 최저가격을 공개하는 데 한정되는 원칙이다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>투명성은 특정한 법적 요건이나 기밀보호 사유가 없는 한 공공조달 관련 정보를 이해관계자에게 공개하고 접근을 보장하는 원칙이다.</dd></div>
+          <div><dt>함정</dt><dd>투명성에도 법적 요건이나 기밀보호에 따른 공개 예외가 있을 수 있다.</dd></div>
+          <div><dt>근거</dt><dd>투명성은 특정한 법적 요건이나 기밀보호 사유가 없는 한 공공조달 관련 정보를 이해관계자에게 공개하고 접근을 보장하는 원칙이다. [PDF 페이지 3]</dd></div>
+          <div><dt>원문 PDF</dt><dd>3페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">3</span>가격 대비 가치에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-003-option-1">
+              <input id="2-1-003-option-1" type="radio" name="2-1-003" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>구매 시점의 최저가격만으로 판단한다.</span>
+            </label><label class="option" for="2-1-003-option-2">
+              <input id="2-1-003-option-2" type="radio" name="2-1-003" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>품질보다 가격을 항상 우선한다.</span>
+            </label><label class="option" for="2-1-003-option-3">
+              <input id="2-1-003-option-3" type="radio" name="2-1-003" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>비용, 품질, 총소유비용, 생애주기비용, 공급업체의 역량 및 관련 정책 목표 등을 종합적으로 고려한다.</span>
+            </label><label class="option" for="2-1-003-option-4">
+              <input id="2-1-003-option-4" type="radio" name="2-1-003" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>공급업체의 역량과 정부정책의 목표는 고려 대상에서 제외한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>가격 대비 가치는 구매 시점의 최저가격이 아니라 비용과 품질을 비롯해 총소유비용, 생애주기비용, 공급업체의 역량 및 관련 정부정책과 제도의 목표까지 고려하는 최적 조합이다.</dd></div>
+          <div><dt>함정</dt><dd>가격 대비 가치를 최저가격과 동일한 개념으로 보아서는 안 된다.</dd></div>
+          <div><dt>근거</dt><dd>가격 대비 가치는 구매 시점의 최저가격이 아니라 비용과 품질을 비롯해 총소유비용, 생애주기비용, 공급업체의 역량 및 관련 정부정책과 제도의 목표까지 고려하는 최적 조합이다. [PDF 페이지 4]</dd></div>
+          <div><dt>원문 PDF</dt><dd>4페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">4</span>경쟁 원칙의 기능으로 옳지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-004-option-1">
+              <input id="2-1-004-option-1" type="radio" name="2-1-004" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>합리적인 가격과 품질의 조달대상물 확보에 기여한다.</span>
+            </label><label class="option" for="2-1-004-option-2">
+              <input id="2-1-004-option-2" type="radio" name="2-1-004" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>공개적 경쟁을 통해 투명성 달성에 기여한다.</span>
+            </label><label class="option" for="2-1-004-option-3">
+              <input id="2-1-004-option-3" type="radio" name="2-1-004" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>책임성·공정성·청렴성 확보에 기여할 수 있다.</span>
+            </label><label class="option" for="2-1-004-option-4">
+              <input id="2-1-004-option-4" type="radio" name="2-1-004" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>잠재적 조달기업의 참여를 줄이는 것을 주된 목적으로 한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>경쟁은 합리적인 가격과 품질의 조달대상물을 확보하는 효과적인 방법이며, 경쟁을 촉진하는 기준과 방법은 투명성, 책임성, 공정성, 청렴성 확보에 기여한다.</dd></div>
+          <div><dt>함정</dt><dd>경쟁은 참여 제한이 아니라 공개적 경쟁의 촉진을 전제로 한다.</dd></div>
+          <div><dt>근거</dt><dd>경쟁은 합리적인 가격과 품질의 조달대상물을 확보하는 효과적인 방법이며, 경쟁을 촉진하는 기준과 방법은 투명성, 책임성, 공정성, 청렴성 확보에 기여한다. [PDF 페이지 4~5]</dd></div>
+          <div><dt>원문 PDF</dt><dd>4, 5페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">5</span>차별 금지와 동등한 대우 원칙에 부합하는 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-005-option-1">
+              <input id="2-1-005-option-1" type="radio" name="2-1-005" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>국적을 이유로 실질적인 차이가 없는 조달기업의 참여를 제한한다.</span>
+            </label><label class="option" for="2-1-005-option-2">
+              <input id="2-1-005-option-2" type="radio" name="2-1-005" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>조달대상물과 무관한 요건을 추가해 입찰참가자를 줄인다.</span>
+            </label><label class="option" for="2-1-005-option-3">
+              <input id="2-1-005-option-3" type="radio" name="2-1-005" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>잠재적 공급업체 또는 계약자에게 전 과정의 동등한 참여 기회와 공정한 평가를 보장한다.</span>
+            </label><label class="option" for="2-1-005-option-4">
+              <input id="2-1-005-option-4" type="radio" name="2-1-005" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>국내 조달기업에만 기술·품질 요건을 적용한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>차별 금지와 동등한 대우는 잠재적 공급업체 또는 계약자에게 입찰, 평가, 계약 등 공공조달 전 과정의 동등한 참여 기회와 공정한 평가를 보장하는 원칙이다.</dd></div>
+          <div><dt>함정</dt><dd>기술·품질·가격·법규 부합성과 무관한 국적이나 출신지 등은 참여 제한의 근거가 될 수 없다.</dd></div>
+          <div><dt>근거</dt><dd>차별 금지와 동등한 대우는 잠재적 공급업체 또는 계약자에게 입찰, 평가, 계약 등 공공조달 전 과정의 동등한 참여 기회와 공정한 평가를 보장하는 원칙이다. [PDF 페이지 5]</dd></div>
+          <div><dt>원문 PDF</dt><dd>5페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">6</span>기본 원칙으로서 책임성을 확보하기 위한 방안으로 가장 적절한 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-006-option-1">
+              <input id="2-1-006-option-1" type="radio" name="2-1-006" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>이해관계자의 정보 접근과 이의 제기를 제한한다.</span>
+            </label><label class="option" for="2-1-006-option-2">
+              <input id="2-1-006-option-2" type="radio" name="2-1-006" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>제기된 문제의 처리 결과는 공개하지 않는다.</span>
+            </label><label class="option" for="2-1-006-option-3">
+              <input id="2-1-006-option-3" type="radio" name="2-1-006" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>의사결정 결과보다 절차의 속도만 중시한다.</span>
+            </label><label class="option" for="2-1-006-option-4">
+              <input id="2-1-006-option-4" type="radio" name="2-1-006" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>이해관계자가 활동과 결과를 확인하고 이의를 제기할 수 있게 하며 처리 결과를 피드백한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>책임성을 확보하려면 이해관계자가 공공조달 활동과 결과에 접근해 정보를 확인하고 이의를 제기할 수 있어야 하며, 제기된 문제를 공개적으로 신속히 해결하고 결과를 피드백하는 절차가 필요하다.</dd></div>
+          <div><dt>함정</dt><dd>책임성은 담당자의 책임 선언만이 아니라 정보 접근, 이의 제기 및 처리 결과의 피드백을 포함한다.</dd></div>
+          <div><dt>근거</dt><dd>책임성을 확보하려면 이해관계자가 공공조달 활동과 결과에 접근해 정보를 확인하고 이의를 제기할 수 있어야 하며, 제기된 문제를 공개적으로 신속히 해결하고 결과를 피드백하는 절차가 필요하다. [PDF 페이지 5]</dd></div>
+          <div><dt>원문 PDF</dt><dd>5페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">7</span>공공조달 실행 원칙의 연계 구조에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-007-option-1">
+              <input id="2-1-007-option-1" type="radio" name="2-1-007" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>전자조달 활용, 전자정부시스템 간 통합, 역량 개발은 실행 기반을 이룬다.</span>
+            </label><label class="option" for="2-1-007-option-2">
+              <input id="2-1-007-option-2" type="radio" name="2-1-007" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>위험관리, 평가, 책임성은 실행 기반에만 해당한다.</span>
+            </label><label class="option" for="2-1-007-option-3">
+              <input id="2-1-007-option-3" type="radio" name="2-1-007" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>투명성, 청렴성, 접근성, 참여는 관리 원칙에만 해당한다.</span>
+            </label><label class="option" for="2-1-007-option-4">
+              <input id="2-1-007-option-4" type="radio" name="2-1-007" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>운영 효율성과 정책지원 효과성은 서로 연계되지 않는다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>전자조달 활용, 전자정부시스템 간 통합, 역량 개발은 실행 기반을 이루고, 투명성·청렴성·접근성·참여의 구현과 효율성·정책지원 효과성의 균형을 뒷받침한다. 위험관리·평가·책임성은 지속적이고 안정적인 이행을 지원한다.</dd></div>
+          <div><dt>함정</dt><dd>기반 원칙과 핵심 실행 원칙, 목표 및 관리 원칙의 역할을 바꾸어 묻는 선택지에 주의한다.</dd></div>
+          <div><dt>근거</dt><dd>전자조달 활용, 전자정부시스템 간 통합, 역량 개발은 실행 기반을 이루고, 투명성·청렴성·접근성·참여의 구현과 효율성·정책지원 효과성의 균형을 뒷받침한다. 위험관리·평가·책임성은 지속적이고 안정적인 이행을 지원한다. [PDF 페이지 6]</dd></div>
+          <div><dt>원문 PDF</dt><dd>6페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">8</span>실행 원칙으로서 투명성을 강화하는 방안으로 옳지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-008-option-1">
+              <input id="2-1-008-option-1" type="radio" name="2-1-008" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>조달계획과 입찰공고를 공개한다.</span>
+            </label><label class="option" for="2-1-008-option-2">
+              <input id="2-1-008-option-2" type="radio" name="2-1-008" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>평가기준과 계약정보를 비공개로 유지한다.</span>
+            </label><label class="option" for="2-1-008-option-3">
+              <input id="2-1-008-option-3" type="radio" name="2-1-008" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>불만·항의·분쟁 조정 체계를 마련한다.</span>
+            </label><label class="option" for="2-1-008-option-4">
+              <input id="2-1-008-option-4" type="radio" name="2-1-008" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>이해 상충 정보와 공급업체 제재 목록을 공개한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>투명성 강화에는 조달정책·제도와 조달계획, 입찰공고, 평가기준, 계약정보·계약금액의 공개, 분쟁 조정 체계 및 이해 상충 정보와 공급업체 제재 목록의 공개 등이 포함된다.</dd></div>
+          <div><dt>함정</dt><dd>입찰공고만 공개하면 투명성이 완성된다고 보아서는 안 된다.</dd></div>
+          <div><dt>근거</dt><dd>투명성 강화에는 조달정책·제도와 조달계획, 입찰공고, 평가기준, 계약정보·계약금액의 공개, 분쟁 조정 체계 및 이해 상충 정보와 공급업체 제재 목록의 공개 등이 포함된다. [PDF 페이지 7]</dd></div>
+          <div><dt>원문 PDF</dt><dd>7페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">9</span>나라장터 및 조달데이터허브에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-009-option-1">
+              <input id="2-1-009-option-1" type="radio" name="2-1-009" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>나라장터의 입찰정보는 낙찰자만 확인할 수 있다.</span>
+            </label><label class="option" for="2-1-009-option-2">
+              <input id="2-1-009-option-2" type="radio" name="2-1-009" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>조달데이터허브는 계약정보를 제공하지 않는다.</span>
+            </label><label class="option" for="2-1-009-option-3">
+              <input id="2-1-009-option-3" type="radio" name="2-1-009" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>조달데이터허브는 정해진 보고서만 열람할 수 있고 데이터셋을 내려받을 수 없다.</span>
+            </label><label class="option" for="2-1-009-option-4">
+              <input id="2-1-009-option-4" type="radio" name="2-1-009" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>조달데이터허브는 120종이 넘는 공공조달데이터 보고서를 제공하고 이용자가 정보 속성을 선택해 데이터셋을 구성·활용하도록 지원한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>나라장터와 연계된 조달데이터허브는 120종이 넘는 공공조달데이터 보고서를 제공하며, 이용자가 필요한 정보 속성을 선택해 데이터셋을 구성하고 내려받아 활용할 수 있게 한다.</dd></div>
+          <div><dt>함정</dt><dd>단순 열람 기능과 이용자 맞춤 데이터셋 구성·활용 기능을 구분한다.</dd></div>
+          <div><dt>근거</dt><dd>나라장터와 연계된 조달데이터허브는 120종이 넘는 공공조달데이터 보고서를 제공하며, 이용자가 필요한 정보 속성을 선택해 데이터셋을 구성하고 내려받아 활용할 수 있게 한다. [PDF 페이지 7~8]</dd></div>
+          <div><dt>원문 PDF</dt><dd>7, 8페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">10</span>국내 구매 규격 사전 공개 절차에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-010-option-1">
+              <input id="2-1-010-option-1" type="radio" name="2-1-010" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>물품·용역(서비스)의 추정 가격이 5,000만 원 이상이면 사전 공개 절차를 의무화한다고 설명한다.</span>
+            </label><label class="option" for="2-1-010-option-2">
+              <input id="2-1-010-option-2" type="radio" name="2-1-010" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>이해관계자가 의견을 제시해도 입찰공고에는 반영할 수 없다.</span>
+            </label><label class="option" for="2-1-010-option-3">
+              <input id="2-1-010-option-3" type="radio" name="2-1-010" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>담당자는 검토 결과를 15일 이내 회신해야 한다.</span>
+            </label><label class="option" for="2-1-010-option-4">
+              <input id="2-1-010-option-4" type="radio" name="2-1-010" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>구매 규격은 계약 체결 후에만 공개한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>원문은 물품·용역(서비스)의 추정 가격이 5,000만 원 이상이면 구매 규격의 사전 공개 절차를 의무화하고, 제시된 의견에 대해 담당자가 2주일 이내 검토 결과를 회신한다고 설명한다.</dd></div>
+          <div><dt>함정</dt><dd>5,000만 원, 입찰공고 이전, 2주일이라는 기준을 서로 바꾸어 묻는 선택지에 주의한다.</dd></div>
+          <div><dt>근거</dt><dd>원문은 물품·용역(서비스)의 추정 가격이 5,000만 원 이상이면 구매 규격의 사전 공개 절차를 의무화하고, 제시된 의견에 대해 담당자가 2주일 이내 검토 결과를 회신한다고 설명한다. [PDF 페이지 9]</dd></div>
+          <div><dt>원문 PDF</dt><dd>9페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">11</span>청렴성을 확보하기 위한 방안으로 가장 적절하지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-011-option-1">
+              <input id="2-1-011-option-1" type="radio" name="2-1-011" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>이해관계자에게 청렴성 준수 절차와 서약을 요구한다.</span>
+            </label><label class="option" for="2-1-011-option-2">
+              <input id="2-1-011-option-2" type="radio" name="2-1-011" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>조달기관 담당자에게 정기적인 교육을 제공한다.</span>
+            </label><label class="option" for="2-1-011-option-3">
+              <input id="2-1-011-option-3" type="radio" name="2-1-011" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>조달기업의 내부통제·규정 준수·부패 방지 수단을 모니터링한다.</span>
+            </label><label class="option" for="2-1-011-option-4">
+              <input id="2-1-011-option-4" type="radio" name="2-1-011" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>공공조달의 특정 위험에도 일반 관리수단만 적용하고 조정·강화된 수단은 배제한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>청렴성을 확보하려면 일반적인 공공부문 청렴성 관리수단을 기본으로 하되, 공공조달의 특정 위험에 대응하도록 조정·강화된 관리수단을 함께 활용해야 한다.</dd></div>
+          <div><dt>함정</dt><dd>일반 관리수단과 공공조달의 특정 위험에 대응하는 강화된 관리수단은 대체 관계가 아니다.</dd></div>
+          <div><dt>근거</dt><dd>청렴성을 확보하려면 일반적인 공공부문 청렴성 관리수단을 기본으로 하되, 공공조달의 특정 위험에 대응하도록 조정·강화된 관리수단을 함께 활용해야 한다. [PDF 페이지 10]</dd></div>
+          <div><dt>원문 PDF</dt><dd>10페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">12</span>접근성에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-012-option-1">
+              <input id="2-1-012-option-1" type="radio" name="2-1-012" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>기업 규모와 관계없이 잠재적 경쟁자가 조달 기회에 접근하도록 보장하는 데 핵심이 있다.</span>
+            </label><label class="option" for="2-1-012-option-2">
+              <input id="2-1-012-option-2" type="radio" name="2-1-012" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>경쟁적 입찰보다 단수 공급자 방법을 기본으로 한다.</span>
+            </label><label class="option" for="2-1-012-option-3">
+              <input id="2-1-012-option-3" type="radio" name="2-1-012" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>복잡한 규칙과 비표준 입찰문서는 신규 진입자의 참여를 촉진한다.</span>
+            </label><label class="option" for="2-1-012-option-4">
+              <input id="2-1-012-option-4" type="radio" name="2-1-012" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>정보 접근만 다루며 시장 참여 기회의 진입장벽은 다루지 않는다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>접근성의 핵심은 모든 규모의 잠재적 경쟁자가 조달 기회에 접근하도록 보장하는 것이며, 정보 접근과 시장 참여 기회라는 두 관점에서 진입장벽을 줄이는 것이다.</dd></div>
+          <div><dt>함정</dt><dd>접근성은 정보의 열람뿐 아니라 입찰 기회에 대한 진입장벽 해소도 포함한다.</dd></div>
+          <div><dt>근거</dt><dd>접근성의 핵심은 모든 규모의 잠재적 경쟁자가 조달 기회에 접근하도록 보장하는 것이며, 정보 접근과 시장 참여 기회라는 두 관점에서 진입장벽을 줄이는 것이다. [PDF 페이지 13~14]</dd></div>
+          <div><dt>원문 PDF</dt><dd>13, 14페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">13</span>균형성이 추구하는 두 목표의 조합으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-013-option-1">
+              <input id="2-1-013-option-1" type="radio" name="2-1-013" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>최저가격과 비공개 계약</span>
+            </label><label class="option" for="2-1-013-option-2">
+              <input id="2-1-013-option-2" type="radio" name="2-1-013" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>효율적 재정운용과 정부정책 지원의 효과성</span>
+            </label><label class="option" for="2-1-013-option-3">
+              <input id="2-1-013-option-3" type="radio" name="2-1-013" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>참여 제한과 절차 단축</span>
+            </label><label class="option" for="2-1-013-option-4">
+              <input id="2-1-013-option-4" type="radio" name="2-1-013" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>중앙조달 확대와 분산조달 폐지</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>균형성은 공공조달의 본원적 목표인 효율적 재정운용과 정부정책을 지원·선도하는 정책 효과성을 함께 달성하도록 두 목표의 균형을 추구하는 원칙이다.</dd></div>
+          <div><dt>함정</dt><dd>균형성은 두 조달 방법의 선택이 아니라 운영 효율성과 정책 효과성 사이의 균형에 관한 원칙이다.</dd></div>
+          <div><dt>근거</dt><dd>균형성은 공공조달의 본원적 목표인 효율적 재정운용과 정부정책을 지원·선도하는 정책 효과성을 함께 달성하도록 두 목표의 균형을 추구하는 원칙이다. [PDF 페이지 15]</dd></div>
+          <div><dt>원문 PDF</dt><dd>15페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">14</span>참여 원칙에 관한 설명으로 옳지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-014-option-1">
+              <input id="2-1-014-option-1" type="radio" name="2-1-014" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>조달기업에 규모나 배경과 관계없이 동등한 경쟁 기회를 제공해야 한다.</span>
+            </label><label class="option" for="2-1-014-option-2">
+              <input id="2-1-014-option-2" type="radio" name="2-1-014" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>지역사회에 영향을 미치는 용역(서비스)이나 공사는 주민과 일반 대중의 참여를 보장하는 조치가 중요하다.</span>
+            </label><label class="option" for="2-1-014-option-3">
+              <input id="2-1-014-option-3" type="radio" name="2-1-014" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>투명성과 개방성만 확보하면 이해관계자의 실질적 참여는 자동으로 보장된다.</span>
+            </label><label class="option" for="2-1-014-option-4">
+              <input id="2-1-014-option-4" type="radio" name="2-1-014" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>시민사회 단체와 감사기관 등이 공정성·투명성·가격 대비 가치를 모니터링하는 데 참여할 수 있다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>투명성과 개방성은 참여의 필수 조건이지만, 그 자체만으로 이해관계자의 실질적 참여를 보장하기에는 충분하지 않다.</dd></div>
+          <div><dt>함정</dt><dd>정보 공개라는 조건과 실제 참여를 가능하게 하는 인력·예산·수단을 동일시하지 않는다.</dd></div>
+          <div><dt>근거</dt><dd>투명성과 개방성은 참여의 필수 조건이지만, 그 자체만으로 이해관계자의 실질적 참여를 보장하기에는 충분하지 않다. [PDF 페이지 17]</dd></div>
+          <div><dt>원문 PDF</dt><dd>17페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">15</span>국내 중소기업의 공공조달 참여 확대 지원에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-015-option-1">
+              <input id="2-1-015-option-1" type="radio" name="2-1-015" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>중소기업 공급 실적의 법정 구매목표 비율은 30% 이상이다.</span>
+            </label><label class="option" for="2-1-015-option-2">
+              <input id="2-1-015-option-2" type="radio" name="2-1-015" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>여성기업의 최소한도는 공사 실적 5% 이상이다.</span>
+            </label><label class="option" for="2-1-015-option-3">
+              <input id="2-1-015-option-3" type="radio" name="2-1-015" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>장애인기업의 최소한도는 3%이다.</span>
+            </label><label class="option" for="2-1-015-option-4">
+              <input id="2-1-015-option-4" type="radio" name="2-1-015" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>고시금액 2.3억 원 미만은 중소기업에 우선 조달 기회를 부여한다고 설명한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>원문은 중소기업의 공급 실적 목표를 50% 이상으로 두고, 고시금액 2.3억 원 미만은 중소기업에 우선 조달 기회를 부여한다고 설명한다.</dd></div>
+          <div><dt>함정</dt><dd>중소기업 50%, 여성기업의 물품·용역(서비스) 5%와 공사 3%, 장애인기업 1%, 고시금액 2.3억 원을 바꾸어 묻기 쉽다.</dd></div>
+          <div><dt>근거</dt><dd>원문은 중소기업의 공급 실적 목표를 50% 이상으로 두고, 고시금액 2.3억 원 미만은 중소기업에 우선 조달 기회를 부여한다고 설명한다. [PDF 페이지 18]</dd></div>
+          <div><dt>원문 PDF</dt><dd>18페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">16</span>효율성의 5R 원칙에 포함되지 않는 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-016-option-1">
+              <input id="2-1-016-option-1" type="radio" name="2-1-016" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>적정 수량(Right Quantity)</span>
+            </label><label class="option" for="2-1-016-option-2">
+              <input id="2-1-016-option-2" type="radio" name="2-1-016" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>적정 품질(Right Quality)</span>
+            </label><label class="option" for="2-1-016-option-3">
+              <input id="2-1-016-option-3" type="radio" name="2-1-016" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>적정 공급업체(Right Supplier)</span>
+            </label><label class="option" for="2-1-016-option-4">
+              <input id="2-1-016-option-4" type="radio" name="2-1-016" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>적정 장소(Right Place)</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>효율성의 5R은 적정 수량, 적정 품질, 적정 시기, 적정 가격, 적정 장소이다. 적정 공급업체는 5R에 포함되지 않는다.</dd></div>
+          <div><dt>함정</dt><dd>공급업체의 역량은 가격 대비 가치에서 고려할 수 있지만 효율성의 5R 항목 자체는 아니다.</dd></div>
+          <div><dt>근거</dt><dd>효율성의 5R은 적정 수량, 적정 품질, 적정 시기, 적정 가격, 적정 장소이다. 적정 공급업체는 5R에 포함되지 않는다. [PDF 페이지 19]</dd></div>
+          <div><dt>원문 PDF</dt><dd>19페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">17</span>효율성 향상을 위한 도구에 해당하지 않는 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-017-option-1">
+              <input id="2-1-017-option-1" type="radio" name="2-1-017" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>기본협정</span>
+            </label><label class="option" for="2-1-017-option-2">
+              <input id="2-1-017-option-2" type="radio" name="2-1-017" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>다수공급자계약</span>
+            </label><label class="option" for="2-1-017-option-3">
+              <input id="2-1-017-option-3" type="radio" name="2-1-017" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>전자카탈로그</span>
+            </label><label class="option" for="2-1-017-option-4">
+              <input id="2-1-017-option-4" type="radio" name="2-1-017" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>이해관계자 정보 접근 제한</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>효율성을 높이기 위한 도구에는 중앙구매, 기본협정, 다수공급자계약, 전자카탈로그, 동적구매시스템, 전자경매 등이 포함된다.</dd></div>
+          <div><dt>함정</dt><dd>효율성은 절차를 간소화하더라도 투명하고 공정한 절차와 법적 기준을 전제로 한다.</dd></div>
+          <div><dt>근거</dt><dd>효율성을 높이기 위한 도구에는 중앙구매, 기본협정, 다수공급자계약, 전자카탈로그, 동적구매시스템, 전자경매 등이 포함된다. [PDF 페이지 19]</dd></div>
+          <div><dt>원문 PDF</dt><dd>19페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">18</span>중앙조달(구매)기관에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-018-option-1">
+              <input id="2-1-018-option-1" type="radio" name="2-1-018" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>수요 통합은 거래비용을 늘리는 것을 목적으로 한다.</span>
+            </label><label class="option" for="2-1-018-option-2">
+              <input id="2-1-018-option-2" type="radio" name="2-1-018" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>원문은 수요 통합을 기반으로 거래비용을 중심으로 평균 12~25%의 비용 절감 효과가 있을 수 있다고 설명한다.</span>
+            </label><label class="option" for="2-1-018-option-3">
+              <input id="2-1-018-option-3" type="radio" name="2-1-018" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>2024년 조사에서 응답 국가의 50%만 일반 상품을 위한 국가 또는 연방 수준의 중앙조달(구매)기관을 운영한다고 제시한다.</span>
+            </label><label class="option" for="2-1-018-option-4">
+              <input id="2-1-018-option-4" type="radio" name="2-1-018" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>중앙조달(구매)기관은 전략적 활용의 효과성과 무관하다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>원문은 중앙조달이 수요 통합을 통해 거래비용을 중심으로 평균 12~25%의 비용 절감 효과를 보일 수 있으며, 2024년 조사에서 응답 국가의 93%가 일반 상품을 위한 국가 또는 연방 수준의 중앙조달(구매)기관을 설립했다고 설명한다.</dd></div>
+          <div><dt>함정</dt><dd>비용 절감 수치 12~25%와 중앙조달(구매)기관 설립 응답 비율 93%를 혼동하지 않는다.</dd></div>
+          <div><dt>근거</dt><dd>원문은 중앙조달이 수요 통합을 통해 거래비용을 중심으로 평균 12~25%의 비용 절감 효과를 보일 수 있으며, 2024년 조사에서 응답 국가의 93%가 일반 상품을 위한 국가 또는 연방 수준의 중앙조달(구매)기관을 설립했다고 설명한다. [PDF 페이지 20]</dd></div>
+          <div><dt>원문 PDF</dt><dd>20페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">19</span>전자조달 활용의 효과로 옳지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-019-option-1">
+              <input id="2-1-019-option-1" type="radio" name="2-1-019" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>업무 자동화와 표준화를 통한 처리 시간 절감</span>
+            </label><label class="option" for="2-1-019-option-2">
+              <input id="2-1-019-option-2" type="radio" name="2-1-019" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>인적 오류 발생 위험의 감소</span>
+            </label><label class="option" for="2-1-019-option-3">
+              <input id="2-1-019-option-3" type="radio" name="2-1-019" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>공공조달 데이터의 실시간 수집·분석·가공</span>
+            </label><label class="option" for="2-1-019-option-4">
+              <input id="2-1-019-option-4" type="radio" name="2-1-019" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>시스템이 복잡할수록 신규 진입 기업의 접근성이 반드시 높아짐</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>전자조달은 자동화·표준화, 처리 시간 절감, 인적 오류 위험 감소 및 데이터 활용에 기여하지만, 지나치게 복잡한 시스템은 신규 진입 기업이나 중소기업에 새로운 장벽이 될 수 있다.</dd></div>
+          <div><dt>함정</dt><dd>전자조달의 도입 자체가 언제나 접근성을 높이는 것은 아니며 시스템의 복잡성이 장벽이 될 수 있다.</dd></div>
+          <div><dt>근거</dt><dd>전자조달은 자동화·표준화, 처리 시간 절감, 인적 오류 위험 감소 및 데이터 활용에 기여하지만, 지나치게 복잡한 시스템은 신규 진입 기업이나 중소기업에 새로운 장벽이 될 수 있다. [PDF 페이지 21~22]</dd></div>
+          <div><dt>원문 PDF</dt><dd>21, 22페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">20</span>역량 개발에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-020-option-1">
+              <input id="2-1-020-option-1" type="radio" name="2-1-020" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>조달기업의 역량은 재정 자원만을 의미한다.</span>
+            </label><label class="option" for="2-1-020-option-2">
+              <input id="2-1-020-option-2" type="radio" name="2-1-020" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>공공조달 담당자의 교육훈련은 표준화할 필요가 없다.</span>
+            </label><label class="option" for="2-1-020-option-3">
+              <input id="2-1-020-option-3" type="radio" name="2-1-020" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>조달기업은 계약 이행에 필요한 자원·기술·전문 지식·경험과 전체 단계를 관리할 능력을 갖춰야 한다.</span>
+            </label><label class="option" for="2-1-020-option-4">
+              <input id="2-1-020-option-4" type="radio" name="2-1-020" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>대학·연구기관·전문기관의 협업은 역량 개발과 무관하다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>역량은 계약 요건에 맞는 물품, 용역(서비스), 공사를 제공하는 데 필요한 자원, 기술, 전문 지식과 경험을 갖추고, 조달계획·실행·품질관리 등 전체 단계를 관리하는 능력을 포함한다.</dd></div>
+          <div><dt>함정</dt><dd>역량을 재정이나 인력 중 하나로 한정하지 말고 자원·기술·지식·경험 및 관리 능력을 함께 본다.</dd></div>
+          <div><dt>근거</dt><dd>역량은 계약 요건에 맞는 물품, 용역(서비스), 공사를 제공하는 데 필요한 자원, 기술, 전문 지식과 경험을 갖추고, 조달계획·실행·품질관리 등 전체 단계를 관리하는 능력을 포함한다. [PDF 페이지 23]</dd></div>
+          <div><dt>원문 PDF</dt><dd>23페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">21</span>평가 원칙을 실행하기 위한 요건으로 가장 적절한 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-021-option-1">
+              <input id="2-1-021-option-1" type="radio" name="2-1-021" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>과거 자료만 사용하고 평가 기준은 사업마다 임의로 변경한다.</span>
+            </label><label class="option" for="2-1-021-option-2">
+              <input id="2-1-021-option-2" type="radio" name="2-1-021" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>비용 절감 수준은 측정하지 않는다.</span>
+            </label><label class="option" for="2-1-021-option-3">
+              <input id="2-1-021-option-3" type="radio" name="2-1-021" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>결과를 측정하되 공공조달시스템 개선에는 반영하지 않는다.</span>
+            </label><label class="option" for="2-1-021-option-4">
+              <input id="2-1-021-option-4" type="radio" name="2-1-021" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>신뢰할 수 있는 최신 자료와 일관된 기준을 바탕으로 결과를 주기적으로 측정하고 성과·효과성·비용 절감 지표를 개발한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>평가는 신뢰할 수 있는 최신 자료와 일관된 기준을 바탕으로 공공조달 프로세스의 결과를 주기적으로 측정하고, 성과·효과성·비용 절감 수준을 측정할 지표를 개발해야 한다.</dd></div>
+          <div><dt>함정</dt><dd>평가는 단순한 사후 확인이 아니라 결과 측정과 피드백을 통한 공공조달시스템 개선을 포함한다.</dd></div>
+          <div><dt>근거</dt><dd>평가는 신뢰할 수 있는 최신 자료와 일관된 기준을 바탕으로 공공조달 프로세스의 결과를 주기적으로 측정하고, 성과·효과성·비용 절감 수준을 측정할 지표를 개발해야 한다. [PDF 페이지 25]</dd></div>
+          <div><dt>원문 PDF</dt><dd>25페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">22</span>위험관리 활동의 올바른 순서는?</legend>
+        <div class="options">
+          <label class="option" for="2-1-022-option-1">
+              <input id="2-1-022-option-1" type="radio" name="2-1-022" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>위험 식별 → 위험 평가 → 위험 해결(처리) → 위험 모니터링 → 지속적 개선</span>
+            </label><label class="option" for="2-1-022-option-2">
+              <input id="2-1-022-option-2" type="radio" name="2-1-022" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>위험 평가 → 위험 식별 → 지속적 개선 → 위험 해결(처리) → 위험 모니터링</span>
+            </label><label class="option" for="2-1-022-option-3">
+              <input id="2-1-022-option-3" type="radio" name="2-1-022" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>위험 식별 → 위험 모니터링 → 위험 평가 → 지속적 개선 → 위험 해결(처리)</span>
+            </label><label class="option" for="2-1-022-option-4">
+              <input id="2-1-022-option-4" type="radio" name="2-1-022" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>위험 해결(처리) → 위험 식별 → 위험 평가 → 위험 모니터링 → 지속적 개선</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>위험관리 활동은 위험 식별, 위험 평가, 위험 해결(처리), 위험 모니터링, 지속적 개선의 순서로 진행된다.</dd></div>
+          <div><dt>함정</dt><dd>위험 식별과 평가가 해결보다 먼저 이루어지며, 모니터링 뒤에 지속적 개선이 이어진다.</dd></div>
+          <div><dt>근거</dt><dd>위험관리 활동은 위험 식별, 위험 평가, 위험 해결(처리), 위험 모니터링, 지속적 개선의 순서로 진행된다. [PDF 페이지 26]</dd></div>
+          <div><dt>원문 PDF</dt><dd>26페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">23</span>입찰담합징후분석시스템(BRIAS)에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-023-option-1">
+              <input id="2-1-023-option-1" type="radio" name="2-1-023" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>KONEPS에서 매월 정보를 수집하고 매일 시스템을 실행한다.</span>
+            </label><label class="option" for="2-1-023-option-2">
+              <input id="2-1-023-option-2" type="radio" name="2-1-023" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>입찰가격, 참가자 수, 경쟁 방식 등 담합 유발 요인을 분석해 잠재적 담합 점수를 산출한다.</span>
+            </label><label class="option" for="2-1-023-option-3">
+              <input id="2-1-023-option-3" type="radio" name="2-1-023" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>점수가 특정 기준을 넘으면 자동으로 담합으로 확정한다.</span>
+            </label><label class="option" for="2-1-023-option-4">
+              <input id="2-1-023-option-4" type="radio" name="2-1-023" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>사후 신고만을 사용하므로 정보시스템 기반 분석은 하지 않는다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>BRIAS는 나라장터에서 입찰정보를 추출해 입찰가격, 참가자 수, 경쟁 방식 등의 담합 유발 요인을 분석하고 잠재적 담합 점수를 산출한다. 점수가 기준을 초과하면 추가 정보 수집과 조사 필요성을 검토한다.</dd></div>
+          <div><dt>함정</dt><dd>기준 초과 점수는 담합 확정이 아니라 추가 정보 수집과 조사 필요성을 시사한다.</dd></div>
+          <div><dt>근거</dt><dd>BRIAS는 나라장터에서 입찰정보를 추출해 입찰가격, 참가자 수, 경쟁 방식 등의 담합 유발 요인을 분석하고 잠재적 담합 점수를 산출한다. 점수가 기준을 초과하면 추가 정보 수집과 조사 필요성을 검토한다. [PDF 페이지 27]</dd></div>
+          <div><dt>원문 PDF</dt><dd>27페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">24</span>통합 원칙과 나라장터의 사례에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-1-024-option-1">
+              <input id="2-1-024-option-1" type="radio" name="2-1-024" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>통합은 전자조달시스템 내부 기능만 연결하고 다른 정부 시스템과의 연계는 제외한다.</span>
+            </label><label class="option" for="2-1-024-option-2">
+              <input id="2-1-024-option-2" type="radio" name="2-1-024" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>나라장터는 재정관리시스템과 연계되지 않는다.</span>
+            </label><label class="option" for="2-1-024-option-3">
+              <input id="2-1-024-option-3" type="radio" name="2-1-024" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>통합은 공공조달 프로세스를 공공재정관리, 예산, 회계, 납세, 모니터링 등 정부의 주요 기능 및 시스템과 연결하는 원칙이다.</span>
+            </label><label class="option" for="2-1-024-option-4">
+              <input id="2-1-024-option-4" type="radio" name="2-1-024" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>다른 전자정부시스템과 연결되지 않을수록 전자조달시스템 활용성이 높아진다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>통합은 공공조달 프로세스를 공공재정관리, 예산, 회계, 납세, 모니터링 등 정부의 주요 기능 및 시스템과 연결하는 원칙이며, 나라장터는 정부·지방 재정관리시스템과 외부 플랫폼을 연계한다.</dd></div>
+          <div><dt>함정</dt><dd>전자조달 활용은 디지털 조달업무의 실행·관리에 초점을 두고, 통합은 다른 정부 프로세스 및 시스템과의 연결에 초점을 둔다.</dd></div>
+          <div><dt>근거</dt><dd>통합은 공공조달 프로세스를 공공재정관리, 예산, 회계, 납세, 모니터링 등 정부의 주요 기능 및 시스템과 연결하는 원칙이며, 나라장터는 정부·지방 재정관리시스템과 외부 플랫폼을 연계한다. [PDF 페이지 29]</dd></div>
+          <div><dt>원문 PDF</dt><dd>29페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">25</span>경쟁적 조달 방법에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-001-option-1">
+              <input id="2-2-001-option-1" type="radio" name="2-2-001" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>조달기관이 특정 공급업체만 직접 선택하는 방법이다.</span>
+            </label><label class="option" for="2-2-001-option-2">
+              <input id="2-2-001-option-2" type="radio" name="2-2-001" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>공공조달 프로세스 전체 단계에 필요한 절차·기준·정보를 관련 이해관계자 모두에게 공개해 실행하는 방법이다.</span>
+            </label><label class="option" for="2-2-001-option-3">
+              <input id="2-2-001-option-3" type="radio" name="2-2-001" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>가격제안만으로 공급업체를 정하는 방법이다.</span>
+            </label><label class="option" for="2-2-001-option-4">
+              <input id="2-2-001-option-4" type="radio" name="2-2-001" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>긴급한 조달대상물에만 예외적으로 적용하는 방법이다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>경쟁적 조달 방법은 공공조달 프로세스 전체 단계에 필요한 절차·기준·정보를 관련 이해관계자 모두에게 공개해 실행하는 방법이다.</dd></div>
+          <div><dt>함정</dt><dd>공급업체를 직접 선택하거나 특정 공급업체로 제한하는 것은 비경쟁적 조달 방법의 설명이다.</dd></div>
+          <div><dt>근거</dt><dd>경쟁적 조달 방법은 공공조달 프로세스 전체 단계에 필요한 절차·기준·정보를 관련 이해관계자 모두에게 공개해 실행하는 방법이다. [PDF 페이지 35]</dd></div>
+          <div><dt>원문 PDF</dt><dd>35페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">26</span>견적요청의 경쟁 여부에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-002-option-1">
+              <input id="2-2-002-option-1" type="radio" name="2-2-002" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>견적요청은 운영 방식과 관계없이 언제나 경쟁적 방법이다.</span>
+            </label><label class="option" for="2-2-002-option-2">
+              <input id="2-2-002-option-2" type="radio" name="2-2-002" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>견적요청은 운영 방식과 관계없이 언제나 비경쟁적 방법이다.</span>
+            </label><label class="option" for="2-2-002-option-3">
+              <input id="2-2-002-option-3" type="radio" name="2-2-002" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>복수의 조달기업의 견적을 가격 중심으로 평가하면 경쟁적 방법이고, 특정 조달기업의 가격 제안만으로 계약자를 정하면 비경쟁적 방법이다.</span>
+            </label><label class="option" for="2-2-002-option-4">
+              <input id="2-2-002-option-4" type="radio" name="2-2-002" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>견적요청은 기술제안서를 평가한 뒤에만 경쟁적 방법이 된다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>복수의 조달기업으로부터 견적서를 받아 가격 중심으로 평가하면 경쟁적 방법이며, 특정 조달기업의 가격 제안만으로 계약자를 결정하면 비경쟁적 방법이다.</dd></div>
+          <div><dt>함정</dt><dd>견적요청은 명칭만으로 경쟁 여부가 고정되지 않고 실제 운영 방식에 따라 분류가 달라진다.</dd></div>
+          <div><dt>근거</dt><dd>복수의 조달기업으로부터 견적서를 받아 가격 중심으로 평가하면 경쟁적 방법이며, 특정 조달기업의 가격 제안만으로 계약자를 결정하면 비경쟁적 방법이다. [PDF 페이지 34]</dd></div>
+          <div><dt>원문 PDF</dt><dd>34페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">27</span>공개입찰의 입찰공고에 필요한 요건으로 옳지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-003-option-1">
+              <input id="2-2-003-option-1" type="radio" name="2-2-003" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>특정 기업에만 비공개로 제공되는 평가기준</span>
+            </label><label class="option" for="2-2-003-option-2">
+              <input id="2-2-003-option-2" type="radio" name="2-2-003" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>중립적이고 명확한 기술사양</span>
+            </label><label class="option" for="2-2-003-option-3">
+              <input id="2-2-003-option-3" type="radio" name="2-2-003" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>객관적인 입찰참가자격 기준</span>
+            </label><label class="option" for="2-2-003-option-4">
+              <input id="2-2-003-option-4" type="radio" name="2-2-003" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>명확하고 객관적인 평가기준</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>공개입찰의 입찰공고에는 중립적이고 명확한 기술사양, 자격을 갖춘 모든 잠재적 입찰자에 대한 개방, 객관적인 입찰참가자격 기준, 국내 또는 국제 공고, 명확하고 객관적인 평가기준이 필요하다.</dd></div>
+          <div><dt>함정</dt><dd>공개입찰의 평가기준은 특정 기업에만 비공개로 제공하는 것이 아니라 명확하고 객관적으로 제시해야 한다.</dd></div>
+          <div><dt>근거</dt><dd>공개입찰의 입찰공고에는 중립적이고 명확한 기술사양, 자격을 갖춘 모든 잠재적 입찰자에 대한 개방, 객관적인 입찰참가자격 기준, 국내 또는 국제 공고, 명확하고 객관적인 평가기준이 필요하다. [PDF 페이지 36]</dd></div>
+          <div><dt>원문 PDF</dt><dd>36페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">28</span>공개입찰의 참가와 평가에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-004-option-1">
+              <input id="2-2-004-option-1" type="radio" name="2-2-004" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>입찰에 참가한 모든 기업은 이행 능력과 관계없이 평가받는다.</span>
+            </label><label class="option" for="2-2-004-option-2">
+              <input id="2-2-004-option-2" type="radio" name="2-2-004" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>참가요건의 제한을 최소화하므로 최소 요구사항을 심사하지 않는다.</span>
+            </label><label class="option" for="2-2-004-option-3">
+              <input id="2-2-004-option-3" type="radio" name="2-2-004" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>평가 결과는 입찰기업에게 공개하지 않는 것이 원칙이다.</span>
+            </label><label class="option" for="2-2-004-option-4">
+              <input id="2-2-004-option-4" type="radio" name="2-2-004" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>참가 제한이 적더라도 실질적 이행 능력을 갖추고 최소 요구사항을 충족한 기업을 대상으로 평가한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>공개입찰은 참가요건의 제한을 최소화하지만, 모든 기업에 평가 기회를 보장하는 것은 아니며 실질적 이행 능력을 갖추고 최소 요구사항을 충족한 기업을 대상으로 평가한다.</dd></div>
+          <div><dt>함정</dt><dd>입찰참가 기회의 개방과 평가 대상이 되는 것은 서로 다른 문제이다.</dd></div>
+          <div><dt>근거</dt><dd>공개입찰은 참가요건의 제한을 최소화하지만, 모든 기업에 평가 기회를 보장하는 것은 아니며 실질적 이행 능력을 갖추고 최소 요구사항을 충족한 기업을 대상으로 평가한다. [PDF 페이지 37]</dd></div>
+          <div><dt>원문 PDF</dt><dd>37페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">29</span>선별적 입찰에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-005-option-1">
+              <input id="2-2-005-option-1" type="radio" name="2-2-005" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>모든 잠재적 입찰자에게 제한 없이 개방한다.</span>
+            </label><label class="option" for="2-2-005-option-2">
+              <input id="2-2-005-option-2" type="radio" name="2-2-005" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>경쟁을 확보하기 위해 일반적으로 3개 이상의 조달기업을 초대한다.</span>
+            </label><label class="option" for="2-2-005-option-3">
+              <input id="2-2-005-option-3" type="radio" name="2-2-005" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>사전 선정 절차와 기준 없이 수요기관이 임의로 기업을 초대한다.</span>
+            </label><label class="option" for="2-2-005-option-4">
+              <input id="2-2-005-option-4" type="radio" name="2-2-005" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>초대된 기업에는 공개입찰보다 완화된 절차만 적용한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>선별적 입찰은 일정 요건을 갖춘 조달기업을 공식적으로 초대하며, 경쟁을 확보하기 위해 일반적으로 3개 이상의 조달기업을 초대한다.</dd></div>
+          <div><dt>함정</dt><dd>선별적 입찰은 사전 선정의 타당성을 확보해야 하고, 초대된 기업에는 공개입찰에 준하는 절차를 적용해야 한다.</dd></div>
+          <div><dt>근거</dt><dd>선별적 입찰은 일정 요건을 갖춘 조달기업을 공식적으로 초대하며, 경쟁을 확보하기 위해 일반적으로 3개 이상의 조달기업을 초대한다. [PDF 페이지 38]</dd></div>
+          <div><dt>원문 PDF</dt><dd>38페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">30</span>선별적 입찰과 제한적 입찰의 구분으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-006-option-1">
+              <input id="2-2-006-option-1" type="radio" name="2-2-006" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>선별적 입찰은 언제나 직접계약이고 제한적 입찰은 언제나 공개입찰이다.</span>
+            </label><label class="option" for="2-2-006-option-2">
+              <input id="2-2-006-option-2" type="radio" name="2-2-006" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>두 방법 모두 자격요건 없이 모든 기업에 개방된다.</span>
+            </label><label class="option" for="2-2-006-option-3">
+              <input id="2-2-006-option-3" type="radio" name="2-2-006" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>선별적 입찰은 사전 탐색과 시장조사를 바탕으로 적격 기업을 초대하고, 제한적 입찰은 일반 절차로 적합한 공급자를 선정하지 못했거나 예외적 상황에서 활용할 수 있다.</span>
+            </label><label class="option" for="2-2-006-option-4">
+              <input id="2-2-006-option-4" type="radio" name="2-2-006" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>제한적 입찰은 조달대상물의 특수성이나 긴급 상황과 관계없이 우선 적용한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>선별적 입찰은 공급자 탐색과 시장조사를 바탕으로 적격 기업을 초대하며, 제한적 입찰은 공개입찰이나 선택적 입찰로 적합한 공급자를 선정하지 못했거나 긴급·보안·연속성 등의 예외 상황에서 활용된다.</dd></div>
+          <div><dt>함정</dt><dd>두 방법 모두 참가 범위가 좁아질 수 있지만 적용 배경과 절차가 동일하지 않다.</dd></div>
+          <div><dt>근거</dt><dd>선별적 입찰은 공급자 탐색과 시장조사를 바탕으로 적격 기업을 초대하며, 제한적 입찰은 공개입찰이나 선택적 입찰로 적합한 공급자를 선정하지 못했거나 긴급·보안·연속성 등의 예외 상황에서 활용된다. [PDF 페이지 38]</dd></div>
+          <div><dt>원문 PDF</dt><dd>38페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">31</span>단일기업 계약과 단독공급원 계약에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-007-option-1">
+              <input id="2-2-007-option-1" type="radio" name="2-2-007" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>단일기업 계약은 복수의 공급기업 중 한 기업을 선택하고, 단독공급원 계약은 선택 가능한 공급기업이 거의 없거나 독점적 공급원과 계약한다.</span>
+            </label><label class="option" for="2-2-007-option-2">
+              <input id="2-2-007-option-2" type="radio" name="2-2-007" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>단일기업 계약과 단독공급원 계약은 모두 다수 기업 간 가격경쟁을 전제로 한다.</span>
+            </label><label class="option" for="2-2-007-option-3">
+              <input id="2-2-007-option-3" type="radio" name="2-2-007" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>단독공급원 계약에서는 조달기관에 상대적으로 유리한 조건만 설정된다.</span>
+            </label><label class="option" for="2-2-007-option-4">
+              <input id="2-2-007-option-4" type="radio" name="2-2-007" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>단일기업 계약은 공급 가능한 기업이 하나뿐인 경우에만 사용한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>단일기업 계약은 복수의 공급기업이 존재하는 가운데 한 기업을 선정하는 방법이고, 단독공급원 계약은 공급 가능한 기업이 많지 않거나 선택할 수 없는 상황에서 독점적 공급원과 계약하는 방법이다.</dd></div>
+          <div><dt>함정</dt><dd>둘 다 한 기업과 계약하는 외형은 같지만 선택 가능한 공급기업의 존재 여부가 다르다.</dd></div>
+          <div><dt>근거</dt><dd>단일기업 계약은 복수의 공급기업이 존재하는 가운데 한 기업을 선정하는 방법이고, 단독공급원 계약은 공급 가능한 기업이 많지 않거나 선택할 수 없는 상황에서 독점적 공급원과 계약하는 방법이다. [PDF 페이지 38]</dd></div>
+          <div><dt>원문 PDF</dt><dd>38페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">32</span>전통적인 제안요청의 평가 순서로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-008-option-1">
+              <input id="2-2-008-option-1" type="radio" name="2-2-008" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>가격제안서를 먼저 평가한 후 모든 기술제안서를 폐기한다.</span>
+            </label><label class="option" for="2-2-008-option-2">
+              <input id="2-2-008-option-2" type="radio" name="2-2-008" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>기술제안서와 가격제안서를 구분하지 않고 가격만 평가한다.</span>
+            </label><label class="option" for="2-2-008-option-3">
+              <input id="2-2-008-option-3" type="radio" name="2-2-008" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>가격제안서의 최저가 순위만으로 우선협상대상자를 정한다.</span>
+            </label><label class="option" for="2-2-008-option-4">
+              <input id="2-2-008-option-4" type="radio" name="2-2-008" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>기술제안서를 먼저 평가하고 최소 합격 점수를 획득한 입찰자의 가격제안서를 개봉한 뒤 두 평가점수를 합산한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>전통적인 제안요청에서는 기술제안서를 먼저 평가하고 최소 합격 점수를 획득한 입찰자의 가격제안서만 개봉한 뒤 기술평가점수와 가격평가점수를 합산한다.</dd></div>
+          <div><dt>함정</dt><dd>가격제안서는 기술평가 전에 개봉하지 않으며, 가격만으로 낙찰자를 선정하지 않는다.</dd></div>
+          <div><dt>근거</dt><dd>전통적인 제안요청에서는 기술제안서를 먼저 평가하고 최소 합격 점수를 획득한 입찰자의 가격제안서만 개봉한 뒤 기술평가점수와 가격평가점수를 합산한다. [PDF 페이지 40]</dd></div>
+          <div><dt>원문 PDF</dt><dd>40페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">33</span>제안요청의 공급업체 선정 방식에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-009-option-1">
+              <input id="2-2-009-option-1" type="radio" name="2-2-009" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>품질·비용기반선정은 가격만 고려한다.</span>
+            </label><label class="option" for="2-2-009-option-2">
+              <input id="2-2-009-option-2" type="radio" name="2-2-009" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>고정예산선정은 고정된 예산 범위 안에서 가장 우수한 품질의 제안서를 제출한 조달기업을 선정한다.</span>
+            </label><label class="option" for="2-2-009-option-3">
+              <input id="2-2-009-option-3" type="radio" name="2-2-009" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>품질 기반선정은 전문성·경험·기술력보다 최저가를 우선한다.</span>
+            </label><label class="option" for="2-2-009-option-4">
+              <input id="2-2-009-option-4" type="radio" name="2-2-009" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>최소비용선정은 최소 기술 요건 충족 여부와 관계없이 가장 낮은 가격만 선택한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>고정예산선정(FBS: Fixed Budget Selection)은 고정된 예산 범위 안에서 가장 우수한 품질의 제안서를 제출한 조달기업을 선정한다.</dd></div>
+          <div><dt>함정</dt><dd>최소비용선정도 최소 기술 요건을 충족해야 하며, 품질·비용기반선정은 품질과 가격을 함께 고려한다.</dd></div>
+          <div><dt>근거</dt><dd>고정예산선정(FBS: Fixed Budget Selection)은 고정된 예산 범위 안에서 가장 우수한 품질의 제안서를 제출한 조달기업을 선정한다. [PDF 페이지 41]</dd></div>
+          <div><dt>원문 PDF</dt><dd>41페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">34</span>협상 없는 제안요청에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-010-option-1">
+              <input id="2-2-010-option-1" type="radio" name="2-2-010" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>제안서 평가 후 반드시 가격협상을 거쳐야 한다.</span>
+            </label><label class="option" for="2-2-010-option-2">
+              <input id="2-2-010-option-2" type="radio" name="2-2-010" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>기술적 전문성이나 과거 수행 경험은 평가하지 않는다.</span>
+            </label><label class="option" for="2-2-010-option-3">
+              <input id="2-2-010-option-3" type="radio" name="2-2-010" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>가격 요소와 비가격 요소를 함께 평가하되 제안서 평가 후 별도의 협상 없이 낙찰자를 결정한다.</span>
+            </label><label class="option" for="2-2-010-option-4">
+              <input id="2-2-010-option-4" type="radio" name="2-2-010" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>조달대상물이 표준화되어 있으면 적용할 수 없다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>협상 없는 제안요청은 가격 요소와 기술적 전문성·자격·과거 수행 경험 등의 비가격 요소를 함께 평가하고, 제안서 평가 후 별도의 협상 없이 낙찰자를 결정한다.</dd></div>
+          <div><dt>함정</dt><dd>‘협상 없는’이라는 명칭은 비가격 요소를 평가하지 않는다는 뜻이 아니라 평가 후 별도의 협상을 하지 않는다는 뜻이다.</dd></div>
+          <div><dt>근거</dt><dd>협상 없는 제안요청은 가격 요소와 기술적 전문성·자격·과거 수행 경험 등의 비가격 요소를 함께 평가하고, 제안서 평가 후 별도의 협상 없이 낙찰자를 결정한다. [PDF 페이지 41]</dd></div>
+          <div><dt>원문 PDF</dt><dd>41페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">35</span>국내 적격심사제도에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-011-option-1">
+              <input id="2-2-011-option-1" type="radio" name="2-2-011" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>협상 없는 제안요청을 적용한 사례로 볼 수 있으며, 적격심사 평점과 투찰가격 평점을 합산해 기준 점수를 통과한 업체를 선정한다.</span>
+            </label><label class="option" for="2-2-011-option-2">
+              <input id="2-2-011-option-2" type="radio" name="2-2-011" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>대화 기반 제안요청의 사례로서 입찰자와 반복적으로 대화한다.</span>
+            </label><label class="option" for="2-2-011-option-3">
+              <input id="2-2-011-option-3" type="radio" name="2-2-011" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>기술 및 이행능력과 관계없이 최저가만으로 낙찰자를 정한다.</span>
+            </label><label class="option" for="2-2-011-option-4">
+              <input id="2-2-011-option-4" type="radio" name="2-2-011" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>기술제안서와 가격제안서를 평가하지 않고 무작위로 업체를 선정한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>국내 적격심사제도는 협상 없는 제안요청을 적용한 사례로 볼 수 있고, 적격심사 평점과 투찰가격 평점을 합산해 기준 점수를 통과한 업체를 선정한다.</dd></div>
+          <div><dt>함정</dt><dd>일반적인 기술제안서를 제출하지 않더라도 투찰가격 순위에 따라 제출하는 정량적 자료가 사실상 기술제안서 역할을 한다.</dd></div>
+          <div><dt>근거</dt><dd>국내 적격심사제도는 협상 없는 제안요청을 적용한 사례로 볼 수 있고, 적격심사 평점과 투찰가격 평점을 합산해 기준 점수를 통과한 업체를 선정한다. [PDF 페이지 42]</dd></div>
+          <div><dt>원문 PDF</dt><dd>42페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">36</span>대화 기반 제안요청이 효과적인 경우로 옳지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-012-option-1">
+              <input id="2-2-012-option-1" type="radio" name="2-2-012" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>제안요청 내용을 상세화하기 어려워 조달기업과 대화가 필요한 경우</span>
+            </label><label class="option" for="2-2-012-option-2">
+              <input id="2-2-012-option-2" type="radio" name="2-2-012" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>연구·실험·연구개발을 위한 계약이 필요한 경우</span>
+            </label><label class="option" for="2-2-012-option-3">
+              <input id="2-2-012-option-3" type="radio" name="2-2-012" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>공개입찰에서 입찰서가 제출되지 않아 입찰이 취소된 경우</span>
+            </label><label class="option" for="2-2-012-option-4">
+              <input id="2-2-012-option-4" type="radio" name="2-2-012" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>조달기관이 모든 요구사항을 이미 확정했고 추가 논의 없이 정형화된 기준으로 평가할 수 있는 경우</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>대화 기반 제안요청은 제안요청 내용을 상세화하기 어렵거나 연구·실험·연구개발 계약이 필요하거나 공개입찰에서 입찰서 미제출로 입찰이 취소된 경우에 효과적이다.</dd></div>
+          <div><dt>함정</dt><dd>요구사항이 이미 확정되어 추가 논의가 필요 없는 경우는 대화를 통해 내용을 구체화하는 방식의 핵심 적용 상황이 아니다.</dd></div>
+          <div><dt>근거</dt><dd>대화 기반 제안요청은 제안요청 내용을 상세화하기 어렵거나 연구·실험·연구개발 계약이 필요하거나 공개입찰에서 입찰서 미제출로 입찰이 취소된 경우에 효과적이다. [PDF 페이지 42~43]</dd></div>
+          <div><dt>원문 PDF</dt><dd>42, 43페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">37</span>대화 기반 제안요청과 경쟁적 대화의 차이에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-013-option-1">
+              <input id="2-2-013-option-1" type="radio" name="2-2-013" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>대화 기반 제안요청은 대화를 사용하지 않지만 경쟁적 대화는 대화를 사용한다.</span>
+            </label><label class="option" for="2-2-013-option-2">
+              <input id="2-2-013-option-2" type="radio" name="2-2-013" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>대화 기반 제안요청은 특정 기술·설계 측면의 개선에 상대적으로 중점을 두고, 경쟁적 대화는 조달사업의 모든 측면에 관한 더 깊은 논의를 포함한다.</span>
+            </label><label class="option" for="2-2-013-option-3">
+              <input id="2-2-013-option-3" type="radio" name="2-2-013" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>경쟁적 대화는 기술적 요구사항이 이미 완전히 확정된 경우에만 사용한다.</span>
+            </label><label class="option" for="2-2-013-option-4">
+              <input id="2-2-013-option-4" type="radio" name="2-2-013" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>두 방법은 계약 체결 전 입찰자와 반복적으로 대화한다는 공통점이 없다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>두 방법 모두 계약 체결 전 반복적으로 대화하지만, 대화 기반 제안요청은 특정 기술·설계 측면의 개선에 상대적으로 중점을 두고 경쟁적 대화는 조달사업의 모든 측면에 관한 더 깊은 논의를 포함한다.</dd></div>
+          <div><dt>함정</dt><dd>공통점은 반복적 대화이고, 차이점은 대화의 범위와 초점이다.</dd></div>
+          <div><dt>근거</dt><dd>두 방법 모두 계약 체결 전 반복적으로 대화하지만, 대화 기반 제안요청은 특정 기술·설계 측면의 개선에 상대적으로 중점을 두고 경쟁적 대화는 조달사업의 모든 측면에 관한 더 깊은 논의를 포함한다. [PDF 페이지 43]</dd></div>
+          <div><dt>원문 PDF</dt><dd>43페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">38</span>연속협상 제안요청에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-014-option-1">
+              <input id="2-2-014-option-1" type="radio" name="2-2-014" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>가격이 가장 낮은 기업과만 협상하고 기술평가는 하지 않는다.</span>
+            </label><label class="option" for="2-2-014-option-2">
+              <input id="2-2-014-option-2" type="radio" name="2-2-014" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>모든 기업과 동시에 계약을 체결한다.</span>
+            </label><label class="option" for="2-2-014-option-3">
+              <input id="2-2-014-option-3" type="radio" name="2-2-014" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>기술평가 순위에 따라 선순위 기업부터 협상하고, 협상이 성립하지 않으면 다음 순위 기업과 협상한다.</span>
+            </label><label class="option" for="2-2-014-option-4">
+              <input id="2-2-014-option-4" type="radio" name="2-2-014" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>기술적 요건을 충족하는 기업이 충분히 존재하는지는 적용 여부와 무관하다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>연속협상 제안요청은 기술평가에서 가장 높은 순위를 받은 조달기업부터 협상하고, 협상이 성립하지 않으면 다음 순위 기업과 차례로 협상한다.</dd></div>
+          <div><dt>함정</dt><dd>가격조건을 심사하기 전에 기술적 역량을 평가하며, 기술요건을 충족하는 충분한 수의 기업이 필요하다.</dd></div>
+          <div><dt>근거</dt><dd>연속협상 제안요청은 기술평가에서 가장 높은 순위를 받은 조달기업부터 협상하고, 협상이 성립하지 않으면 다음 순위 기업과 차례로 협상한다. [PDF 페이지 45]</dd></div>
+          <div><dt>원문 PDF</dt><dd>45페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">39</span>경쟁적 협상의 최종 제안서 처리에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-015-option-1">
+              <input id="2-2-015-option-1" type="radio" name="2-2-015" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>협상이 끝난 뒤 모든 입찰기업이 최종 제안서를 제출하며, 제출된 최종 제안서에는 추가 협상을 하지 않는다.</span>
+            </label><label class="option" for="2-2-015-option-2">
+              <input id="2-2-015-option-2" type="radio" name="2-2-015" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>최종 제안서를 제출한 뒤에도 제한 없이 추가 협상을 반복한다.</span>
+            </label><label class="option" for="2-2-015-option-3">
+              <input id="2-2-015-option-3" type="radio" name="2-2-015" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>최종 제안서는 사전 공개된 평가기준과 관계없이 평가한다.</span>
+            </label><label class="option" for="2-2-015-option-4">
+              <input id="2-2-015-option-4" type="radio" name="2-2-015" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>협상 중 특정 기업에 제공한 정보는 다른 참여 기업과 공유하지 않는다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>경쟁적 협상에서는 협상이 끝난 뒤 모든 입찰기업이 완성된 요구사항에 따라 최종 제안서를 제출하고, 최종 제안서에는 추가 협상을 하지 않으며 사전 공개된 평가기준으로 평가한다.</dd></div>
+          <div><dt>함정</dt><dd>요구사항을 개선하기 위한 협상은 최종 제안서 제출 전에 이루어지며, 최종 제안서 제출 후에는 추가 협상이 없다.</dd></div>
+          <div><dt>근거</dt><dd>경쟁적 협상에서는 협상이 끝난 뒤 모든 입찰기업이 완성된 요구사항에 따라 최종 제안서를 제출하고, 최종 제안서에는 추가 협상을 하지 않으며 사전 공개된 평가기준으로 평가한다. [PDF 페이지 46]</dd></div>
+          <div><dt>원문 PDF</dt><dd>46페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">40</span>경쟁적 협상의 적용 특성으로 옳지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-016-option-1">
+              <input id="2-2-016-option-1" type="radio" name="2-2-016" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>다수의 조달기업이 협상에 참여하도록 보장해야 한다.</span>
+            </label><label class="option" for="2-2-016-option-2">
+              <input id="2-2-016-option-2" type="radio" name="2-2-016" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>참여 기업에게 정보가 동등한 수준으로 공유되어야 한다.</span>
+            </label><label class="option" for="2-2-016-option-3">
+              <input id="2-2-016-option-3" type="radio" name="2-2-016" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>충분한 시간이 있으면 요구사항을 개선·보완할 수 있다.</span>
+            </label><label class="option" for="2-2-016-option-4">
+              <input id="2-2-016-option-4" type="radio" name="2-2-016" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>협상을 반복하므로 긴급한 조달대상물에 특히 적합하다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>경쟁적 협상은 협상을 반복하므로 시간이 많이 걸려 긴급한 조달대상물에는 적합하지 않지만, 충분한 시간이 있으면 요구사항을 개선·보완할 수 있다.</dd></div>
+          <div><dt>함정</dt><dd>반복 협상은 요구사항 개선에는 도움이 되지만 시간 소요 때문에 긴급한 조달대상물에는 불리하다.</dd></div>
+          <div><dt>근거</dt><dd>경쟁적 협상은 협상을 반복하므로 시간이 많이 걸려 긴급한 조달대상물에는 적합하지 않지만, 충분한 시간이 있으면 요구사항을 개선·보완할 수 있다. [PDF 페이지 46]</dd></div>
+          <div><dt>원문 PDF</dt><dd>46페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">41</span>2단계입찰의 특징으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-017-option-1">
+              <input id="2-2-017-option-1" type="radio" name="2-2-017" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>기술제안서와 가격제안서를 항상 동시에 제출하고 가격만 평가한다.</span>
+            </label><label class="option" for="2-2-017-option-2">
+              <input id="2-2-017-option-2" type="radio" name="2-2-017" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>제안서 제출이 단계별로 진행되고 입찰참가 조달기업이 기술적 요건과 과업 범위의 정의에 도움을 준다.</span>
+            </label><label class="option" for="2-2-017-option-3">
+              <input id="2-2-017-option-3" type="radio" name="2-2-017" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>물품에는 적용할 수 없고 공사에만 적용한다.</span>
+            </label><label class="option" for="2-2-017-option-4">
+              <input id="2-2-017-option-4" type="radio" name="2-2-017" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>조달기업은 기술사양의 보완 과정에 참여할 수 없다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>2단계입찰은 제안서 제출이 단계별로 진행되고, 입찰참가 조달기업이 기술적 요건과 과업 범위의 정의에 도움을 주는 특징이 있다.</dd></div>
+          <div><dt>함정</dt><dd>제안요청도 기술제안과 가격제안을 구분하지만, 2단계입찰은 제안 제출 자체가 단계별로 진행된다는 점이 핵심이다.</dd></div>
+          <div><dt>근거</dt><dd>2단계입찰은 제안서 제출이 단계별로 진행되고, 입찰참가 조달기업이 기술적 요건과 과업 범위의 정의에 도움을 주는 특징이 있다. [PDF 페이지 47]</dd></div>
+          <div><dt>원문 PDF</dt><dd>47페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">42</span>2단계입찰의 단점으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-018-option-1">
+              <input id="2-2-018-option-1" type="radio" name="2-2-018" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>기술사양과 과업 범위를 개선할 수 없다.</span>
+            </label><label class="option" for="2-2-018-option-2">
+              <input id="2-2-018-option-2" type="radio" name="2-2-018" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>계약 이행 위험을 줄일 가능성이 전혀 없다.</span>
+            </label><label class="option" for="2-2-018-option-3">
+              <input id="2-2-018-option-3" type="radio" name="2-2-018" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>절차와 협상이 장기화될 수 있고, 기술사양과 과업 범위를 확정하는 과정에서 가격이 오를 수 있다.</span>
+            </label><label class="option" for="2-2-018-option-4">
+              <input id="2-2-018-option-4" type="radio" name="2-2-018" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>조달기업의 기술적 역량을 검토할 수 없다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>2단계입찰은 절차가 단계별로 진행되어 오래 걸릴 수 있고 협상이 장기화될 수 있으며, 기술사양과 과업 범위를 확정하는 과정에서 가격이 오를 수 있다.</dd></div>
+          <div><dt>함정</dt><dd>기술사양과 과업 범위의 개선 및 계약 이행 위험 감소는 장점이며, 시간과 협상 복잡성 및 가격 상승 가능성은 단점이다.</dd></div>
+          <div><dt>근거</dt><dd>2단계입찰은 절차가 단계별로 진행되어 오래 걸릴 수 있고 협상이 장기화될 수 있으며, 기술사양과 과업 범위를 확정하는 과정에서 가격이 오를 수 있다. [PDF 페이지 47]</dd></div>
+          <div><dt>원문 PDF</dt><dd>47페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">43</span>2단계입찰이 적합한 경우로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-019-option-1">
+              <input id="2-2-019-option-1" type="radio" name="2-2-019" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>조달 전에 완전한 기술사양을 만들기 어렵고 공급역량을 갖춘 조달기업과 논의해 기술 요구사항을 보완해야 하는 경우</span>
+            </label><label class="option" for="2-2-019-option-2">
+              <input id="2-2-019-option-2" type="radio" name="2-2-019" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>조달기관이 기술사양을 완전히 확정했고 어떠한 논의도 필요하지 않은 경우</span>
+            </label><label class="option" for="2-2-019-option-3">
+              <input id="2-2-019-option-3" type="radio" name="2-2-019" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>긴급성 때문에 단계별 절차를 진행할 시간이 전혀 없는 경우</span>
+            </label><label class="option" for="2-2-019-option-4">
+              <input id="2-2-019-option-4" type="radio" name="2-2-019" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>조달기업의 기술제안이 과업 범위에 영향을 주어서는 안 되는 경우</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>2단계입찰은 조달 전에 완전한 기술사양을 만들기 어렵거나 계약조건·기술사양을 개선하기 위해 공급역량을 갖춘 조달기업과 논의가 필요할 때 적합하다.</dd></div>
+          <div><dt>함정</dt><dd>2단계입찰은 기술적 요구사항과 과업 범위를 보완하기 위한 방식이므로 사전 확정이 어렵고 논의가 필요한 경우에 적합하다.</dd></div>
+          <div><dt>근거</dt><dd>2단계입찰은 조달 전에 완전한 기술사양을 만들기 어렵거나 계약조건·기술사양을 개선하기 위해 공급역량을 갖춘 조달기업과 논의가 필요할 때 적합하다. [PDF 페이지 48]</dd></div>
+          <div><dt>원문 PDF</dt><dd>48페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">44</span>2단계입찰 유형 2의 절차로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-020-option-1">
+              <input id="2-2-020-option-1" type="radio" name="2-2-020" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>1단계에서 가격제안서만 평가하고 2단계에서 기술 요구사항을 처음 공개한다.</span>
+            </label><label class="option" for="2-2-020-option-2">
+              <input id="2-2-020-option-2" type="radio" name="2-2-020" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>1단계에서 최저가 기업을 확정한 뒤 기술평가 없이 계약한다.</span>
+            </label><label class="option" for="2-2-020-option-3">
+              <input id="2-2-020-option-3" type="radio" name="2-2-020" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>1단계와 2단계 모두 가격제안서만 제출받는다.</span>
+            </label><label class="option" for="2-2-020-option-4">
+              <input id="2-2-020-option-4" type="radio" name="2-2-020" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>1단계에서 잠정 기술사양에 관한 제안을 받고 설명·토론을 통해 요구사항을 확정한 뒤, 2단계에서 수정된 요구사항에 맞는 기술제안서와 가격제안서를 평가한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>유형 2는 1단계에서 잠정 기술사양에 관한 제안을 받고 설명·토론으로 기술 요구사항과 제안요청 내용을 확정한 뒤, 2단계에서 수정된 요구사항에 맞는 기술제안서와 가격제안서를 평가한다.</dd></div>
+          <div><dt>함정</dt><dd>유형 2에서는 1단계의 기술제안과 논의를 통해 요구사항을 완성한 후 2단계 평가를 진행한다.</dd></div>
+          <div><dt>근거</dt><dd>유형 2는 1단계에서 잠정 기술사양에 관한 제안을 받고 설명·토론으로 기술 요구사항과 제안요청 내용을 확정한 뒤, 2단계에서 수정된 요구사항에 맞는 기술제안서와 가격제안서를 평가한다. [PDF 페이지 48]</dd></div>
+          <div><dt>원문 PDF</dt><dd>48페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">45</span>국내 2단계경쟁입찰에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-021-option-1">
+              <input id="2-2-021-option-1" type="radio" name="2-2-021" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>2단계입찰 유형 1만 적용한다.</span>
+            </label><label class="option" for="2-2-021-option-2">
+              <input id="2-2-021-option-2" type="radio" name="2-2-021" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>2단계입찰 유형 2를 적용하며, 단순 2단계경쟁입찰과 규격·가격 동시입찰로 나뉜다.</span>
+            </label><label class="option" for="2-2-021-option-3">
+              <input id="2-2-021-option-3" type="radio" name="2-2-021" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>물품 또는 용역(서비스) 계약에는 사용할 수 없다.</span>
+            </label><label class="option" for="2-2-021-option-4">
+              <input id="2-2-021-option-4" type="radio" name="2-2-021" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>규격 또는 기술 입찰의 적격 여부와 관계없이 모든 가격입찰자를 낙찰자로 정한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>국내 2단계경쟁입찰은 2단계입찰 유형 2를 적용하며, 단순 2단계경쟁입찰과 규격·가격 동시입찰로 나뉜다.</dd></div>
+          <div><dt>함정</dt><dd>국내 방식은 규격 또는 기술 입찰의 적격자를 선정한 뒤 그중 최저가 입찰자를 낙찰자로 결정한다.</dd></div>
+          <div><dt>근거</dt><dd>국내 2단계경쟁입찰은 2단계입찰 유형 2를 적용하며, 단순 2단계경쟁입찰과 규격·가격 동시입찰로 나뉜다. [PDF 페이지 49]</dd></div>
+          <div><dt>원문 PDF</dt><dd>49페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">46</span>전자적 역경매에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-022-option-1">
+              <input id="2-2-022-option-1" type="radio" name="2-2-022" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>공급업체들이 최고가를 제시하기 위해 경쟁하는 기존 경매와 동일하다.</span>
+            </label><label class="option" for="2-2-022-option-2">
+              <input id="2-2-022-option-2" type="radio" name="2-2-022" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>가격 경쟁이 없으므로 비용 절감 효과를 기대할 수 없다.</span>
+            </label><label class="option" for="2-2-022-option-3">
+              <input id="2-2-022-option-3" type="radio" name="2-2-022" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>여러 공급업체가 온라인에서 가격을 낮추며 최저가를 제시하지만 품질 저하와 공급업체 관계 악화가 발생할 수 있다.</span>
+            </label><label class="option" for="2-2-022-option-4">
+              <input id="2-2-022-option-4" type="radio" name="2-2-022" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>소규모 혁신적 기업의 참여를 반드시 확대한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>전자적 역경매는 여러 공급업체가 온라인에서 가격을 낮추며 최저가를 제시해 비용 절감을 기대할 수 있지만, 품질 저하와 공급업체 관계 악화 및 소규모 혁신적 기업의 참여 배제 가능성이 있다.</dd></div>
+          <div><dt>함정</dt><dd>전자적 역경매는 기존 경매와 가격 경쟁 방향이 반대이며, 비용 절감 가능성과 함께 부정적 영향도 고려해야 한다.</dd></div>
+          <div><dt>근거</dt><dd>전자적 역경매는 여러 공급업체가 온라인에서 가격을 낮추며 최저가를 제시해 비용 절감을 기대할 수 있지만, 품질 저하와 공급업체 관계 악화 및 소규모 혁신적 기업의 참여 배제 가능성이 있다. [PDF 페이지 50]</dd></div>
+          <div><dt>원문 PDF</dt><dd>50페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">47</span>UNCITRAL 공공조달모델법이 제시한 공공조달 방법에 포함되는 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-023-option-1">
+              <input id="2-2-023-option-1" type="radio" name="2-2-023" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>전자적 역경매</span>
+            </label><label class="option" for="2-2-023-option-2">
+              <input id="2-2-023-option-2" type="radio" name="2-2-023" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>품질 기반선정</span>
+            </label><label class="option" for="2-2-023-option-3">
+              <input id="2-2-023-option-3" type="radio" name="2-2-023" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>고정예산선정</span>
+            </label><label class="option" for="2-2-023-option-4">
+              <input id="2-2-023-option-4" type="radio" name="2-2-023" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>최소비용선정</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>UNCITRAL 공공조달모델법이 제시한 10개 방법에는 전자적 역경매가 포함된다.</dd></div>
+          <div><dt>함정</dt><dd>품질 기반선정, 고정예산선정, 최소비용선정은 교재에서 제안요청의 공급업체 선정 방식으로 설명된다.</dd></div>
+          <div><dt>근거</dt><dd>UNCITRAL 공공조달모델법이 제시한 10개 방법에는 전자적 역경매가 포함된다. [PDF 페이지 31]</dd></div>
+          <div><dt>원문 PDF</dt><dd>31페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">48</span>적정한 입찰 방법을 선택할 때 고려할 요소에 해당하지 않는 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-2-024-option-1">
+              <input id="2-2-024-option-1" type="radio" name="2-2-024" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>조달기관의 임무와 해당 조달사업의 요구사항</span>
+            </label><label class="option" for="2-2-024-option-2">
+              <input id="2-2-024-option-2" type="radio" name="2-2-024" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>시장 상황과 조달의 시급성</span>
+            </label><label class="option" for="2-2-024-option-3">
+              <input id="2-2-024-option-3" type="radio" name="2-2-024" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>조달기관 담당자의 전문성과 공공조달 실행·관리 역량</span>
+            </label><label class="option" for="2-2-024-option-4">
+              <input id="2-2-024-option-4" type="radio" name="2-2-024" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>조달기업의 기업명 길이</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>입찰 방법 선택 시 조달기관의 임무와 조달사업 요구사항, 조달대상물의 품목 특성, 시장 상황, 시급성, 기술 수준, 최적화된 입찰 방법과 기술, 담당자의 전문성과 공공조달 실행·관리 역량을 고려한다.</dd></div>
+          <div><dt>함정</dt><dd>조달기업의 기업명 길이는 교재에 제시된 입찰 방법 선택 요소가 아니다.</dd></div>
+          <div><dt>근거</dt><dd>입찰 방법 선택 시 조달기관의 임무와 조달사업 요구사항, 조달대상물의 품목 특성, 시장 상황, 시급성, 기술 수준, 최적화된 입찰 방법과 기술, 담당자의 전문성과 공공조달 실행·관리 역량을 고려한다. [PDF 페이지 39]</dd></div>
+          <div><dt>원문 PDF</dt><dd>39페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">49</span>비경쟁적 조달 방법에 대한 설명으로 가장 적절한 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-001-option-1">
+              <input id="2-3-001-option-1" type="radio" name="2-3-001" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>조달기관이 특정 공급업체를 직접 선택하여 필요한 조달대상물을 공급받는 방법이다.</span>
+            </label><label class="option" for="2-3-001-option-2">
+              <input id="2-3-001-option-2" type="radio" name="2-3-001" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>모든 조달기업에 참가 요건을 공시한 뒤 공개경쟁입찰을 실시하는 방법이다.</span>
+            </label><label class="option" for="2-3-001-option-3">
+              <input id="2-3-001-option-3" type="radio" name="2-3-001" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>소액구매에만 적용되는 구매카드 사용 절차이다.</span>
+            </label><label class="option" for="2-3-001-option-4">
+              <input id="2-3-001-option-4" type="radio" name="2-3-001" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>가격 이외의 선정기준만으로 낙찰자를 정하는 경쟁적 조달 방법이다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>비경쟁적 조달 방법은 조달기관이 특정 공급업체를 직접 선택하여 필요한 조달대상물을 공급받는 방법이다.</dd></div>
+          <div><dt>함정</dt><dd>비경쟁적 조달 방법을 공개경쟁입찰이나 소액구매에만 한정된 절차로 혼동하지 않아야 한다.</dd></div>
+          <div><dt>근거</dt><dd>비경쟁적 조달 방법은 조달기관이 특정 공급업체를 직접 선택하여 필요한 조달대상물을 공급받는 방법이다. [PDF 페이지 51]</dd></div>
+          <div><dt>원문 PDF</dt><dd>51페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">50</span>비경쟁적 조달 방법을 활용할 수 있는 상황으로 적절하지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-002-option-1">
+              <input id="2-3-002-option-1" type="radio" name="2-3-002" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>경쟁적 조달 방법을 적용할 시간이 부족하고 공익적 긴급성이 높은 경우</span>
+            </label><label class="option" for="2-3-002-option-2">
+              <input id="2-3-002-option-2" type="radio" name="2-3-002" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>시장에 공급업체가 많고 조달 요구의 특수성이 낮아 폭넓은 가격 경쟁이 필요한 경우</span>
+            </label><label class="option" for="2-3-002-option-3">
+              <input id="2-3-002-option-3" type="radio" name="2-3-002" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>특허·저작권 등 지적재산권을 보호해야 하는 경우</span>
+            </label><label class="option" for="2-3-002-option-4">
+              <input id="2-3-002-option-4" type="radio" name="2-3-002" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>기존에 공급된 조달대상물 사이의 호환성이 중요한 경우</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>비경쟁적 조달 방법은 공익적 긴급성, 기술적 전문성, 맞춤형 특화 용역(서비스) 등 조달 요구의 특수성이 높거나 지적재산권 보호와 기존 조달대상물 간 호환성이 중요한 경우에 활용된다.</dd></div>
+          <div><dt>함정</dt><dd>공급업체가 많고 특수성이 낮은 일반적인 경쟁 상황을 비경쟁적 조달의 활용 사유로 오인하지 않아야 한다.</dd></div>
+          <div><dt>근거</dt><dd>비경쟁적 조달 방법은 공익적 긴급성, 기술적 전문성, 맞춤형 특화 용역(서비스) 등 조달 요구의 특수성이 높거나 지적재산권 보호와 기존 조달대상물 간 호환성이 중요한 경우에 활용된다. [PDF 페이지 51]</dd></div>
+          <div><dt>원문 PDF</dt><dd>51페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">51</span>비경쟁적 조달 방법을 반복적으로 실행할 때 발생할 수 있는 위험은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-003-option-1">
+              <input id="2-3-003-option-1" type="radio" name="2-3-003" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>입찰공고 준비로 조달 기간이 길어지는 위험</span>
+            </label><label class="option" for="2-3-003-option-2">
+              <input id="2-3-003-option-2" type="radio" name="2-3-003" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>특화된 조달대상물에 대한 접근성이 낮아지는 위험</span>
+            </label><label class="option" for="2-3-003-option-3">
+              <input id="2-3-003-option-3" type="radio" name="2-3-003" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>특정 공급 기업에 대한 의존성이 커져 장기적인 공급 안정성이 위협받는 위험</span>
+            </label><label class="option" for="2-3-003-option-4">
+              <input id="2-3-003-option-4" type="radio" name="2-3-003" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>민감한 조달사업의 비밀을 보장하기 어려워지는 위험</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>비경쟁적 조달 방법을 반복적으로 실행하면 특정 공급 기업에 과도하게 의존하여 장기적으로 안정적인 공급이 위협받을 수 있다.</dd></div>
+          <div><dt>함정</dt><dd>신속성, 특화된 조달대상물에 대한 접근성, 비밀 보장은 위험이 아니라 장점으로 제시된다.</dd></div>
+          <div><dt>근거</dt><dd>비경쟁적 조달 방법을 반복적으로 실행하면 특정 공급 기업에 과도하게 의존하여 장기적으로 안정적인 공급이 위협받을 수 있다. [PDF 페이지 51]</dd></div>
+          <div><dt>원문 PDF</dt><dd>51페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">52</span>조달기관이 비경쟁적 조달 방법을 활용할 때 요구되는 조치로 가장 적절한 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-004-option-1">
+              <input id="2-3-004-option-1" type="radio" name="2-3-004" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>모든 견적을 전화로만 접수한다.</span>
+            </label><label class="option" for="2-3-004-option-2">
+              <input id="2-3-004-option-2" type="radio" name="2-3-004" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>경쟁입찰과 같은 장기간의 입찰공고를 반드시 실시한다.</span>
+            </label><label class="option" for="2-3-004-option-3">
+              <input id="2-3-004-option-3" type="radio" name="2-3-004" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>특정 공급 기업과의 관계를 이유로 검토 없이 계약한다.</span>
+            </label><label class="option" for="2-3-004-option-4">
+              <input id="2-3-004-option-4" type="radio" name="2-3-004" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>해당 조달 의사결정의 정당성을 보증할 수 있는 절차와 기록을 남긴다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>조달기관은 비경쟁적 조달 방법을 활용할 때 해당 조달 의사결정의 정당성을 보증할 수 있는 절차와 기록을 남겨야 한다.</dd></div>
+          <div><dt>함정</dt><dd>신속한 조달이 가능하다는 장점이 정당성 확인 절차와 기록을 생략해도 된다는 뜻은 아니다.</dd></div>
+          <div><dt>근거</dt><dd>조달기관은 비경쟁적 조달 방법을 활용할 때 해당 조달 의사결정의 정당성을 보증할 수 있는 절차와 기록을 남겨야 한다. [PDF 페이지 51]</dd></div>
+          <div><dt>원문 PDF</dt><dd>51페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">53</span>견적요청(RFQ: Request For Quotation)에 가장 적합한 조달대상물은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-005-option-1">
+              <input id="2-3-005-option-1" type="radio" name="2-3-005" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>별도 설계·제조가 필요 없고 시장에서 쉽게 구할 수 있는 표준 규격품</span>
+            </label><label class="option" for="2-3-005-option-2">
+              <input id="2-3-005-option-2" type="radio" name="2-3-005" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>기술적 제안의 질만으로 선정해야 하는 맞춤형 대규모 사업</span>
+            </label><label class="option" for="2-3-005-option-3">
+              <input id="2-3-005-option-3" type="radio" name="2-3-005" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>시장에서 구할 수 없고 공급요건을 충족하는 업체가 하나뿐인 조달대상물</span>
+            </label><label class="option" for="2-3-005-option-4">
+              <input id="2-3-005-option-4" type="radio" name="2-3-005" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>장기간의 공개경쟁입찰 절차가 반드시 필요한 대규모 조달사업</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>견적요청은 별도 설계에 따라 제조할 필요가 없는 상용품인 공산품·표준 규격품 등 시장에서 쉽게 구할 수 있고 가격 외 선정기준의 중요성이 크지 않은 경우에 적합하다.</dd></div>
+          <div><dt>함정</dt><dd>견적요청의 적용 대상을 맞춤형 설계가 필요한 사업이나 공급업체가 하나뿐인 단독공급원 조달과 혼동하지 않아야 한다.</dd></div>
+          <div><dt>근거</dt><dd>견적요청은 별도 설계에 따라 제조할 필요가 없는 상용품인 공산품·표준 규격품 등 시장에서 쉽게 구할 수 있고 가격 외 선정기준의 중요성이 크지 않은 경우에 적합하다. [PDF 페이지 52]</dd></div>
+          <div><dt>원문 PDF</dt><dd>52페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">54</span>견적요청의 일반적인 진행 원칙에 대한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-006-option-1">
+              <input id="2-3-006-option-1" type="radio" name="2-3-006" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>원칙적으로 입찰자 한 명에게만 요청해야 한다.</span>
+            </label><label class="option" for="2-3-006-option-2">
+              <input id="2-3-006-option-2" type="radio" name="2-3-006" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>사전에 표준화된 문서를 작성하고 최소 3명 이상의 입찰자가 참여할 수 있도록 요청한다.</span>
+            </label><label class="option" for="2-3-006-option-3">
+              <input id="2-3-006-option-3" type="radio" name="2-3-006" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>입찰자가 2명 이하이면 아무 기록 없이 같은 절차를 계속한다.</span>
+            </label><label class="option" for="2-3-006-option-4">
+              <input id="2-3-006-option-4" type="radio" name="2-3-006" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>공정성과 투명성을 위해 견적요청 문서를 표준화하지 않는다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>공정성과 투명성을 확보하기 위해 사전에 표준화된 견적요청 문서를 작성하고 최소 3명 이상의 입찰자가 참여할 수 있도록 요청하는 것이 일반적이다. 특별한 사정으로 입찰자가 2명 이하이면 예외 절차와 기준을 마련하고 그 사실을 기록한다.</dd></div>
+          <div><dt>함정</dt><dd>실제 입찰자가 2명 이하인 예외와 최소 3명 이상의 참여가 가능하도록 요청해야 하는 일반 원칙을 바꾸어 기억하지 않아야 한다.</dd></div>
+          <div><dt>근거</dt><dd>공정성과 투명성을 확보하기 위해 사전에 표준화된 견적요청 문서를 작성하고 최소 3명 이상의 입찰자가 참여할 수 있도록 요청하는 것이 일반적이다. 특별한 사정으로 입찰자가 2명 이하이면 예외 절차와 기준을 마련하고 그 사실을 기록한다. [PDF 페이지 52]</dd></div>
+          <div><dt>원문 PDF</dt><dd>52페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">55</span>견적 준비·제출과 제출 이후의 처리에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-007-option-1">
+              <input id="2-3-007-option-1" type="radio" name="2-3-007" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>준비 기간을 주지 않고 즉시 제출하게 한 뒤 자유롭게 협상한다.</span>
+            </label><label class="option" for="2-3-007-option-2">
+              <input id="2-3-007-option-2" type="radio" name="2-3-007" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>일반적으로 15일 내외의 준비 기간을 주고 제출 뒤 가격 협상을 의무화한다.</span>
+            </label><label class="option" for="2-3-007-option-3">
+              <input id="2-3-007-option-3" type="radio" name="2-3-007" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>일반적으로 5일 내외의 충분한 준비 기간을 부여하고 제출 뒤에는 변경이나 추가 협상을 허용하지 않는다.</span>
+            </label><label class="option" for="2-3-007-option-4">
+              <input id="2-3-007-option-4" type="radio" name="2-3-007" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>준비 기간은 5개월이며 제출 뒤에는 경쟁자의 견적정보를 이용한 수정을 허용한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>입찰자에게 견적을 준비하고 제출할 충분한 기간을 부여해야 하며, 일반적인 준비 기간은 5일 내외이다. 견적서를 제출한 뒤에는 변경이나 추가 협상을 허용하지 않아야 한다.</dd></div>
+          <div><dt>함정</dt><dd>‘5일 내외’라는 준비 기간과 ‘제출 후 변경·추가 협상 금지’를 서로 분리하거나 반대로 기억하지 않아야 한다.</dd></div>
+          <div><dt>근거</dt><dd>입찰자에게 견적을 준비하고 제출할 충분한 기간을 부여해야 하며, 일반적인 준비 기간은 5일 내외이다. 견적서를 제출한 뒤에는 변경이나 추가 협상을 허용하지 않아야 한다. [PDF 페이지 52]</dd></div>
+          <div><dt>원문 PDF</dt><dd>52페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">56</span>견적요청에서 낙찰자를 선정하는 일반적인 기준은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-008-option-1">
+              <input id="2-3-008-option-1" type="radio" name="2-3-008" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>가장 늦은 납품 기간을 제시한 입찰자를 선정한다.</span>
+            </label><label class="option" for="2-3-008-option-2">
+              <input id="2-3-008-option-2" type="radio" name="2-3-008" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>가장 높은 가격을 제시한 입찰자를 선정한다.</span>
+            </label><label class="option" for="2-3-008-option-3">
+              <input id="2-3-008-option-3" type="radio" name="2-3-008" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>가격을 고려하지 않고 무작위로 선정한다.</span>
+            </label><label class="option" for="2-3-008-option-4">
+              <input id="2-3-008-option-4" type="radio" name="2-3-008" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>가장 낮은 가격을 제출한 입찰자를 선정한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>견적요청 기반의 조달 방법에서는 일반적으로 가장 낮은 가격을 제출한 입찰자가 낙찰자로 선정된다. 다만 지나치게 낮은 가격으로 생길 수 있는 문제를 예방하기 위해 견적 가능한 최저 가격 수준을 설정하기도 한다.</dd></div>
+          <div><dt>함정</dt><dd>일반적인 최저 가격 기준과 문제 예방을 위한 견적 가능한 최저 가격 수준 설정을 혼동하지 않아야 한다.</dd></div>
+          <div><dt>근거</dt><dd>견적요청 기반의 조달 방법에서는 일반적으로 가장 낮은 가격을 제출한 입찰자가 낙찰자로 선정된다. 다만 지나치게 낮은 가격으로 생길 수 있는 문제를 예방하기 위해 견적 가능한 최저 가격 수준을 설정하기도 한다. [PDF 페이지 52]</dd></div>
+          <div><dt>원문 PDF</dt><dd>52페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">57</span>견적요청이 비경쟁적인 방법으로 설명되는 이유로 가장 적절한 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-009-option-1">
+              <input id="2-3-009-option-1" type="radio" name="2-3-009" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>참가 요건이 입찰문서 등으로 공시되지 않고 수요기관이 제한된 수의 조달기업에 견적을 요청할 수 있기 때문이다.</span>
+            </label><label class="option" for="2-3-009-option-2">
+              <input id="2-3-009-option-2" type="radio" name="2-3-009" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>모든 조달기업이 자동으로 참여하고 가격이 공개되기 때문이다.</span>
+            </label><label class="option" for="2-3-009-option-3">
+              <input id="2-3-009-option-3" type="radio" name="2-3-009" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>반드시 한 명의 조달기업만 존재할 때 적용하기 때문이다.</span>
+            </label><label class="option" for="2-3-009-option-4">
+              <input id="2-3-009-option-4" type="radio" name="2-3-009" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>경쟁적 또는 비경쟁적 조달과 관계없는 구매카드 사용 방식이기 때문이다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>견적요청은 참가 요건이 입찰문서 등으로 공시되지 않고 수요기관이 제한된 수의 조달기업에 견적을 요청할 수 있으므로 비경쟁적인 방법이다.</dd></div>
+          <div><dt>함정</dt><dd>3개 이상의 견적 중 상대적으로 유리한 업체를 선정하면 제한경쟁과 유사할 수 있지만, 이것이 견적요청의 기본 성격을 공개경쟁입찰로 바꾸는 것은 아니다.</dd></div>
+          <div><dt>근거</dt><dd>견적요청은 참가 요건이 입찰문서 등으로 공시되지 않고 수요기관이 제한된 수의 조달기업에 견적을 요청할 수 있으므로 비경쟁적인 방법이다. [PDF 페이지 53]</dd></div>
+          <div><dt>원문 PDF</dt><dd>53페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">58</span>견적요청 수단에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-010-option-1">
+              <input id="2-3-010-option-1" type="radio" name="2-3-010" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>접수 근거를 남기기 어려운 전화가 가장 일반적인 수단이다.</span>
+            </label><label class="option" for="2-3-010-option-2">
+              <input id="2-3-010-option-2" type="radio" name="2-3-010" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>서면, 이메일, 팩스, 택배로 요청할 수 있지만 전화는 활용되지 않는다.</span>
+            </label><label class="option" for="2-3-010-option-3">
+              <input id="2-3-010-option-3" type="radio" name="2-3-010" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>전자조달시스템이 있어도 전자입찰 기능은 사용할 수 없다.</span>
+            </label><label class="option" for="2-3-010-option-4">
+              <input id="2-3-010-option-4" type="radio" name="2-3-010" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>견적요청은 반드시 대면 방식으로만 진행한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>견적은 서면, 이메일, 팩스, 택배로 요청할 수 있으나 서면 자료로 접수 근거를 확인하기 어려운 전화는 활용되지 않는다. 전자조달시스템이 구축된 경우 전자입찰 기능으로 처리하는 것이 일반적이다.</dd></div>
+          <div><dt>함정</dt><dd>신속한 방식이라는 이유로 기록을 확인하기 어려운 전화도 허용된다고 판단하지 않아야 한다.</dd></div>
+          <div><dt>근거</dt><dd>견적은 서면, 이메일, 팩스, 택배로 요청할 수 있으나 서면 자료로 접수 근거를 확인하기 어려운 전화는 활용되지 않는다. 전자조달시스템이 구축된 경우 전자입찰 기능으로 처리하는 것이 일반적이다. [PDF 페이지 53]</dd></div>
+          <div><dt>원문 PDF</dt><dd>53페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">59</span>접수된 견적의 평가와 구매 주문서 체결에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-011-option-1">
+              <input id="2-3-011-option-1" type="radio" name="2-3-011" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>가격만 확인하고 행정 요건과 기술 요건은 평가하지 않는다.</span>
+            </label><label class="option" for="2-3-011-option-2">
+              <input id="2-3-011-option-2" type="radio" name="2-3-011" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>가장 높은 가격과 가장 늦은 완료일을 제시한 업체를 선택한다.</span>
+            </label><label class="option" for="2-3-011-option-3">
+              <input id="2-3-011-option-3" type="radio" name="2-3-011" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>행정 요건과 기술 요건의 준수 여부를 확인한 뒤, 이를 준수한 견적의 가격과 납기 또는 완료일을 비교한다.</span>
+            </label><label class="option" for="2-3-011-option-4">
+              <input id="2-3-011-option-4" type="radio" name="2-3-011" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>견적 제출 이후 경쟁자의 정보를 제공하여 가격을 다시 협상한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>접수된 견적은 행정 요건과 기술사양 또는 작업 범위의 준수 여부를 평가해야 한다. 요건을 준수한 견적의 가격을 비교하여 가장 낮은 가격 견적과 빠른 납기 또는 완료일을 제시한 업체와 구매 주문서를 체결한다.</dd></div>
+          <div><dt>함정</dt><dd>최저 가격만 곧바로 비교하는 것이 아니라 행정 요건과 기술 요건의 준수 여부를 먼저 확인해야 한다.</dd></div>
+          <div><dt>근거</dt><dd>접수된 견적은 행정 요건과 기술사양 또는 작업 범위의 준수 여부를 평가해야 한다. 요건을 준수한 견적의 가격을 비교하여 가장 낮은 가격 견적과 빠른 납기 또는 완료일을 제시한 업체와 구매 주문서를 체결한다. [PDF 페이지 53]</dd></div>
+          <div><dt>원문 PDF</dt><dd>53페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">60</span>견적요청 방법의 단점으로 가장 적절한 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-012-option-1">
+              <input id="2-3-012-option-1" type="radio" name="2-3-012" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>입찰공고가 필요하여 조달 기간이 크게 늘어난다.</span>
+            </label><label class="option" for="2-3-012-option-2">
+              <input id="2-3-012-option-2" type="radio" name="2-3-012" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>견적 건수가 무제한으로 늘어 선정 기간이 길어진다.</span>
+            </label><label class="option" for="2-3-012-option-3">
+              <input id="2-3-012-option-3" type="radio" name="2-3-012" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>수요기관이 관련 조달기업 정보를 보유해도 응답 가능성이 낮아진다.</span>
+            </label><label class="option" for="2-3-012-option-4">
+              <input id="2-3-012-option-4" type="radio" name="2-3-012" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>적용 요건을 맞추려고 수량이나 금액을 인위적으로 분할하여 오남용할 수 있다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>견적요청은 특정 조달기업으로부터 신속히 공급받기 위해 적용 가능한 수준으로 수량이나 금액 등을 분할하여 오남용할 개연성이 있다.</dd></div>
+          <div><dt>함정</dt><dd>입찰 서류·입찰공고가 필요 없어 기간을 단축하는 점과 접수 건수가 요청한 조달기업 수로 제한되는 점은 단점이 아니라 장점이다.</dd></div>
+          <div><dt>근거</dt><dd>견적요청은 특정 조달기업으로부터 신속히 공급받기 위해 적용 가능한 수준으로 수량이나 금액 등을 분할하여 오남용할 개연성이 있다. [PDF 페이지 53]</dd></div>
+          <div><dt>원문 PDF</dt><dd>53페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">61</span>단독공급원 조달과 단일공급 조달의 구분으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-013-option-1">
+              <input id="2-3-013-option-1" type="radio" name="2-3-013" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>단독공급원 조달은 공급요건을 충족하는 업체가 하나뿐인 경우이고, 단일공급 조달은 공급 가능한 업체가 다수이지만 하나를 직접 선택하는 경우이다.</span>
+            </label><label class="option" for="2-3-013-option-2">
+              <input id="2-3-013-option-2" type="radio" name="2-3-013" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>단독공급원 조달은 공급업체가 다수일 때만 적용하고, 단일공급 조달은 업체가 하나뿐일 때만 적용한다.</span>
+            </label><label class="option" for="2-3-013-option-3">
+              <input id="2-3-013-option-3" type="radio" name="2-3-013" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>두 방법 모두 공개경쟁입찰을 통해 하나의 기업을 선정한다.</span>
+            </label><label class="option" for="2-3-013-option-4">
+              <input id="2-3-013-option-4" type="radio" name="2-3-013" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>두 방법은 공급 가능한 조달기업 수와 관계없이 완전히 같은 개념이다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>단독공급원 조달은 조달대상물의 공급요건을 충족하는 업체가 하나만 존재할 때 적용한다. 단일공급 조달은 공급 가능한 조달기업이 다수인데도 전략적인 관계 구축 등의 목적으로 하나의 기업을 직접 선택하는 방법이다.</dd></div>
+          <div><dt>함정</dt><dd>‘단독’은 공급 가능한 업체가 하나뿐인 상태이고, ‘단일’은 여러 업체 중 하나를 직접 선택하는 경우라는 차이를 반대로 기억하지 않아야 한다.</dd></div>
+          <div><dt>근거</dt><dd>단독공급원 조달은 조달대상물의 공급요건을 충족하는 업체가 하나만 존재할 때 적용한다. 단일공급 조달은 공급 가능한 조달기업이 다수인데도 전략적인 관계 구축 등의 목적으로 하나의 기업을 직접 선택하는 방법이다. [PDF 페이지 54]</dd></div>
+          <div><dt>원문 PDF</dt><dd>54페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">62</span>단독공급원 조달과 단일공급 조달의 활용 원칙으로 가장 적절한 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-014-option-1">
+              <input id="2-3-014-option-1" type="radio" name="2-3-014" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>경쟁이 강화되므로 모든 조달에 우선 적용한다.</span>
+            </label><label class="option" for="2-3-014-option-2">
+              <input id="2-3-014-option-2" type="radio" name="2-3-014" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>경쟁 배제로 투명성, 공정성, 효율성 등이 저하될 수 있어 예외적인 상황에서만 사용하는 것이 적합하다.</span>
+            </label><label class="option" for="2-3-014-option-3">
+              <input id="2-3-014-option-3" type="radio" name="2-3-014" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>공급 가능한 업체 수와 상관없이 상위 관리자의 승인 없이 사용한다.</span>
+            </label><label class="option" for="2-3-014-option-4">
+              <input id="2-3-014-option-4" type="radio" name="2-3-014" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>공개경쟁입찰보다 절차가 길기 때문에 대규모 사업에만 의무 적용한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>단독공급원 조달과 단일공급 조달은 공개경쟁입찰과 달리 경쟁이 배제되어 투명성, 공정성, 효율성 등이 저하될 수 있으므로 예외적인 상황에서만 사용하는 것이 적합하다.</dd></div>
+          <div><dt>함정</dt><dd>직접 선택이 가능하다는 점을 일반적 우선 적용 원칙으로 확대해서는 안 된다.</dd></div>
+          <div><dt>근거</dt><dd>단독공급원 조달과 단일공급 조달은 공개경쟁입찰과 달리 경쟁이 배제되어 투명성, 공정성, 효율성 등이 저하될 수 있으므로 예외적인 상황에서만 사용하는 것이 적합하다. [PDF 페이지 54]</dd></div>
+          <div><dt>원문 PDF</dt><dd>54페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">63</span>직접조달 방법을 적용하기에 적합한 경우는?</legend>
+        <div class="options">
+          <label class="option" for="2-3-015-option-1">
+              <input id="2-3-015-option-1" type="radio" name="2-3-015" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>공급 가능한 조달기업이 많고 공개경쟁입찰이 객관적으로 더 유리한 경우</span>
+            </label><label class="option" for="2-3-015-option-2">
+              <input id="2-3-015-option-2" type="radio" name="2-3-015" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>법적 정당성이 확보되지 않았지만 담당자가 개인적으로 필요하다고 판단한 경우</span>
+            </label><label class="option" for="2-3-015-option-3">
+              <input id="2-3-015-option-3" type="radio" name="2-3-015" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>특허·호환성·지식재산권 등 배타적 권리로 다른 조달기업이나 개인에게서 조달할 수 없는 경우</span>
+            </label><label class="option" for="2-3-015-option-4">
+              <input id="2-3-015-option-4" type="radio" name="2-3-015" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>요구사항을 충족할 수 있는 업체를 조사하지 않은 경우</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>특허, 호환성 또는 지식재산권 등 배타적 권리에 따라 다른 조달기업이나 개인으로부터 조달할 수 없는 상황은 직접조달 방법의 적용이 적합한 경우에 해당한다.</dd></div>
+          <div><dt>함정</dt><dd>담당자의 개인적 판단만으로는 부족하며 직접계약의 내용적·형식적·법적 정당성이 입증되어야 한다.</dd></div>
+          <div><dt>근거</dt><dd>특허, 호환성 또는 지식재산권 등 배타적 권리에 따라 다른 조달기업이나 개인으로부터 조달할 수 없는 상황은 직접조달 방법의 적용이 적합한 경우에 해당한다. [PDF 페이지 54]</dd></div>
+          <div><dt>원문 PDF</dt><dd>54페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">64</span>직접조달의 필요성을 입증하기 위해 작성하는 문서에 포함될 사항이 아닌 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-016-option-1">
+              <input id="2-3-016-option-1" type="radio" name="2-3-016" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>요청기관과 요구사항 설명</span>
+            </label><label class="option" for="2-3-016-option-2">
+              <input id="2-3-016-option-2" type="radio" name="2-3-016" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>추가 공급 가능 조달기업을 파악하기 위해 취한 조치</span>
+            </label><label class="option" for="2-3-016-option-3">
+              <input id="2-3-016-option-3" type="radio" name="2-3-016" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>요구사항 충족에 소요되는 총비용</span>
+            </label><label class="option" for="2-3-016-option-4">
+              <input id="2-3-016-option-4" type="radio" name="2-3-016" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>담당자가 선호하는 조달기업의 광고 문구</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>문서에는 요청기관, 요구사항 설명, 식별된 조달기업만 요구사항을 충족할 수 있는 이유, 추가 공급 가능 조달기업을 파악하기 위해 취한 조치, 총비용, 단독·단일공급원 조달 필요성을 배제하기 위해 계획한 조치를 명확히 기재해야 한다.</dd></div>
+          <div><dt>함정</dt><dd>개인적 선호나 광고 문구가 아니라 직접조달의 객관적 정당성을 입증하는 사항을 기록해야 한다.</dd></div>
+          <div><dt>근거</dt><dd>문서에는 요청기관, 요구사항 설명, 식별된 조달기업만 요구사항을 충족할 수 있는 이유, 추가 공급 가능 조달기업을 파악하기 위해 취한 조치, 총비용, 단독·단일공급원 조달 필요성을 배제하기 위해 계획한 조치를 명확히 기재해야 한다. [PDF 페이지 54]</dd></div>
+          <div><dt>원문 PDF</dt><dd>54페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="1">
+      <fieldset>
+        <legend><span class="question-number">65</span>수의계약의 일반적인 절차를 순서대로 바르게 나열한 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-017-option-1">
+              <input id="2-3-017-option-1" type="radio" name="2-3-017" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>요건 조사·분석 및 정당성 보고·승인 → 제안서 또는 가격 견적 요청 → 협상 후 문제가 없으면 공급업체 선정</span>
+            </label><label class="option" for="2-3-017-option-2">
+              <input id="2-3-017-option-2" type="radio" name="2-3-017" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>공급업체 선정 → 공개입찰 공고 → 정당성 보고·승인</span>
+            </label><label class="option" for="2-3-017-option-3">
+              <input id="2-3-017-option-3" type="radio" name="2-3-017" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>가격 견적 요청 → 공급업체 선정 → 요건 조사 없이 사후 승인</span>
+            </label><label class="option" for="2-3-017-option-4">
+              <input id="2-3-017-option-4" type="radio" name="2-3-017" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>협상 → 모든 조달기업의 공개경쟁입찰 → 단일 공급기업에 견적 요청</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>1번</dd></div>
+          <div><dt>해설</dt><dd>일반적인 절차는 특정 단일 공급기업으로부터 조달해야 하는 요건을 조사·분석하여 정당성을 보고하고 승인받은 뒤, 해당 기업에 제안서 또는 가격 견적을 요청하고, 협상을 거쳐 문제가 없으면 공급업체로 선정하는 순서이다.</dd></div>
+          <div><dt>함정</dt><dd>공급업체를 먼저 선정한 뒤 정당성을 사후에 승인받는 순서가 아니다.</dd></div>
+          <div><dt>근거</dt><dd>일반적인 절차는 특정 단일 공급기업으로부터 조달해야 하는 요건을 조사·분석하여 정당성을 보고하고 승인받은 뒤, 해당 기업에 제안서 또는 가격 견적을 요청하고, 협상을 거쳐 문제가 없으면 공급업체로 선정하는 순서이다. [PDF 페이지 54~55]</dd></div>
+          <div><dt>원문 PDF</dt><dd>54, 55페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="2">
+      <fieldset>
+        <legend><span class="question-number">66</span>소액구매의 성격에 대한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-018-option-1">
+              <input id="2-3-018-option-1" type="radio" name="2-3-018" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>대규모 조달사업에만 적용하는 장기간의 경쟁적 입찰 방식이다.</span>
+            </label><label class="option" for="2-3-018-option-2">
+              <input id="2-3-018-option-2" type="radio" name="2-3-018" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>사전 설정 금액 이하의 소규모 조달대상물에 필요한 프로세스와 서류를 최소화하는 간소화된 방법이다.</span>
+            </label><label class="option" for="2-3-018-option-3">
+              <input id="2-3-018-option-3" type="radio" name="2-3-018" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>공급 가능한 조달기업이 하나뿐일 때만 적용하는 단독공급원 조달이다.</span>
+            </label><label class="option" for="2-3-018-option-4">
+              <input id="2-3-018-option-4" type="radio" name="2-3-018" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>경쟁적 조달과 비경쟁적 조달을 결합한 별도의 계약 방식이다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>2번</dd></div>
+          <div><dt>해설</dt><dd>소액구매는 사전에 설정된 금액 이하의 소규모 조달대상물 공급 과정에서 필요한 프로세스와 서류를 최소화하는 간소화된 방법이며, 경쟁적 또는 비경쟁적 조달을 위한 계약 방식이라기보다 민간의 단순 구매와 유사하다.</dd></div>
+          <div><dt>함정</dt><dd>소액구매를 경쟁적 또는 비경쟁적 조달의 별도 계약 방식으로 분류하지 않아야 한다.</dd></div>
+          <div><dt>근거</dt><dd>소액구매는 사전에 설정된 금액 이하의 소규모 조달대상물 공급 과정에서 필요한 프로세스와 서류를 최소화하는 간소화된 방법이며, 경쟁적 또는 비경쟁적 조달을 위한 계약 방식이라기보다 민간의 단순 구매와 유사하다. [PDF 페이지 55]</dd></div>
+          <div><dt>원문 PDF</dt><dd>55페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="3">
+      <fieldset>
+        <legend><span class="question-number">67</span>소액구매임곗값에 관한 설명으로 옳은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-019-option-1">
+              <input id="2-3-019-option-1" type="radio" name="2-3-019" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>유엔(UN)은 사전 승인 여부와 관계없이 최대 3만 5,000달러까지 허용한다.</span>
+            </label><label class="option" for="2-3-019-option-2">
+              <input id="2-3-019-option-2" type="radio" name="2-3-019" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>미국은 국내 계약 5,000달러, 국외 계약 1만 달러를 적용한다.</span>
+            </label><label class="option" for="2-3-019-option-3">
+              <input id="2-3-019-option-3" type="radio" name="2-3-019" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>유엔(UN)은 5,000달러를 한도로 하되 사전 승인 시 최대 1만 달러까지 가능하고, 미국은 국내 계약 1만 달러, 국외 계약 3만 5,000달러까지 운영한다.</span>
+            </label><label class="option" for="2-3-019-option-4">
+              <input id="2-3-019-option-4" type="radio" name="2-3-019" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>우리나라의 모든 조달기관은 소액 기준을 예외 없이 정확히 500만 원으로 고정한다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>3번</dd></div>
+          <div><dt>해설</dt><dd>유엔(UN)은 소액구매 한도를 5,000달러로 설정하고 사전 승인 시 최대 1만 달러까지 허용한다. 미국은 국내 계약 1만 달러, 국외 계약 3만 5,000달러까지 소액구매임곗값으로 운영한다.</dd></div>
+          <div><dt>함정</dt><dd>유엔(UN)의 한도와 사전 승인 한도, 미국의 국내·국외 기준을 서로 바꾸지 않아야 하며, 우리나라의 구체적인 소액 범위는 조달기관별로 다르다.</dd></div>
+          <div><dt>근거</dt><dd>유엔(UN)은 소액구매 한도를 5,000달러로 설정하고 사전 승인 시 최대 1만 달러까지 허용한다. 미국은 국내 계약 1만 달러, 국외 계약 3만 5,000달러까지 소액구매임곗값으로 운영한다. [PDF 페이지 55]</dd></div>
+          <div><dt>원문 PDF</dt><dd>55페이지</dd></div>
+        </dl>
+      </details>
+    </article><article class="question-card" data-question data-answer="4">
+      <fieldset>
+        <legend><span class="question-number">68</span>소액구매의 장점으로 적절하지 않은 것은?</legend>
+        <div class="options">
+          <label class="option" for="2-3-020-option-1">
+              <input id="2-3-020-option-1" type="radio" name="2-3-020" value="1">
+              <span class="option-number" aria-hidden="true">1</span>
+              <span>경쟁적 조달 절차에서 발생하는 시간·비용·인력을 줄여 거래비용을 절감한다.</span>
+            </label><label class="option" for="2-3-020-option-2">
+              <input id="2-3-020-option-2" type="radio" name="2-3-020" value="2">
+              <span class="option-number" aria-hidden="true">2</span>
+              <span>대량으로 발생하는 유사한 소규모 구매 수요를 효과적으로 처리한다.</span>
+            </label><label class="option" for="2-3-020-option-3">
+              <input id="2-3-020-option-3" type="radio" name="2-3-020" value="3">
+              <span class="option-number" aria-hidden="true">3</span>
+              <span>소규모 구매와 관련된 관리 부담을 크게 줄인다.</span>
+            </label><label class="option" for="2-3-020-option-4">
+              <input id="2-3-020-option-4" type="radio" name="2-3-020" value="4">
+              <span class="option-number" aria-hidden="true">4</span>
+              <span>장기간의 경쟁적 입찰 절차를 추가하여 거래비용과 관리 부담을 늘린다.</span>
+            </label>
+        </div>
+      </fieldset>
+      <p class="feedback" data-feedback role="status" hidden></p>
+      <details class="explanation" data-explanation hidden>
+        <summary>정답과 해설</summary>
+        <dl>
+          <div><dt>정답</dt><dd>4번</dd></div>
+          <div><dt>해설</dt><dd>소액구매는 시간·비용·인력 등을 줄여 거래비용을 절감하고, 대량으로 발생하는 유사한 소규모 구매 수요를 효과적으로 처리하며, 관련 관리 부담을 크게 감소시킬 수 있다.</dd></div>
+          <div><dt>함정</dt><dd>장기간의 경쟁적 입찰 절차에 따른 시간과 비용을 줄이는 것이 소액구매의 목적이므로 이를 반대로 설명한 선택지를 주의해야 한다.</dd></div>
+          <div><dt>근거</dt><dd>소액구매는 시간·비용·인력 등을 줄여 거래비용을 절감하고, 대량으로 발생하는 유사한 소규모 구매 수요를 효과적으로 처리하며, 관련 관리 부담을 크게 감소시킬 수 있다. [PDF 페이지 55]</dd></div>
+          <div><dt>원문 PDF</dt><dd>55페이지</dd></div>
+        </dl>
+      </details>
+    </article>
+      <div class="actions">
+        <button class="button button-primary" id="submit-answers" type="submit">채점하기</button>
+        <button class="button button-secondary" id="reset-exam" type="reset">다시 풀기</button>
+      </div>
+    </form>
+    <p class="footer">모든 문항은 G3 품질 게이트를 통과했으며 원문 PDF 페이지 근거를 포함합니다.</p>
+  </main>
+  <script>
+    (() => {
+      const form = document.getElementById('exam-form');
+      const cards = [...document.querySelectorAll('[data-question]')];
+      const answeredCount = document.getElementById('answered-count');
+      const score = document.getElementById('score');
+      const storageKey = "mark-exam:공공조달관리사-1권-2장";
+
+      const updateProgress = () => {
+        const answered = cards.filter(card => card.querySelector('input:checked')).length;
+        answeredCount.textContent = String(answered);
+      };
+
+      const saveProgress = () => {
+        const answers = {};
+        cards.forEach(card => {
+          const selected = card.querySelector('input:checked');
+          if (selected) answers[selected.name] = selected.value;
+        });
+        try { localStorage.setItem(storageKey, JSON.stringify(answers)); } catch (error) { /* 저장 불가 환경 */ }
+      };
+
+      const restoreProgress = () => {
+        try {
+          const answers = JSON.parse(localStorage.getItem(storageKey) || '{}');
+          if (!answers || Array.isArray(answers) || typeof answers !== 'object') return;
+          cards.forEach(card => {
+            card.querySelectorAll('input[type="radio"]').forEach(input => {
+              input.checked = answers[input.name] === input.value;
+            });
+          });
+          updateProgress();
+        } catch (error) { /* 손상되거나 사용할 수 없는 저장소는 무시 */ }
+      };
+
+      form.addEventListener('change', () => { updateProgress(); saveProgress(); });
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        let correct = 0;
+        cards.forEach(card => {
+          const selected = card.querySelector('input:checked');
+          const isCorrect = selected && selected.value === card.dataset.answer;
+          card.classList.toggle('correct', Boolean(isCorrect));
+          card.classList.toggle('incorrect', !isCorrect);
+          const feedback = card.querySelector('[data-feedback]');
+          feedback.hidden = false;
+          feedback.textContent = !selected ? '답을 선택하지 않았습니다.' : isCorrect ? '정답입니다.' : '오답입니다.';
+          card.querySelector('[data-explanation]').hidden = false;
+          if (isCorrect) correct += 1;
+        });
+        score.textContent = `${correct} / ${cards.length}점`;
+        score.focus?.();
+      });
+
+      form.addEventListener('reset', () => {
+        window.setTimeout(() => {
+          cards.forEach(card => {
+            card.classList.remove('correct', 'incorrect');
+            card.querySelector('[data-feedback]').hidden = true;
+            const explanation = card.querySelector('[data-explanation]');
+            explanation.hidden = true;
+            explanation.open = false;
+          });
+          answeredCount.textContent = '0';
+          score.textContent = '채점 전';
+          try { localStorage.removeItem(storageKey); } catch (error) { /* 저장 불가 환경 */ }
+          document.querySelector('h1').focus?.();
+        }, 0);
+      });
+      restoreProgress();
+    })();
+  </script>
+</body>
+</html>
