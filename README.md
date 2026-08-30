@@ -4,6 +4,7 @@
 
 ## 공개 결과물
 
+- [자동화 대시보드](dashboard.html) — 파이프라인 상태·품질 게이트·공개 결과물을 한 화면에서 확인
 - [1권 1장 공공조달 맞춤 문제집](deliverables/volume-1-chapter-1/README.md) — 대화형 HTML·Markdown·DOCX·PDF
 - [1권 2장 공공조달 68문제](deliverables/volume-1-chapter-2/1권_2장_공공조달_68문제.html) — 외부 의존성이 없는 독립형 대화형 HTML
 
@@ -23,7 +24,7 @@
 - Python 3.11 이상
 - Hermes Agent CLI와 인증된 모델
 - G4 사용 시 LibreOffice(`soffice`가 PATH에 있어야 함)
-- 테스트에만 pytest 필요: `uv run --with pytest ...`
+- 테스트에는 pytest와 대시보드 JavaScript 동작 검증용 Node.js 필요: `uv run --with pytest ...`
 
 Windows에서도 Hermes 터미널이 Git Bash이므로 아래 명령을 그대로 사용할 수 있다. 이 PC에서는 `python3` 대신 `python`을 사용한다.
 

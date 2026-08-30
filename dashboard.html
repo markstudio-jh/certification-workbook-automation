@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MARK Studio 자격증 교재 자동화 공개 저장소 대시보드">
+  <title>MARK Studio | 교재 자동화 대시보드</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #14101d;
+      --bg-deep: #0d0a13;
+      --panel: #1c1629;
+      --panel-strong: #251d35;
+      --panel-soft: #171220;
+      --line: #3a2f4d;
+      --line-soft: #2a2238;
+      --ink: #f7f4fb;
+      --muted: #aaa1b8;
+      --accent: #c7f36b;
+      --accent-ink: #172006;
+      --purple: #9e8ad1;
+      --amber: #f6c66d;
+      --red: #ff8f91;
+      --success: #7de2ad;
+      --shadow: 0 18px 50px rgba(4, 2, 8, .32);
+      --radius: 14px;
+      --font: "Pretendard Variable", Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif;
+      --mono: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+    }
+
+    html[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f4f1f7;
+      --bg-deep: #ebe6f0;
+      --panel: #ffffff;
+      --panel-strong: #f8f5fb;
+      --panel-soft: #f0ebf4;
+      --line: #d5cada;
+      --line-soft: #e5dfe8;
+      --ink: #211a2b;
+      --muted: #70667a;
+      --accent: #51730e;
+      --accent-ink: #f8ffe8;
+      --purple: #665193;
+      --amber: #956100;
+      --red: #b13f44;
+      --success: #23774b;
+      --shadow: 0 18px 42px rgba(54, 40, 68, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        linear-gradient(var(--line-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line-soft) 1px, transparent 1px),
+        var(--bg);
+      background-size: 48px 48px;
+      color: var(--ink);
+      font-family: var(--font);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: 12px;
+      left: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: var(--accent-ink);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px 18px;
+      border-right: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg-deep) 94%, transparent);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 4px 8px 24px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .brand-mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .brand strong { display: block; font-size: 15px; letter-spacing: -.02em; }
+    .brand small { display: block; color: var(--muted); font-size: 11px; }
+
+    .nav-label,
+    .eyebrow,
+    .section-kicker,
+    .metric-label {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .nav-label { display: block; padding: 22px 10px 8px; }
+    .nav-list { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+    .nav-list a {
+      display: flex;
+      min-height: 44px;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 9px;
+      color: var(--muted);
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .nav-list a:hover,
+    .nav-list a[aria-current="location"] { background: var(--panel-strong); color: var(--ink); }
+    .nav-index { width: 24px; color: var(--purple); font-family: var(--mono); font-size: 11px; }
+
+    .sidebar-foot { position: absolute; right: 18px; bottom: 20px; left: 18px; }
+    .repo-link,
+    .theme-toggle {
+      display: flex;
+      width: 100%;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 12px;
+      text-decoration: none;
+    }
+    .theme-toggle { margin-top: 8px; }
+    .repo-link:hover, .theme-toggle:hover { border-color: var(--purple); background: var(--panel-strong); }
+    .compact-label { display: none; }
+
+    main { min-width: 0; padding: 32px clamp(20px, 4vw, 56px) 72px; }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+    .crumb { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+    .live-state { display: flex; align-items: center; gap: 8px; color: var(--success); font-size: 12px; font-weight: 600; }
+    .live-state::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 16%, transparent);
+      content: "";
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, .75fr);
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 34px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow { color: var(--accent); }
+    h1 {
+      max-width: 760px;
+      margin: 12px 0 14px;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.04;
+      letter-spacing: -.055em;
+      text-wrap: balance;
+    }
+    .intro p { max-width: 690px; margin: 0; color: var(--muted); font-size: 16px; text-wrap: pretty; }
+    .release-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .release-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .release-row + .release-row { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line-soft); }
+    .release-row span { color: var(--muted); font-size: 12px; }
+    .release-row strong { font-family: var(--mono); font-size: 12px; }
+    .public-badge { padding: 4px 8px; border-radius: 999px; background: color-mix(in srgb, var(--success) 16%, transparent); color: var(--success); }
+
+    section { scroll-margin-top: 24px; padding-top: 54px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+    .section-head h2 { margin: 4px 0 0; font-size: clamp(24px, 3vw, 34px); letter-spacing: -.035em; }
+    .section-head p { max-width: 500px; margin: 0; color: var(--muted); font-size: 13px; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--panel);
+    }
+    .metric { min-height: 150px; padding: 22px; }
+    .metric + .metric { border-left: 1px solid var(--line); }
+    .metric-value { display: block; margin: 20px 0 4px; font-family: var(--mono); font-size: clamp(28px, 4vw, 43px); font-weight: 500; letter-spacing: -.06em; }
+    .metric-note { color: var(--muted); font-size: 12px; }
+    .metric-value.accent { color: var(--accent); }
+
+    .pipeline-board { display: grid; grid-template-columns: 1.3fr .7fr; gap: 18px; }
+    .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); box-shadow: var(--shadow); }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 19px; border-bottom: 1px solid var(--line-soft); }
+    .panel-head h3 { margin: 0; font-size: 14px; }
+    .panel-head code { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+
+    .flow { padding: 26px 22px 30px; }
+    .flow-track { display: grid; grid-template-columns: repeat(5, 1fr); position: relative; gap: 8px; }
+    .flow-track::before { position: absolute; top: 15px; right: 10%; left: 10%; height: 1px; background: var(--line); content: ""; }
+    .flow-step { position: relative; z-index: 1; text-align: center; }
+    .flow-dot { display: grid; width: 31px; height: 31px; margin: 0 auto 10px; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--panel); color: var(--muted); font-family: var(--mono); font-size: 10px; }
+    .flow-step.active .flow-dot { border-color: var(--amber); background: color-mix(in srgb, var(--amber) 13%, var(--panel)); color: var(--amber); }
+    .flow-step span { color: var(--muted); font-size: 11px; }
+    .flow-step.active span { color: var(--ink); font-weight: 600; }
+    .section-record { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 26px; padding: 16px; border: 1px solid var(--line-soft); border-radius: 10px; background: var(--panel-soft); }
+    .section-record strong { display: block; font-size: 14px; }
+    .section-record small { color: var(--muted); font-size: 11px; }
+    .status-pill { padding: 5px 9px; border: 1px solid color-mix(in srgb, var(--amber) 50%, var(--line)); border-radius: 999px; color: var(--amber); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+
+    .config-list { margin: 0; padding: 8px 18px 16px; list-style: none; }
+    .config-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 49px; border-bottom: 1px solid var(--line-soft); font-size: 12px; }
+    .config-list li:last-child { border-bottom: 0; }
+    .config-list span { color: var(--muted); }
+    .config-list code { font-family: var(--mono); font-size: 11px; text-align: right; }
+    .ok { color: var(--success); }
+
+    .quality-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .gate { padding: 22px; }
+    .gate-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .gate h3 { margin: 0; font-size: 20px; }
+    .pass { color: var(--success); font-family: var(--mono); font-size: 12px; font-weight: 600; }
+    .gate p { margin: 8px 0 22px; color: var(--muted); font-size: 13px; }
+    .bar-row { display: grid; grid-template-columns: 120px 1fr 54px; gap: 12px; align-items: center; margin-top: 12px; font-size: 11px; }
+    .bar-row span:first-child { color: var(--muted); }
+    .bar { height: 6px; overflow: hidden; border-radius: 999px; background: var(--panel-soft); }
+    .bar > i { display: block; width: var(--value); height: 100%; background: var(--accent); }
+    .bar-row strong { font-family: var(--mono); font-weight: 500; text-align: right; }
+    .test-strip { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 18px; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel-soft); }
+    .test-strip strong { font-family: var(--mono); color: var(--success); }
+    .test-strip span { color: var(--muted); font-size: 12px; }
+
+    .deliverable-list { display: grid; gap: 14px; }
+    .deliverable {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      text-decoration: none;
+      transition: border-color .18s ease, transform .18s ease, background .18s ease;
+    }
+    .deliverable:hover { border-color: var(--purple); background: var(--panel-strong); transform: translateY(-2px); }
+    .deliverable-code { color: var(--purple); font-family: var(--mono); font-size: 12px; }
+    .deliverable h3 { margin: 0 0 4px; font-size: 17px; }
+    .deliverable p { margin: 0; color: var(--muted); font-size: 12px; }
+    .file-tags { display: flex; flex-wrap: wrap; gap: 5px; justify-content: end; }
+    .file-tags span { padding: 4px 7px; border: 1px solid var(--line); border-radius: 5px; color: var(--muted); font-family: var(--mono); font-size: 9px; }
+
+    .architecture { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--panel); }
+    .arch-step { position: relative; min-height: 184px; padding: 22px; }
+    .arch-step + .arch-step { border-left: 1px solid var(--line); }
+    .arch-step:not(:last-child)::after { position: absolute; z-index: 2; top: 28px; right: -8px; color: var(--accent); font-family: var(--mono); content: "→"; }
+    .arch-num { color: var(--purple); font-family: var(--mono); font-size: 11px; }
+    .arch-step h3 { margin: 26px 0 8px; font-size: 16px; }
+    .arch-step p { margin: 0; color: var(--muted); font-size: 12px; }
+
+    .command-box { margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-deep); }
+    .command-head { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; border-bottom: 1px solid var(--line); color: var(--muted); font-family: var(--mono); font-size: 10px; }
+    .copy-button { min-height: 36px; padding: 0 10px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel); color: var(--ink); cursor: pointer; font-size: 10px; }
+    pre { margin: 0; padding: 18px; overflow-x: auto; color: var(--accent); font-family: var(--mono); font-size: 12px; line-height: 1.7; }
+
+    footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    footer code { font-family: var(--mono); }
+
+    @media (max-width: 1040px) {
+      .shell { grid-template-columns: 82px minmax(0, 1fr); }
+      .sidebar { padding-inline: 12px; }
+      .brand { justify-content: center; }
+      .brand-text, .nav-label, .nav-list a span:last-child, .wide-label { display: none; }
+      .nav-list a { justify-content: center; padding-inline: 0; }
+      .nav-index { width: auto; }
+      .sidebar-foot { right: 12px; left: 12px; }
+      .compact-label { display: inline; }
+      .intro { grid-template-columns: 1fr; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .metric:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+      .metric:nth-child(4) { border-top: 1px solid var(--line); }
+      .pipeline-board { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .shell { display: block; }
+      .sidebar { position: static; width: 100%; height: auto; padding: 10px 14px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .brand { justify-content: flex-start; padding: 3px 2px 10px; border-bottom: 0; }
+      .brand-text { display: block; }
+      .nav-list { grid-template-columns: repeat(5, 1fr); }
+      .nav-list a { min-height: 40px; }
+      .sidebar-foot {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .theme-toggle { margin-top: 0; }
+      .wide-label { display: inline; }
+      .compact-label { display: none; }
+      main { padding-top: 20px; }
+      .topbar { margin-bottom: 26px; }
+      .metrics, .quality-grid, .architecture { grid-template-columns: 1fr; }
+      .metric + .metric, .arch-step + .arch-step { border-left: 0; border-top: 1px solid var(--line); }
+      .arch-step:not(:last-child)::after { top: auto; right: 22px; bottom: -11px; transform: rotate(90deg); }
+      .deliverable { grid-template-columns: 1fr; }
+      .file-tags { justify-content: start; }
+      .section-head, footer { align-items: flex-start; flex-direction: column; }
+      .bar-row { grid-template-columns: 102px 1fr 48px; }
+    }
+
+    @media (max-width: 470px) {
+      .metrics { grid-template-columns: 1fr; }
+      .metric + .metric { border-left: 0; border-top: 1px solid var(--line); }
+      .flow-track { grid-template-columns: 1fr; }
+      .flow-track::before { top: 7%; bottom: 7%; left: 15px; width: 1px; height: auto; }
+      .flow-step { display: flex; align-items: center; gap: 12px; text-align: left; }
+      .flow-dot { flex: 0 0 31px; margin: 0; }
+      .section-record, .test-strip { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">M/</span>
+        <span class="brand-text"><strong>MARK Studio</strong><small>Workbook Automation</small></span>
+      </div>
+      <span class="nav-label">Monitor</span>
+      <nav aria-label="주요 탐색">
+        <ol class="nav-list">
+          <li><a href="#overview" aria-label="개요"><span class="nav-index">01</span><span>개요</span></a></li>
+          <li><a href="#pipeline" aria-label="파이프라인"><span class="nav-index">02</span><span>파이프라인</span></a></li>
+          <li><a href="#quality" aria-label="품질 검증"><span class="nav-index">03</span><span>품질 검증</span></a></li>
+          <li><a href="#deliverables" aria-label="공개 결과물"><span class="nav-index">04</span><span>공개 결과물</span></a></li>
+          <li><a href="#architecture" aria-label="자동화 구조"><span class="nav-index">05</span><span>구조</span></a></li>
+        </ol>
+      </nav>
+      <div class="sidebar-foot">
+        <a class="repo-link" href="https://github.com/markstudio-jh/certification-workbook-automation" aria-label="GitHub 저장소 열기"><span class="wide-label">GitHub 저장소 ↗</span><span class="compact-label" aria-hidden="true">GH ↗</span></a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="색상 테마 전환"><span class="wide-label">테마 전환</span><span class="compact-label" aria-hidden="true">◐</span></button>
+      </div>
+    </aside>
+
+    <main id="main">
+      <div class="topbar">
+        <span class="crumb">markstudio-jh / certification-workbook-automation</span>
+        <span class="live-state">PUBLIC RELEASE</span>
+      </div>
+
+      <header class="intro" id="overview">
+        <div>
+          <span class="eyebrow">SOURCE-GROUNDED AUTOMATION</span>
+          <h1>교재 제작의 상태와 품질을 한 화면에.</h1>
+          <p>절 단위 원문 입력부터 집필, 문제 생성, 독립 검수, 장 조립까지의 공개 구현 범위를 저장소 데이터에 근거해 보여주는 정적 대시보드입니다.</p>
+        </div>
+        <aside class="release-card" aria-label="공개 릴리스 정보">
+          <div class="release-row"><span>Visibility</span><strong class="public-badge">PUBLIC</strong></div>
+          <div class="release-row"><span>Branch</span><strong>main</strong></div>
+          <div class="release-row"><span>Runtime</span><strong>Python ≥ 3.11</strong></div>
+          <div class="release-row"><span>License</span><strong>MIT · code/docs</strong></div>
+        </aside>
+      </header>
+
+      <section aria-labelledby="overview-title">
+        <div class="section-head">
+          <div><span class="section-kicker">REPOSITORY SNAPSHOT</span><h2 id="overview-title">공개 현황</h2></div>
+          <p>숫자는 공개 저장소의 <code>state.json</code>, 테스트 실행, 결과물 README에서 가져왔습니다.</p>
+        </div>
+        <div class="metrics">
+          <article class="metric"><span class="metric-label">Public bundles</span><strong class="metric-value accent">2</strong><span class="metric-note">1권 1장 · 1권 2장</span></article>
+          <article class="metric"><span class="metric-label">Cited questions</span><strong class="metric-value">84 / 84</strong><span class="metric-note">1장 PDF 페이지 근거 완비</span></article>
+          <article class="metric"><span class="metric-label">Tests</span><strong class="metric-value">23 / 23</strong><span class="metric-note">2026-08-30 검증 스냅샷</span></article>
+          <article class="metric"><span class="metric-label">Tracked scripts</span><strong class="metric-value">3</strong><span class="metric-note">pipeline · gate · assemble</span></article>
+        </div>
+      </section>
+
+      <section id="pipeline" aria-labelledby="pipeline-title">
+        <div class="section-head">
+          <div><span class="section-kicker">CURRENT STATE</span><h2 id="pipeline-title">파이프라인</h2></div>
+          <p>공개 샘플은 재실행 가능한 초기 상태를 유지하며, 생성 산출물은 저장소 밖 <code>outputs/</code>에 기록됩니다.</p>
+        </div>
+        <div class="pipeline-board">
+          <article class="panel">
+            <div class="panel-head"><h3>절 처리 단계</h3><code>state.json → sections[0]</code></div>
+            <div class="flow">
+              <div class="flow-track" aria-label="파이프라인 처리 순서">
+                <div class="flow-step active"><span class="flow-dot">01</span><span>pending</span></div>
+                <div class="flow-step"><span class="flow-dot">02</span><span>writing</span></div>
+                <div class="flow-step"><span class="flow-dot">03</span><span>questions</span></div>
+                <div class="flow-step"><span class="flow-dot">04</span><span>review</span></div>
+                <div class="flow-step"><span class="flow-dot">05</span><span>published</span></div>
+              </div>
+              <div class="section-record" data-stage="pending">
+                <div><strong>3-1 · 공공조달관리사</strong><small>1권 / 3장 / inputs/sections/3-1.md</small></div>
+                <span class="status-pill">pending</span>
+              </div>
+            </div>
+          </article>
+          <aside class="panel">
+            <div class="panel-head"><h3>실행 구성</h3><code>locked inputs</code></div>
+            <ul class="config-list">
+              <li><span>glossary_locked</span><code class="ok">true</code></li>
+              <li><span>재작업 한도</span><code>2 attempts</code></li>
+              <li><span>절 병렬 처리</span><code>ThreadPoolExecutor</code></li>
+              <li><span>상태 저장</span><code>atomic JSON</code></li>
+              <li><span>예외 경로</span><code>human_review</code></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section id="quality" aria-labelledby="quality-title">
+        <div class="section-head">
+          <div><span class="section-kicker">QUALITY GATES</span><h2 id="quality-title">검증 기준</h2></div>
+          <p>기계 게이트와 컨텍스트가 격리된 검수자를 분리해 형식·근거·의미 오류를 단계적으로 차단합니다.</p>
+        </div>
+        <div class="quality-grid">
+          <article class="panel gate">
+            <div class="gate-top"><h3>G2 · 통합 교재</h3><span class="pass">PASS</span></div>
+            <p>6블록 구성, TODO 제거, 원어 병기, 출제 포인트와 혼동 주의를 검사합니다.</p>
+            <div class="bar-row"><span>구조 충족</span><span class="bar"><i style="--value:100%"></i></span><strong>PASS</strong></div>
+            <div class="bar-row"><span>TODO 잔여</span><span class="bar"><i style="--value:0%"></i></span><strong>0</strong></div>
+            <div class="bar-row"><span>수치 출처율</span><span class="bar"><i style="--value:60%"></i></span><strong>≥60%</strong></div>
+          </article>
+          <article class="panel gate">
+            <div class="gate-top"><h3>G3 · 통합 문제</h3><span class="pass">PASS</span></div>
+            <p>정답·근거·함정 필드와 정답 위치 편향을 검사하며, 1장 공개본은 모든 문항에 PDF 페이지를 유지합니다.</p>
+            <div class="bar-row"><span>정답 표기</span><span class="bar"><i style="--value:100%"></i></span><strong>84/84</strong></div>
+            <div class="bar-row"><span>PDF 근거</span><span class="bar"><i style="--value:100%"></i></span><strong>84/84</strong></div>
+            <div class="bar-row"><span>최대 위치 비율</span><span class="bar"><i style="--value:54.76%"></i></span><strong>27.38%</strong></div>
+          </article>
+        </div>
+        <div class="test-strip"><div><strong>✓ 23 / 23</strong><br><span>검증 스냅샷: 2026-08-30 전체 테스트 통과</span></div><span>G4는 LibreOffice 전제 실패 분기도 단위 테스트로 검증</span></div>
+      </section>
+
+      <section id="deliverables" aria-labelledby="deliverables-title">
+        <div class="section-head">
+          <div><span class="section-kicker">OPEN DELIVERABLES</span><h2 id="deliverables-title">공개 결과물</h2></div>
+          <p>원본 PDF·원문 추출본·로그·환경설정·API 키는 제외하고 검증된 2차 학습자료만 제공합니다.</p>
+        </div>
+        <div class="deliverable-list">
+          <a class="deliverable" href="deliverables/volume-1-chapter-1/README.md">
+            <span class="deliverable-code">VOL.1 / CH.1</span>
+            <span><h3>공공조달 맞춤 문제집</h3><p>4개 절 · 84문항 · PDF 페이지 근거 84/84 · 최종 PDF 47페이지</p></span>
+            <span class="file-tags"><span>HTML</span><span>MD</span><span>DOCX</span><span>PDF</span></span>
+          </a>
+          <a class="deliverable" href="deliverables/volume-1-chapter-2/1권_2장_공공조달_68문제.html">
+            <span class="deliverable-code">VOL.1 / CH.2</span>
+            <span><h3>공공조달 68문제</h3><p>외부 런타임 의존성 없이 브라우저에서 실행되는 대화형 문제 세트</p></span>
+            <span class="file-tags"><span>HTML</span><span>68 Q</span></span>
+          </a>
+          <a class="deliverable" href="https://github.com/markstudio-jh/certification-workbook-automation">
+            <span class="deliverable-code">SOURCE</span>
+            <span><h3>자동화 소스 저장소</h3><p>파이프라인, 품질 게이트, 장 조립 스크립트와 재실행 가능한 공개 샘플</p></span>
+            <span class="file-tags"><span>PUBLIC</span><span>MIT</span></span>
+          </a>
+        </div>
+      </section>
+
+      <section id="architecture" aria-labelledby="architecture-title">
+        <div class="section-head">
+          <div><span class="section-kicker">SYSTEM MAP</span><h2 id="architecture-title">자동화 구조</h2></div>
+          <p>사람의 반복 승인을 줄이되, 품질 기준을 넘지 못한 예외는 <code>human_review</code>로 분리합니다.</p>
+        </div>
+        <div class="architecture">
+          <article class="arch-step"><span class="arch-num">01 / INPUT</span><h3>절 단위 원문</h3><p>프로필 카드, 잠긴 용어집, 6블록 템플릿과 함께 범위를 고정합니다.</p></article>
+          <article class="arch-step"><span class="arch-num">02 / CREATE</span><h3>독립 집필 세션</h3><p>교재와 문제를 절별로 생성하고 G2·G3 실패 항목만 재작업합니다.</p></article>
+          <article class="arch-step"><span class="arch-num">03 / REVIEW</span><h3>3중 독립 검수</h3><p>이미지·표, 수치·근거, 문항 정답을 수정 권한 없는 검수자가 확인합니다.</p></article>
+          <article class="arch-step"><span class="arch-num">04 / PUBLISH</span><h3>장 조립과 배포</h3><p>모든 절이 published일 때만 장 단위 Markdown과 최종 형식을 조립합니다.</p></article>
+        </div>
+        <div class="command-box">
+          <div class="command-head"><span>QUICK START · GIT BASH / WINDOWS</span><button class="copy-button" id="copyCommand" type="button">명령 복사</button></div>
+          <pre id="commandText"><code>python scripts/pipeline.py --dry-run
+python scripts/pipeline.py --workers 3
+uv run --with pytest python -m pytest tests -q</code></pre>
+        </div>
+      </section>
+
+      <footer>
+        <span>MARK Studio · Certification Workbook Automation</span>
+        <span>Source: <code>README.md · state.json · deliverables/</code></span>
+      </footer>
+      <span id="statusMessage" class="sr-only" aria-live="polite"></span>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const toggle = document.getElementById('themeToggle');
+      const copyButton = document.getElementById('copyCommand');
+      const status = document.getElementById('statusMessage');
+
+      function safeStorageGet(key) {
+        try {
+          return window.localStorage.getItem(key);
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function safeStorageSet(key, value) {
+        try {
+          window.localStorage.setItem(key, value);
+          return true;
+        } catch (_) {
+          return false;
+        }
+      }
+
+      const storedTheme = safeStorageGet('mark-dashboard-theme');
+      if (storedTheme === 'light' || storedTheme === 'dark') root.dataset.theme = storedTheme;
+
+      toggle.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        const persisted = safeStorageSet('mark-dashboard-theme', next);
+        status.textContent = `${next === 'dark' ? '어두운' : '밝은'} 테마로 전환했습니다.${persisted ? '' : ' 이 브라우저에서는 설정이 저장되지 않습니다.'}`;
+      });
+
+      copyButton.addEventListener('click', async () => {
+        const command = document.getElementById('commandText').innerText.trim();
+        try {
+          await navigator.clipboard.writeText(command);
+          copyButton.textContent = '복사됨';
+          status.textContent = '빠른 시작 명령을 복사했습니다.';
+          window.setTimeout(() => { copyButton.textContent = '명령 복사'; }, 1600);
+        } catch (_) {
+          status.textContent = '브라우저가 클립보드 복사를 허용하지 않았습니다.';
+        }
+      });
+
+      const links = [...document.querySelectorAll('.nav-list a')];
+      const sections = links.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          links.forEach(link => link.removeAttribute('aria-current'));
+          const active = links.find(link => link.getAttribute('href') === `#${entry.target.id}`);
+          if (active) active.setAttribute('aria-current', 'location');
+        });
+      }, { rootMargin: '-25% 0px -65% 0px' });
+      sections.forEach(section => observer.observe(section));
+    })();
+  </script>
+</body>
+</html>
