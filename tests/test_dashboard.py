@@ -97,8 +97,14 @@ def test_dashboard_keeps_controls_accessible_and_storage_failures_isolated():
     assert re.search(r"\.sidebar-foot\s*\{[^}]*display:\s*grid", mobile_css, re.S)
     narrow_css = html.split("@media (max-width: 470px)", 1)[1]
     assert "grid-template-columns: repeat(2, minmax(0, 1fr))" in narrow_css
+    assert re.search(r"\.topbar\s*\{[^}]*flex-wrap:\s*wrap", html, re.S)
     assert re.search(r"\.crumb\s*\{[^}]*flex:\s*1 1 100%", narrow_css, re.S)
     assert re.search(r"\.crumb\s*\{[^}]*overflow-wrap:\s*anywhere", html, re.S)
+    assert re.search(
+        r"\.release-row strong\s*\{[^}]*max-width:\s*58%[^}]*overflow-wrap:\s*anywhere",
+        narrow_css,
+        re.S,
+    )
 
 
 def test_dashboard_runtime_survives_blocked_local_storage(tmp_path):
