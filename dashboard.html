@@ -181,13 +181,14 @@
     main { min-width: 0; padding: 32px clamp(20px, 4vw, 56px) 72px; }
     .topbar {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 18px;
       margin-bottom: 36px;
     }
-    .crumb { color: var(--muted); font-family: var(--mono); font-size: 12px; }
-    .live-state { display: flex; align-items: center; gap: 8px; color: var(--success); font-size: 12px; font-weight: 600; }
+    .crumb { min-width: 0; color: var(--muted); font-family: var(--mono); font-size: 12px; overflow-wrap: anywhere; }
+    .live-state { display: flex; flex: 0 0 auto; align-items: center; gap: 8px; color: var(--success); font-size: 12px; font-weight: 600; }
     .live-state::before {
       width: 8px;
       height: 8px;
@@ -369,6 +370,10 @@
     }
 
     @media (max-width: 470px) {
+      .sidebar-foot { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .topbar { align-items: flex-start; }
+      .crumb { flex: 1 1 100%; }
+      .release-row strong { max-width: 58%; text-align: right; overflow-wrap: anywhere; }
       .metrics { grid-template-columns: 1fr; }
       .metric + .metric { border-left: 0; border-top: 1px solid var(--line); }
       .flow-track { grid-template-columns: 1fr; }
@@ -436,7 +441,7 @@
         <div class="metrics">
           <article class="metric"><span class="metric-label">Public bundles</span><strong class="metric-value accent">2</strong><span class="metric-note">1권 1장 · 1권 2장</span></article>
           <article class="metric"><span class="metric-label">Cited questions</span><strong class="metric-value">84 / 84</strong><span class="metric-note">1장 PDF 페이지 근거 완비</span></article>
-          <article class="metric"><span class="metric-label">Tests</span><strong class="metric-value">23 / 23</strong><span class="metric-note">2026-08-30 검증 스냅샷</span></article>
+          <article class="metric"><span class="metric-label">Tests</span><strong class="metric-value">24 / 24</strong><span class="metric-note">2026-08-30 검증 스냅샷</span></article>
           <article class="metric"><span class="metric-label">Tracked scripts</span><strong class="metric-value">3</strong><span class="metric-note">pipeline · gate · assemble</span></article>
         </div>
       </section>
@@ -444,11 +449,11 @@
       <section id="pipeline" aria-labelledby="pipeline-title">
         <div class="section-head">
           <div><span class="section-kicker">CURRENT STATE</span><h2 id="pipeline-title">파이프라인</h2></div>
-          <p>공개 샘플은 재실행 가능한 초기 상태를 유지하며, 생성 산출물은 저장소 밖 <code>outputs/</code>에 기록됩니다.</p>
+          <p>공개용 가상 샘플 3-1~3-4는 재실행 가능한 초기 상태를 유지하며, 생성 산출물은 저장소 밖 <code>outputs/</code>에 기록됩니다.</p>
         </div>
         <div class="pipeline-board">
           <article class="panel">
-            <div class="panel-head"><h3>절 처리 단계</h3><code>state.json → sections[0]</code></div>
+            <div class="panel-head"><h3>절 처리 단계</h3><code>state.json → sections[0..3]</code></div>
             <div class="flow">
               <div class="flow-track" aria-label="파이프라인 처리 순서">
                 <div class="flow-step active"><span class="flow-dot">01</span><span>pending</span></div>
@@ -458,7 +463,19 @@
                 <div class="flow-step"><span class="flow-dot">05</span><span>published</span></div>
               </div>
               <div class="section-record" data-stage="pending">
-                <div><strong>3-1 · 공공조달관리사</strong><small>1권 / 3장 / inputs/sections/3-1.md</small></div>
+                <div><strong>3-1 · 공개용 가상 샘플</strong><small>1권 / 3장 / inputs/sections/3-1.md</small></div>
+                <span class="status-pill">pending</span>
+              </div>
+              <div class="section-record" data-stage="pending">
+                <div><strong>3-2 · 공개용 가상 샘플</strong><small>1권 / 3장 / inputs/sections/3-2.md</small></div>
+                <span class="status-pill">pending</span>
+              </div>
+              <div class="section-record" data-stage="pending">
+                <div><strong>3-3 · 공개용 가상 샘플</strong><small>1권 / 3장 / inputs/sections/3-3.md</small></div>
+                <span class="status-pill">pending</span>
+              </div>
+              <div class="section-record" data-stage="pending">
+                <div><strong>3-4 · 공개용 가상 샘플</strong><small>1권 / 3장 / inputs/sections/3-4.md</small></div>
                 <span class="status-pill">pending</span>
               </div>
             </div>
@@ -497,7 +514,7 @@
             <div class="bar-row"><span>최대 위치 비율</span><span class="bar"><i style="--value:54.76%"></i></span><strong>27.38%</strong></div>
           </article>
         </div>
-        <div class="test-strip"><div><strong>✓ 23 / 23</strong><br><span>검증 스냅샷: 2026-08-30 전체 테스트 통과</span></div><span>G4는 LibreOffice 전제 실패 분기도 단위 테스트로 검증</span></div>
+        <div class="test-strip"><div><strong>✓ 24 / 24</strong><br><span>검증 스냅샷: 2026-08-30 전체 테스트 통과</span></div><span>G4는 LibreOffice 전제 실패 분기도 단위 테스트로 검증</span></div>
       </section>
 
       <section id="deliverables" aria-labelledby="deliverables-title">
@@ -518,7 +535,7 @@
           </a>
           <a class="deliverable" href="https://github.com/markstudio-jh/certification-workbook-automation">
             <span class="deliverable-code">SOURCE</span>
-            <span><h3>자동화 소스 저장소</h3><p>파이프라인, 품질 게이트, 장 조립 스크립트와 재실행 가능한 공개 샘플</p></span>
+            <span><h3>자동화 소스 저장소</h3><p>파이프라인, 품질 게이트, 장 조립 스크립트와 재실행 가능한 가상 샘플 4개</p></span>
             <span class="file-tags"><span>PUBLIC</span><span>MIT</span></span>
           </a>
         </div>
@@ -530,7 +547,7 @@
           <p>사람의 반복 승인을 줄이되, 품질 기준을 넘지 못한 예외는 <code>human_review</code>로 분리합니다.</p>
         </div>
         <div class="architecture">
-          <article class="arch-step"><span class="arch-num">01 / INPUT</span><h3>절 단위 원문</h3><p>프로필 카드, 잠긴 용어집, 6블록 템플릿과 함께 범위를 고정합니다.</p></article>
+          <article class="arch-step"><span class="arch-num">01 / INPUT</span><h3>절 단위 입력</h3><p>공개 저장소에서는 실제 원문 대신 가상 샘플, 프로필 카드, 잠긴 용어집과 6블록 템플릿으로 범위를 고정합니다.</p></article>
           <article class="arch-step"><span class="arch-num">02 / CREATE</span><h3>독립 집필 세션</h3><p>교재와 문제를 절별로 생성하고 G2·G3 실패 항목만 재작업합니다.</p></article>
           <article class="arch-step"><span class="arch-num">03 / REVIEW</span><h3>3중 독립 검수</h3><p>이미지·표, 수치·근거, 문항 정답을 수정 권한 없는 검수자가 확인합니다.</p></article>
           <article class="arch-step"><span class="arch-num">04 / PUBLISH</span><h3>장 조립과 배포</h3><p>모든 절이 published일 때만 장 단위 Markdown과 최종 형식을 조립합니다.</p></article>

@@ -52,7 +52,7 @@ def test_dashboard_exposes_repository_monitoring_sections():
     assert {"overview", "pipeline", "quality", "deliverables", "architecture"} <= parser.ids
     assert 'data-stage="pending"' in html
     assert "glossary_locked" in html
-    assert "23 / 23" in html
+    assert "24 / 24" in html
     assert "검증 스냅샷" in html
 
 
@@ -95,6 +95,10 @@ def test_dashboard_keeps_controls_accessible_and_storage_failures_isolated():
     assert re.search(r"function safeStorageSet\(.*?try\s*\{.*?localStorage\.setItem", html, re.S)
     mobile_css = html.split("@media (max-width: 720px)", 1)[1]
     assert re.search(r"\.sidebar-foot\s*\{[^}]*display:\s*grid", mobile_css, re.S)
+    narrow_css = html.split("@media (max-width: 470px)", 1)[1]
+    assert "grid-template-columns: repeat(2, minmax(0, 1fr))" in narrow_css
+    assert re.search(r"\.crumb\s*\{[^}]*flex:\s*1 1 100%", narrow_css, re.S)
+    assert re.search(r"\.crumb\s*\{[^}]*overflow-wrap:\s*anywhere", html, re.S)
 
 
 def test_dashboard_runtime_survives_blocked_local_storage(tmp_path):

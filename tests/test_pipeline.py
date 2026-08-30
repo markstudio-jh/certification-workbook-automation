@@ -1,7 +1,11 @@
 import json
 from pathlib import Path
+import re
 
 import pipeline
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def make_project(tmp_path: Path):
@@ -79,3 +83,34 @@ def test_answer_review_prompt_verifies_pdf_page_evidence(tmp_path):
     prompt = runner._prompt("review_answers", section["id"], runner._context(state, section))
     assert "PDF 페이지" in prompt
     assert "원문" in prompt
+
+
+def test_public_section_samples_are_complete_synthetic_and_registered():
+    expected_ids = ["3-1", "3-2", "3-3", "3-4"]
+    state = json.loads((ROOT / "state.json").read_text(encoding="utf-8"))
+
+    assert [section["id"] for section in state["sections"]] == expected_ids
+    assert [section["source"] for section in state["sections"]] == [
+        f"inputs/sections/{section_id}.md" for section_id in expected_ids
+    ]
+    assert all(section["stage"] == "pending" for section in state["sections"])
+
+    for index, section_id in enumerate(expected_ids):
+        sample = ROOT / "inputs" / "sections" / f"{section_id}.md"
+        assert sample.is_file()
+        text = sample.read_text(encoding="utf-8")
+        assert "가상 예시" in text
+        assert "실제 교재·PDF에서 추출한 문장이 아니" in text
+        assert "> 원본:" not in text
+        markers = [
+            int(page)
+            for page in re.findall(r"^\[PDF 페이지 (\d+)\]$", text, re.MULTILINE)
+        ]
+        start = index * 2 + 1
+        assert markers == [start, start + 1]
+
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    dashboard = (ROOT / "dashboard.html").read_text(encoding="utf-8")
+    assert "3-1~3-4" in readme
+    assert "공개용 가상 샘플" in readme
+    assert all(f"inputs/sections/{section_id}.md" in dashboard for section_id in expected_ids)
