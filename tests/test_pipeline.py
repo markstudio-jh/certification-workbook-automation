@@ -85,6 +85,70 @@ def test_answer_review_prompt_verifies_pdf_page_evidence(tmp_path):
     assert "원문" in prompt
 
 
+def test_review_findings_are_repaired_and_independently_rechecked_before_publish(tmp_path, monkeypatch):
+    make_project(tmp_path)
+
+    class FindingThenCleanAgent:
+        def __init__(self):
+            self.calls = []
+            self.review_round = 0
+
+        def run(self, prompt, cwd, log_path):
+            self.calls.append(prompt)
+            if prompt == "review_image":
+                self.review_round += 1
+            if prompt.startswith("review_"):
+                return "의미 오류 있음" if self.review_round == 1 else "이상 없음"
+            return "완료"
+
+    agent = FindingThenCleanAgent()
+    runner = pipeline.Pipeline(tmp_path, agent=agent)
+    state = runner.store.load()
+    section = state["sections"][0]
+    monkeypatch.setattr(runner, "_prompt", lambda role, sid, paths, extra="": role)
+    monkeypatch.setattr(
+        runner,
+        "_gate_with_repair",
+        lambda state, section, paths, gate: {"passed": True, "failures": []},
+    )
+
+    result = runner._run_section(state, section)
+
+    review_calls = [call for call in agent.calls if call.startswith("review_")]
+    assert len(review_calls) == 6
+    assert all(review_calls.count(role) == 2 for role in (
+        "review_image", "review_facts", "review_answers",
+    ))
+    assert result == {"id": "3-1", "status": "published", "reviews_clean": True}
+
+
+def test_persistent_review_findings_fail_closed_to_human_review(tmp_path, monkeypatch):
+    make_project(tmp_path)
+
+    class AlwaysFindingAgent:
+        def run(self, prompt, cwd, log_path):
+            if prompt.startswith("review_"):
+                return "의미 오류 있음"
+            return "완료"
+
+    runner = pipeline.Pipeline(tmp_path, agent=AlwaysFindingAgent())
+    state = runner.store.load()
+    section = state["sections"][0]
+    monkeypatch.setattr(runner, "_prompt", lambda role, sid, paths, extra="": role)
+    monkeypatch.setattr(
+        runner,
+        "_gate_with_repair",
+        lambda state, section, paths, gate: {"passed": True, "failures": []},
+    )
+
+    result = runner._run_section(state, section)
+    saved = runner.store.load()["sections"][0]
+
+    assert result == {"id": "3-1", "status": "human_review", "gate": "semantic-review"}
+    assert saved["stage"] == "human_review"
+    assert "재검수" in saved["last_error"]
+
+
 def test_public_section_samples_are_complete_synthetic_and_registered():
     expected_ids = ["3-1", "3-2", "3-3", "3-4"]
     state = json.loads((ROOT / "state.json").read_text(encoding="utf-8"))

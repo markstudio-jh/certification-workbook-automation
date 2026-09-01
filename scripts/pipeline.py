@@ -176,12 +176,24 @@ class Pipeline:
         self.store.update_section(sid, stage="review", gates={"G2": "pass", "G3": "pass"})
         paths["reviews"].mkdir(parents=True, exist_ok=True)
         roles = ("review_image", "review_facts", "review_answers")
-        review_results: dict[str, str] = {}
-        with ThreadPoolExecutor(max_workers=3) as pool:
-            futures = {pool.submit(self.agent.run, self._prompt(role, sid, paths), self.root,
-                                   paths["reviews"] / f"{role}.md"): role for role in roles}
-            for future in as_completed(futures):
-                review_results[futures[future]] = future.result()
+
+        def run_reviews(suffix: str = "") -> dict[str, str]:
+            review_results: dict[str, str] = {}
+            with ThreadPoolExecutor(max_workers=3) as pool:
+                futures = {
+                    pool.submit(
+                        self.agent.run,
+                        self._prompt(role, sid, paths),
+                        self.root,
+                        paths["reviews"] / f"{role}{suffix}.md",
+                    ): role
+                    for role in roles
+                }
+                for future in as_completed(futures):
+                    review_results[futures[future]] = future.result()
+            return review_results
+
+        review_results = run_reviews()
         clean = all(self._review_clean(text) for text in review_results.values())
         if not clean:
             findings = "\n\n".join(f"## {role}\n{text}" for role, text in review_results.items())
@@ -192,6 +204,15 @@ class Pipeline:
             if not (g2["passed"] and g3["passed"]):
                 self.store.update_section(sid, stage="human_review", last_error="검수 수정 후 게이트 실패")
                 return {"id": sid, "status": "human_review", "gate": "post-review"}
+            review_results = run_reviews("-after-repair")
+            clean = all(self._review_clean(text) for text in review_results.values())
+            if not clean:
+                self.store.update_section(
+                    sid,
+                    stage="human_review",
+                    last_error="자동 수정 후 독립 재검수에서도 의미 지적이 남음",
+                )
+                return {"id": sid, "status": "human_review", "gate": "semantic-review"}
         self.store.update_section(sid, stage="published", gates={"G2": "pass", "G3": "pass"})
         return {"id": sid, "status": "published", "reviews_clean": clean}
 
