@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="1권 3장 공공조달관리사 48문항 대화형 문제집">
+  <title>1권 3장 | 48문항 실전 문제집</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0d1117; --panel:#151b23; --panel2:#1d2632; --line:#303b49; --text:#f4f7fb; --muted:#9eabba; --lime:#c7f36b; --green:#69d6a4; --red:#ff8f91; --amber:#f4c76b; --radius:16px; font-family:Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif; }
+    * { box-sizing:border-box; } html { scroll-behavior:smooth; } body { margin:0; min-width:320px; background:radial-gradient(circle at 85% 0,#273242 0,transparent 30rem),var(--bg); color:var(--text); line-height:1.6; }
+    button,input { font:inherit; } button { min-height:44px; cursor:pointer; } button:focus-visible,input:focus-visible { outline:3px solid var(--lime); outline-offset:3px; }
+    .skip { position:fixed; top:10px; left:10px; transform:translateY(-160%); z-index:10; padding:10px 14px; background:var(--lime); color:#162006; border-radius:8px; } .skip:focus { transform:none; }
+    header { max-width:1120px; margin:auto; padding:48px 24px 28px; } .eyebrow { color:var(--lime); font:700 12px ui-monospace,monospace; letter-spacing:.12em; } h1 { max-width:760px; margin:10px 0; font-size:clamp(34px,6vw,68px); line-height:1.04; letter-spacing:-.055em; } header p { max-width:720px; color:var(--muted); }
+    .summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; margin-top:28px; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius); background:var(--line); } .summary div { padding:18px; background:var(--panel); } .summary strong { display:block; color:var(--lime); font:600 28px ui-monospace,monospace; } .summary span { color:var(--muted); font-size:12px; }
+    .toolbar { position:sticky; top:0; z-index:5; border-block:1px solid var(--line); background:color-mix(in srgb,var(--bg) 92%,transparent); backdrop-filter:blur(14px); } .toolbar-inner { display:flex; max-width:1120px; margin:auto; padding:12px 24px; align-items:center; gap:8px; overflow-x:auto; } .filter,.reset { flex:0 0 auto; padding:8px 13px; border:1px solid var(--line); border-radius:999px; background:var(--panel); color:var(--muted); } .filter.active { border-color:var(--lime); color:var(--lime); } .reset { margin-left:auto; color:var(--amber); }
+    main { max-width:900px; margin:auto; padding:36px 24px 80px; } .question { margin-bottom:18px; padding:24px; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); box-shadow:0 15px 38px rgba(0,0,0,.16); } .question[data-result="correct"] { border-color:var(--green); } .question[data-result="wrong"] { border-color:var(--red); } .question[hidden] { display:none; }
+    .question-meta { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; } .question-meta span { padding:3px 8px; border-radius:999px; background:var(--panel2); color:var(--muted); font:600 10px ui-monospace,monospace; } fieldset { min-width:0; margin:0; padding:0; border:0; } legend { width:100%; margin-bottom:16px; font-size:18px; font-weight:700; } .choices { display:grid; gap:9px; } .choice { display:grid; grid-template-columns:auto auto minmax(0,1fr); gap:10px; align-items:start; min-height:48px; padding:12px; border:1px solid var(--line); border-radius:11px; background:var(--panel2); cursor:pointer; } .choice:hover { border-color:#526174; } .choice:has(input:checked) { border-color:var(--lime); background:color-mix(in srgb,var(--lime) 9%,var(--panel2)); } .choice input { margin-top:6px; } .choice-symbol { color:var(--lime); font-weight:700; }
+    .actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:16px; } .grade { padding:9px 16px; border:0; border-radius:9px; background:var(--lime); color:#172006; font-weight:800; } .feedback { font-weight:700; } .explanation { margin-top:16px; padding:15px; border-left:3px solid var(--lime); border-radius:0 10px 10px 0; background:#10161e; } .explanation p { margin:7px 0; } .explanation p span { display:inline-block; min-width:42px; margin-right:8px; color:var(--lime); font-size:12px; font-weight:800; }
+    footer { max-width:900px; margin:auto; padding:0 24px 48px; color:var(--muted); font-size:12px; }
+    @media (max-width:640px) { header { padding-top:32px; } .summary { grid-template-columns:1fr; } .toolbar-inner { padding-inline:14px; } main { padding-inline:14px; } .question { padding:18px; } .reset { margin-left:0; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } * { transition:none!important; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#quiz">문제로 바로 이동</a>
+  <header>
+    <span class="eyebrow">MARK STUDIO · VOLUME 1 / CHAPTER 3</span>
+    <h1>48문항으로 끝내는 3장 실전 점검</h1>
+    <p>각 문항의 정답·근거·PDF 페이지·함정 설명을 한 화면에서 확인할 수 있는 오프라인 문제집입니다. 모든 데이터는 검증 완료된 장 조립본에서 생성했습니다.</p>
+    <div class="summary" aria-label="문제집 요약">
+      <div><strong>48</strong><span>전체 문항</span></div>
+      <div><strong id="answered">0</strong><span>채점한 문항</span></div>
+      <div><strong id="score">0</strong><span>정답 문항</span></div>
+    </div>
+  </header>
+  <nav class="toolbar" aria-label="절 필터">
+    <div class="toolbar-inner"><button type="button" class="filter active" data-filter="all">전체</button><button type="button" class="filter" data-filter="제1절 계약 방식의 기초">제1절 계약 방식의 기초</button>
+<button type="button" class="filter" data-filter="제2절 전자 구매 절차 예상문제 및 해설">제2절 전자 구매 절차 예상문제 및 해설</button>
+<button type="button" class="filter" data-filter="제3절 계약 이행 기록 예상문제">제3절 계약 이행 기록 예상문제</button>
+<button type="button" class="filter" data-filter="제4절 품목 정보 관리 예상문제 및 해설">제4절 품목 정보 관리 예상문제 및 해설</button><button type="button" class="reset">전체 초기화</button></div>
+  </nav>
+  <main id="quiz">
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>1. 계약 방식 선택의 기본 흐름</span><span>문항 01</span></div>
+          <fieldset>
+            <legend>예시 기관이 계약 방식을 선택하기 전에 먼저 확인해야 하는 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q1" value="1"><span class="choice-symbol">①</span><span>구매 목적과 적용 규칙</span></label>
+<label class="choice"><input type="radio" name="q1" value="2"><span class="choice-symbol">②</span><span>검토 일자와 담당 역할</span></label>
+<label class="choice"><input type="radio" name="q1" value="3"><span class="choice-symbol">③</span><span>승인 주체와 기록 항목</span></label>
+<label class="choice"><input type="radio" name="q1" value="4"><span class="choice-symbol">④</span><span>선택한 계약 방식과 승인 여부</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>예시 기관은 구매 목적과 적용 규칙을 먼저 확인한 뒤 계약 방식을 선택한다. [PDF 페이지 1]</p>
+            <p><span>함정</span>②와 ④는 검토 기록에 포함되는 항목이고, ③의 승인 주체와 기록 항목은 계약 방식 검토 시 함께 확인해야 할 대상이지만 선택에 앞서 먼저 확인하는 두 항목은 구매 목적과 적용 규칙이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>1. 계약 방식 선택의 기본 흐름</span><span>문항 02</span></div>
+          <fieldset>
+            <legend>계약 담당자가 계약 방식을 검토할 때 함께 확인해야 하는 항목으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q2" value="1"><span class="choice-symbol">①</span><span>구매 목적, 검토 일자, 담당 역할</span></label>
+<label class="choice"><input type="radio" name="q2" value="2"><span class="choice-symbol">②</span><span>적용 근거, 승인 주체, 기록 항목</span></label>
+<label class="choice"><input type="radio" name="q2" value="3"><span class="choice-symbol">③</span><span>구매 대상, 승인 여부, 검토 일자</span></label>
+<label class="choice"><input type="radio" name="q2" value="4"><span class="choice-symbol">④</span><span>공급자 수, 계약 명칭, 담당 역할</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>계약 담당자는 계약 방식의 명칭만으로 결론을 내리지 않고 적용 근거, 승인 주체, 기록 항목을 함께 확인해야 한다. [PDF 페이지 1]</p>
+            <p><span>함정</span>검토 기록에 포함되는 항목과 계약 방식 검토 시 함께 확인하는 대상을 혼동하지 않는다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>1. 계약 방식 선택의 기본 흐름</span><span>문항 03</span></div>
+          <fieldset>
+            <legend>계약 방식의 결정에 관한 설명으로 옳지 않은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q3" value="1"><span class="choice-symbol">①</span><span>구매 목적을 확인한 뒤 계약 방식을 선택한다.</span></label>
+<label class="choice"><input type="radio" name="q3" value="2"><span class="choice-symbol">②</span><span>적용 규칙을 확인한 뒤 계약 방식을 선택한다.</span></label>
+<label class="choice"><input type="radio" name="q3" value="3"><span class="choice-symbol">③</span><span>계약 방식은 그 명칭만으로 결정한다.</span></label>
+<label class="choice"><input type="radio" name="q3" value="4"><span class="choice-symbol">④</span><span>적용 근거와 승인 주체를 함께 확인한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>계약 방식은 명칭만으로 결정하지 않으며, 계약 담당자는 적용 근거, 승인 주체, 기록 항목을 함께 확인해야 한다. [PDF 페이지 1]</p>
+            <p><span>함정</span>방식의 명칭은 검토 대상의 전부가 아니므로 명칭만으로 결론을 내릴 수 없다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>2. 경쟁 방식과 예외 방식</span><span>문항 04</span></div>
+          <fieldset>
+            <legend>여러 공급자가 정해진 기준에 따라 참여하도록 구성하는 방식은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q4" value="1"><span class="choice-symbol">①</span><span>예외 방식</span></label>
+<label class="choice"><input type="radio" name="q4" value="2"><span class="choice-symbol">②</span><span>검토 기록</span></label>
+<label class="choice"><input type="radio" name="q4" value="3"><span class="choice-symbol">③</span><span>승인 절차</span></label>
+<label class="choice"><input type="radio" name="q4" value="4"><span class="choice-symbol">④</span><span>경쟁 방식</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>경쟁 방식은 여러 공급자가 정해진 기준에 따라 참여하도록 구성하는 방식이다. [PDF 페이지 1]</p>
+            <p><span>함정</span>예외 방식은 공개 경쟁을 사용하기 어려운 사유가 있을 때 내부 규칙과 승인 절차를 확인한 후 적용한다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>2. 경쟁 방식과 예외 방식</span><span>문항 05</span></div>
+          <fieldset>
+            <legend>예외 방식을 적용하는 상황과 절차를 바르게 설명한 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q5" value="1"><span class="choice-symbol">①</span><span>여러 공급자가 참여할 때 명칭만 확인한 후 적용한다.</span></label>
+<label class="choice"><input type="radio" name="q5" value="2"><span class="choice-symbol">②</span><span>공개 경쟁을 사용하기 어려운 사유가 있을 때 내부 규칙과 승인 절차를 확인한 후 적용한다.</span></label>
+<label class="choice"><input type="radio" name="q5" value="3"><span class="choice-symbol">③</span><span>구매 목적을 확인하기 어려울 때 승인 주체 없이 적용한다.</span></label>
+<label class="choice"><input type="radio" name="q5" value="4"><span class="choice-symbol">④</span><span>정해진 기준에 따라 여러 공급자가 참여하도록 구성할 때 적용한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>예외 방식은 공개 경쟁을 사용하기 어려운 사유가 있을 때 내부 규칙과 승인 절차를 확인한 후 적용한다. [PDF 페이지 1]</p>
+            <p><span>함정</span>④는 경쟁 방식에 관한 설명이며, 예외 방식은 내부 규칙과 승인 절차를 확인한 후 적용한다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>2. 경쟁 방식과 예외 방식</span><span>문항 06</span></div>
+          <fieldset>
+            <legend>경쟁 방식과 예외 방식의 구분으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q6" value="1"><span class="choice-symbol">①</span><span>경쟁 방식은 여러 공급자가 정해진 기준에 따라 참여하도록 구성하고, 예외 방식은 공개 경쟁을 사용하기 어려운 사유가 있을 때 내부 규칙과 승인 절차를 확인한 후 적용한다.</span></label>
+<label class="choice"><input type="radio" name="q6" value="2"><span class="choice-symbol">②</span><span>경쟁 방식은 공개 경쟁을 사용하기 어려울 때 적용하고, 예외 방식은 여러 공급자가 참여하도록 구성한다.</span></label>
+<label class="choice"><input type="radio" name="q6" value="3"><span class="choice-symbol">③</span><span>두 방식 모두 계약 방식의 명칭만으로 결정한다.</span></label>
+<label class="choice"><input type="radio" name="q6" value="4"><span class="choice-symbol">④</span><span>두 방식 모두 승인 절차를 확인하지 않고 적용한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>경쟁 방식은 여러 공급자가 정해진 기준에 따라 참여하도록 구성하는 방식이고, 예외 방식은 공개 경쟁을 사용하기 어려운 사유가 있을 때 내부 규칙과 승인 절차를 확인한 후 적용하는 방식이다. [PDF 페이지 1]</p>
+            <p><span>함정</span>②는 경쟁 방식과 예외 방식의 적용 상황을 서로 바꾸어 놓은 설명이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>2. 경쟁 방식과 예외 방식</span><span>문항 07</span></div>
+          <fieldset>
+            <legend>다음 상황에 가장 부합하는 계약 방식은? 여러 공급자가 정해진 기준에 따라 참여하도록 구성하려 한다.</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q7" value="1"><span class="choice-symbol">①</span><span>예외 방식</span></label>
+<label class="choice"><input type="radio" name="q7" value="2"><span class="choice-symbol">②</span><span>승인 절차</span></label>
+<label class="choice"><input type="radio" name="q7" value="3"><span class="choice-symbol">③</span><span>경쟁 방식</span></label>
+<label class="choice"><input type="radio" name="q7" value="4"><span class="choice-symbol">④</span><span>검토 기록</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>경쟁 방식은 여러 공급자가 정해진 기준에 따라 참여하도록 구성하는 방식이다. [PDF 페이지 1]</p>
+            <p><span>함정</span>예외 방식은 공개 경쟁을 사용하기 어려운 사유가 있을 때 내부 규칙과 승인 절차를 확인한 후 적용한다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>2. 경쟁 방식과 예외 방식</span><span>문항 08</span></div>
+          <fieldset>
+            <legend>다음 상황에서 계약 담당자가 취할 조치로 가장 적절한 것은? 공개 경쟁을 사용하기 어려운 사유가 있다.</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q8" value="1"><span class="choice-symbol">①</span><span>경쟁 방식을 명칭만으로 즉시 결정한다.</span></label>
+<label class="choice"><input type="radio" name="q8" value="2"><span class="choice-symbol">②</span><span>검토 기록을 작성하지 않고 경쟁 방식을 적용한다.</span></label>
+<label class="choice"><input type="radio" name="q8" value="3"><span class="choice-symbol">③</span><span>승인 주체만 확인하고 예외 방식을 적용한다.</span></label>
+<label class="choice"><input type="radio" name="q8" value="4"><span class="choice-symbol">④</span><span>내부 규칙과 승인 절차를 확인한 후 예외 방식을 적용한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>예외 방식은 공개 경쟁을 사용하기 어려운 사유가 있을 때 내부 규칙과 승인 절차를 확인한 후 적용한다. [PDF 페이지 1]</p>
+            <p><span>함정</span>예외 방식은 공개 경쟁을 사용하기 어려운 사유가 있다는 사실만으로 바로 적용하는 것이 아니라 내부 규칙과 승인 절차를 확인한 후 적용한다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>3. 계약 방식 검토 기록</span><span>문항 09</span></div>
+          <fieldset>
+            <legend>계약 방식 검토 기록에 포함되는 항목으로 옳지 않은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q9" value="1"><span class="choice-symbol">①</span><span>구매 목적과 대상</span></label>
+<label class="choice"><input type="radio" name="q9" value="2"><span class="choice-symbol">②</span><span>공급자의 실제 참여 인원</span></label>
+<label class="choice"><input type="radio" name="q9" value="3"><span class="choice-symbol">③</span><span>적용 근거와 승인 여부</span></label>
+<label class="choice"><input type="radio" name="q9" value="4"><span class="choice-symbol">④</span><span>검토 일자와 담당 역할</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>계약 방식 검토 기록에는 구매 목적과 대상, 선택한 계약 방식, 적용 근거와 승인 여부, 검토 일자와 담당 역할을 포함한다. 공급자의 실제 참여 인원은 제시된 항목이 아니다. [PDF 페이지 2]</p>
+            <p><span>함정</span>경쟁 방식에서 여러 공급자가 참여하도록 구성한다는 설명을 검토 기록의 필수 항목으로 확대해서는 안 된다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>3. 계약 방식 검토 기록</span><span>문항 10</span></div>
+          <fieldset>
+            <legend>계약 방식 검토 기록에 포함되는 항목만을 모두 고른 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q10" value="1"><span class="choice-symbol">①</span><span>구매 목적과 대상, 공급자 명단, 승인 주체</span></label>
+<label class="choice"><input type="radio" name="q10" value="2"><span class="choice-symbol">②</span><span>적용 규칙, 내부 규칙, 공급자 수</span></label>
+<label class="choice"><input type="radio" name="q10" value="3"><span class="choice-symbol">③</span><span>선택한 계약 방식, 적용 근거와 승인 여부, 검토 일자와 담당 역할</span></label>
+<label class="choice"><input type="radio" name="q10" value="4"><span class="choice-symbol">④</span><span>승인 절차, 계약 방식의 명칭, 공개 경쟁의 사유</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>검토 기록에는 구매 목적과 대상, 선택한 계약 방식, 적용 근거와 승인 여부, 검토 일자와 담당 역할이 포함된다. [PDF 페이지 2]</p>
+            <p><span>함정</span>승인 주체는 계약 방식 검토 시 함께 확인해야 할 대상이지만, 검토 기록 항목으로 제시된 표기는 승인 여부이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>3. 계약 방식 검토 기록</span><span>문항 11</span></div>
+          <fieldset>
+            <legend>계약 방식 검토 기록에서 빠뜨리지 않도록 특히 주의해야 하는 항목은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q11" value="1"><span class="choice-symbol">①</span><span>적용 규칙과 내부 규칙</span></label>
+<label class="choice"><input type="radio" name="q11" value="2"><span class="choice-symbol">②</span><span>경쟁입찰과 수의계약</span></label>
+<label class="choice"><input type="radio" name="q11" value="3"><span class="choice-symbol">③</span><span>승인 주체와 기록 항목</span></label>
+<label class="choice"><input type="radio" name="q11" value="4"><span class="choice-symbol">④</span><span>검토 일자와 담당 역할</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>검토 기록에는 검토 일자와 담당 역할이 포함되며, 이를 빠뜨리지 않도록 주의해야 한다. [PDF 페이지 2]</p>
+            <p><span>함정</span>승인 주체는 계약 방식을 검토할 때 확인하는 대상이고, 검토 기록에 포함되는 항목은 승인 여부이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제1절 계약 방식의 기초" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제1절 계약 방식의 기초</span><span>3. 계약 방식 검토 기록</span><span>문항 12</span></div>
+          <fieldset>
+            <legend>계약 방식 검토 기록의 항목을 모두 포함한 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q12" value="1"><span class="choice-symbol">①</span><span>구매 목적과 대상, 선택한 계약 방식, 적용 근거와 승인 여부, 검토 일자와 담당 역할</span></label>
+<label class="choice"><input type="radio" name="q12" value="2"><span class="choice-symbol">②</span><span>구매 목적과 대상, 승인 주체, 내부 규칙, 공급자 명단</span></label>
+<label class="choice"><input type="radio" name="q12" value="3"><span class="choice-symbol">③</span><span>선택한 계약 방식, 공급자 수, 공개 경쟁의 사유, 담당자 이름</span></label>
+<label class="choice"><input type="radio" name="q12" value="4"><span class="choice-symbol">④</span><span>적용 근거, 승인 절차, 계약 금액, 계약 기한</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>계약 방식 검토 기록에는 구매 목적과 대상, 선택한 계약 방식, 적용 근거와 승인 여부, 검토 일자와 담당 역할을 포함한다. [PDF 페이지 2]</p>
+            <p><span>함정</span>승인 주체와 승인 절차는 관련 검토에서 확인할 수 있지만, 원문이 검토 기록 항목으로 제시한 표기는 적용 근거와 승인 여부이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 13</span></div>
+          <fieldset>
+            <legend>전자 구매를 시작하기 전에 구매 담당자가 확인해야 하는 요청 정보로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q13" value="1"><span class="choice-symbol">①</span><span>품목, 수량, 희망 일정, 검토 역할</span></label>
+<label class="choice"><input type="radio" name="q13" value="2"><span class="choice-symbol">②</span><span>대상, 수량, 담당 역할, 처리 상태</span></label>
+<label class="choice"><input type="radio" name="q13" value="3"><span class="choice-symbol">③</span><span>요청 내용, 첨부 기록, 변경 사유, 처리 상태</span></label>
+<label class="choice"><input type="radio" name="q13" value="4"><span class="choice-symbol">④</span><span>확인한 항목, 보완 여부, 다음 처리 역할, 변경 사유</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>구매 담당자는 전자 구매를 시작하기 전에 품목, 수량, 희망 일정과 검토 역할을 확인한다. [원문 PDF 페이지 3]</p>
+            <p><span>함정</span>②는 주문 기록의 표시 항목이고, ④의 앞 세 항목은 검토 결과의 시스템 기록 항목이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 14</span></div>
+          <fieldset>
+            <legend>요청 정보에서 누락된 항목을 발견했을 때의 처리로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q14" value="1"><span class="choice-symbol">①</span><span>주문 기록으로 먼저 전환한 뒤 보완을 요청한다.</span></label>
+<label class="choice"><input type="radio" name="q14" value="2"><span class="choice-symbol">②</span><span>주문 단계로 넘기지 않고 요청 부서에 보완을 요청한다.</span></label>
+<label class="choice"><input type="radio" name="q14" value="3"><span class="choice-symbol">③</span><span>처리 상태를 변경하고 변경 사유만 남긴다.</span></label>
+<label class="choice"><input type="radio" name="q14" value="4"><span class="choice-symbol">④</span><span>승인 역할이 승인만 선택하도록 한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>누락된 항목이 있으면 바로 주문 단계로 넘기지 않고 요청 부서에 보완을 요청한다. [원문 PDF 페이지 3]</p>
+            <p><span>함정</span>원문은 승인된 요청을 주문 기록으로 전환한다고 하므로, 누락된 요청을 먼저 주문 기록으로 전환한다는 ①은 절차가 뒤바뀌었다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 15</span></div>
+          <fieldset>
+            <legend>검토 결과를 시스템 기록에 남길 때 포함되는 항목이 아닌 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q15" value="1"><span class="choice-symbol">①</span><span>확인한 항목</span></label>
+<label class="choice"><input type="radio" name="q15" value="2"><span class="choice-symbol">②</span><span>보완 여부</span></label>
+<label class="choice"><input type="radio" name="q15" value="3"><span class="choice-symbol">③</span><span>다음 처리 역할</span></label>
+<label class="choice"><input type="radio" name="q15" value="4"><span class="choice-symbol">④</span><span>변경 사유</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>검토 결과의 시스템 기록에는 확인한 항목, 보완 여부와 다음 처리 역할을 포함한다. [원문 PDF 페이지 3]</p>
+            <p><span>함정</span>변경 사유는 주문 기록의 처리 상태가 변경될 때 함께 남기는 내용이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 16</span></div>
+          <fieldset>
+            <legend>요청 정보가 준비되었을 때 구매 담당자가 수행하는 일로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q16" value="1"><span class="choice-symbol">①</span><span>주문 기록에서 처리 상태를 삭제한다.</span></label>
+<label class="choice"><input type="radio" name="q16" value="2"><span class="choice-symbol">②</span><span>요청 부서 대신 보완 여부를 확정한다.</span></label>
+<label class="choice"><input type="radio" name="q16" value="3"><span class="choice-symbol">③</span><span>가상의 내부 승인 기준에 따라 검토 순서를 지정한다.</span></label>
+<label class="choice"><input type="radio" name="q16" value="4"><span class="choice-symbol">④</span><span>승인 역할을 주문 기록으로 전환한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>요청 정보가 준비되면 구매 담당자는 가상의 내부 승인 기준에 따라 검토 순서를 지정한다. [원문 PDF 페이지 4]</p>
+            <p><span>함정</span>주문 기록으로 전환되는 것은 승인 역할이 아니라 승인된 요청이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 17</span></div>
+          <fieldset>
+            <legend>승인 역할이 확인하는 대상으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q17" value="1"><span class="choice-symbol">①</span><span>품목과 희망 일정만</span></label>
+<label class="choice"><input type="radio" name="q17" value="2"><span class="choice-symbol">②</span><span>요청 내용과 첨부 기록</span></label>
+<label class="choice"><input type="radio" name="q17" value="3"><span class="choice-symbol">③</span><span>확인한 항목과 다음 처리 역할만</span></label>
+<label class="choice"><input type="radio" name="q17" value="4"><span class="choice-symbol">④</span><span>대상과 변경 사유</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>승인 역할은 요청 내용과 첨부 기록을 확인한다. [원문 PDF 페이지 4]</p>
+            <p><span>함정</span>품목과 희망 일정은 전자 구매 시작 전에 구매 담당자가 확인하는 요청 정보에 포함된다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 18</span></div>
+          <fieldset>
+            <legend>승인 역할이 요청 내용과 첨부 기록을 확인한 뒤 선택하는 처리 결과로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q18" value="1"><span class="choice-symbol">①</span><span>승인 또는 보완 요청</span></label>
+<label class="choice"><input type="radio" name="q18" value="2"><span class="choice-symbol">②</span><span>주문 또는 처리 상태 삭제</span></label>
+<label class="choice"><input type="radio" name="q18" value="3"><span class="choice-symbol">③</span><span>검토 순서 지정 또는 주문 취소</span></label>
+<label class="choice"><input type="radio" name="q18" value="4"><span class="choice-symbol">④</span><span>대상 변경 또는 수량 삭제</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>승인 역할은 요청 내용과 첨부 기록을 확인한 뒤 승인 또는 보완 요청 중 하나를 선택한다. [원문 PDF 페이지 4]</p>
+            <p><span>함정</span>검토 순서 지정은 요청 정보가 준비되었을 때 구매 담당자가 수행하는 일이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 19</span></div>
+          <fieldset>
+            <legend>주문 기록으로 전환되는 것은 무엇인가?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q19" value="1"><span class="choice-symbol">①</span><span>누락된 항목</span></label>
+<label class="choice"><input type="radio" name="q19" value="2"><span class="choice-symbol">②</span><span>검토 역할</span></label>
+<label class="choice"><input type="radio" name="q19" value="3"><span class="choice-symbol">③</span><span>승인 역할</span></label>
+<label class="choice"><input type="radio" name="q19" value="4"><span class="choice-symbol">④</span><span>승인된 요청</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>승인된 요청은 주문 기록으로 전환한다. [원문 PDF 페이지 4]</p>
+            <p><span>함정</span>승인 역할은 요청 내용과 첨부 기록을 확인해 승인 또는 보완 요청을 선택하는 주체이지, 주문 기록으로 전환되는 대상이 아니다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 20</span></div>
+          <fieldset>
+            <legend>주문 기록에 표시하는 항목으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q20" value="1"><span class="choice-symbol">①</span><span>품목, 희망 일정, 보완 여부, 변경 사유</span></label>
+<label class="choice"><input type="radio" name="q20" value="2"><span class="choice-symbol">②</span><span>확인한 항목, 보완 여부, 다음 처리 역할, 첨부 기록</span></label>
+<label class="choice"><input type="radio" name="q20" value="3"><span class="choice-symbol">③</span><span>대상, 수량, 담당 역할, 처리 상태</span></label>
+<label class="choice"><input type="radio" name="q20" value="4"><span class="choice-symbol">④</span><span>요청 내용, 검토 순서, 승인, 보완 요청</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>주문 기록에는 대상, 수량, 담당 역할과 처리 상태를 표시한다. [원문 PDF 페이지 4]</p>
+            <p><span>함정</span>②는 검토 결과의 시스템 기록 항목에 첨부 기록을 섞은 것이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 21</span></div>
+          <fieldset>
+            <legend>주문 기록의 처리 상태가 변경될 때마다 함께 남겨야 하는 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q21" value="1"><span class="choice-symbol">①</span><span>변경 사유</span></label>
+<label class="choice"><input type="radio" name="q21" value="2"><span class="choice-symbol">②</span><span>희망 일정</span></label>
+<label class="choice"><input type="radio" name="q21" value="3"><span class="choice-symbol">③</span><span>검토 순서</span></label>
+<label class="choice"><input type="radio" name="q21" value="4"><span class="choice-symbol">④</span><span>보완 여부</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>주문 기록의 처리 상태가 변경될 때마다 변경 사유를 함께 남긴다. [원문 PDF 페이지 4]</p>
+            <p><span>함정</span>보완 여부는 요청 정보 검토 결과를 시스템 기록에 남길 때 포함되는 항목이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 22</span></div>
+          <fieldset>
+            <legend>전자 구매 절차의 흐름을 원문에 맞게 나열한 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q22" value="1"><span class="choice-symbol">①</span><span>승인된 요청의 주문 기록 전환 → 요청 정보 확인 → 검토 결과 기록</span></label>
+<label class="choice"><input type="radio" name="q22" value="2"><span class="choice-symbol">②</span><span>검토 결과 기록 → 요청 정보 확인 → 누락 항목 보완 요청</span></label>
+<label class="choice"><input type="radio" name="q22" value="3"><span class="choice-symbol">③</span><span>요청 정보 확인 → 누락 항목이 있으면 보완 요청 → 검토 결과 기록 → 승인 역할의 확인과 선택 → 승인된 요청의 주문 기록 전환</span></label>
+<label class="choice"><input type="radio" name="q22" value="4"><span class="choice-symbol">④</span><span>승인 역할의 확인과 선택 → 누락 항목 보완 요청 → 요청 정보 확인 → 주문 기록 전환</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>전자 구매 절차는 요청 정보 확인, 누락 항목 보완 요청, 검토 결과 기록, 승인 역할의 확인과 선택, 승인된 요청의 주문 기록 전환의 흐름으로 정리된다. [원문 PDF 페이지 3~4]</p>
+            <p><span>함정</span>승인된 요청의 주문 기록 전환은 요청 정보 확인과 승인 역할의 확인·선택보다 뒤에 이루어진다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 23</span></div>
+          <fieldset>
+            <legend>요청 부서가 품목, 수량과 검토 역할은 입력했지만 희망 일정을 누락한 경우의 처리로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q23" value="1"><span class="choice-symbol">①</span><span>구매 담당자가 바로 주문 단계로 넘긴다.</span></label>
+<label class="choice"><input type="radio" name="q23" value="2"><span class="choice-symbol">②</span><span>승인 역할이 처리 상태만 표시한다.</span></label>
+<label class="choice"><input type="radio" name="q23" value="3"><span class="choice-symbol">③</span><span>구매 담당자가 변경 사유만 남기고 주문 기록으로 전환한다.</span></label>
+<label class="choice"><input type="radio" name="q23" value="4"><span class="choice-symbol">④</span><span>구매 담당자가 요청 부서에 보완을 요청하고 검토 결과를 시스템 기록에 남긴다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>희망 일정이 누락된 요청은 바로 주문 단계로 넘기지 않고 요청 부서에 보완을 요청하며, 시스템 기록에 확인한 항목, 보완 여부와 다음 처리 역할을 남긴다. [원문 PDF 페이지 3]</p>
+            <p><span>함정</span>누락된 항목이 있으면 바로 주문 단계로 넘기지 않는다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제2절 전자 구매 절차 예상문제 및 해설" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제2절 전자 구매 절차 예상문제 및 해설</span><span>예상문제</span><span>문항 24</span></div>
+          <fieldset>
+            <legend>구매 담당자의 요청 정보 확인과 승인 역할의 확인을 바르게 구분한 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q24" value="1"><span class="choice-symbol">①</span><span>구매 담당자는 요청 내용과 첨부 기록을 확인하고, 승인 역할은 품목과 수량만 확인한다.</span></label>
+<label class="choice"><input type="radio" name="q24" value="2"><span class="choice-symbol">②</span><span>구매 담당자는 품목, 수량, 희망 일정과 검토 역할을 확인하고, 승인 역할은 요청 내용과 첨부 기록을 확인한다.</span></label>
+<label class="choice"><input type="radio" name="q24" value="3"><span class="choice-symbol">③</span><span>구매 담당자는 처리 상태와 변경 사유를 확인하고, 승인 역할은 다음 처리 역할만 확인한다.</span></label>
+<label class="choice"><input type="radio" name="q24" value="4"><span class="choice-symbol">④</span><span>구매 담당자는 승인 또는 보완 요청을 선택하고, 승인 역할은 검토 순서를 지정한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>구매 담당자는 전자 구매 시작 전에 품목, 수량, 희망 일정과 검토 역할을 확인하고, 승인 역할은 요청 내용과 첨부 기록을 확인한다. [원문 PDF 페이지 3~4]</p>
+            <p><span>함정</span>승인 또는 보완 요청을 선택하는 주체는 승인 역할이며, 검토 순서를 지정하는 주체는 구매 담당자이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 25</span></div>
+          <fieldset>
+            <legend>예시 계약의 담당자가 이행을 확인하기 위한 항목을 정하는 시점으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q25" value="1"><span class="choice-symbol">①</span><span>이행을 확인하기 전에 사전에 정한다.</span></label>
+<label class="choice"><input type="radio" name="q25" value="2"><span class="choice-symbol">②</span><span>모든 항목이 확인된 뒤에 정한다.</span></label>
+<label class="choice"><input type="radio" name="q25" value="3"><span class="choice-symbol">③</span><span>기록의 누락이 발견된 뒤에 정한다.</span></label>
+<label class="choice"><input type="radio" name="q25" value="4"><span class="choice-symbol">④</span><span>이행 조건을 변경한 뒤에만 정한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>예시 계약의 담당자는 이행을 확인하기 위한 항목을 사전에 정한다. [근거: 원문 PDF 페이지 5]</p>
+            <p><span>함정</span>모든 항목 확인 후 수행하는 절차는 완료 역할의 누락 여부 검토이다. 이행 항목의 설정 시점과 완료 확인 시점을 혼동하지 않는다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 26</span></div>
+          <fieldset>
+            <legend>이행 확인 항목을 구성하는 일반 정보로만 묶인 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q26" value="1"><span class="choice-symbol">①</span><span>확인 전, 확인 중, 확인 완료</span></label>
+<label class="choice"><input type="radio" name="q26" value="2"><span class="choice-symbol">②</span><span>납품 대상, 확인 역할, 기록 위치</span></label>
+<label class="choice"><input type="radio" name="q26" value="3"><span class="choice-symbol">③</span><span>변경 사유, 영향, 확인 완료</span></label>
+<label class="choice"><input type="radio" name="q26" value="4"><span class="choice-symbol">④</span><span>이전 상태, 새 상태, 다음 조치</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>이행 항목은 납품 대상, 확인 역할, 기록 위치처럼 절차를 설명하는 일반 정보로 구성한다. [근거: 원문 PDF 페이지 5]</p>
+            <p><span>함정</span>확인 전, 확인 중, 확인 완료는 이행 항목을 구성하는 일반 정보가 아니라 각 항목에 부여하는 가상 상태이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 27</span></div>
+          <fieldset>
+            <legend>각 이행 항목에 부여하는 가상 상태의 예로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q27" value="1"><span class="choice-symbol">①</span><span>납품 대상, 확인 역할, 기록 위치</span></label>
+<label class="choice"><input type="radio" name="q27" value="2"><span class="choice-symbol">②</span><span>변경 사유, 영향, 다음 조치</span></label>
+<label class="choice"><input type="radio" name="q27" value="3"><span class="choice-symbol">③</span><span>확인 전, 확인 중, 확인 완료</span></label>
+<label class="choice"><input type="radio" name="q27" value="4"><span class="choice-symbol">④</span><span>최초 기록, 이전 상태, 새 상태</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>각 항목에는 확인 전, 확인 중, 확인 완료와 같은 가상 상태를 부여한다. [근거: 원문 PDF 페이지 5]</p>
+            <p><span>함정</span>납품 대상, 확인 역할, 기록 위치는 가상 상태가 아니라 이행 확인 항목을 구성하는 일반 정보이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 28</span></div>
+          <fieldset>
+            <legend>담당자가 이행 항목의 상태를 변경할 때 함께 기록해야 하는 내용은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q28" value="1"><span class="choice-symbol">①</span><span>납품 대상과 기록 위치</span></label>
+<label class="choice"><input type="radio" name="q28" value="2"><span class="choice-symbol">②</span><span>변경 사유와 영향</span></label>
+<label class="choice"><input type="radio" name="q28" value="3"><span class="choice-symbol">③</span><span>이전 상태와 새 상태</span></label>
+<label class="choice"><input type="radio" name="q28" value="4"><span class="choice-symbol">④</span><span>확인 근거와 다음 조치</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>담당자는 상태만 변경하지 않고 확인 근거와 다음 조치를 함께 기록한다. [근거: 원문 PDF 페이지 5]</p>
+            <p><span>함정</span>변경 사유와 영향은 이행 조건을 바꿀 필요가 생겼을 때 먼저 기록하는 내용이다. 일반적인 상태 변경의 동반 기록과 혼동하지 않는다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 29</span></div>
+          <fieldset>
+            <legend>이행 조건을 바꿀 필요가 생겼을 때 담당자가 먼저 기록해야 하는 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q29" value="1"><span class="choice-symbol">①</span><span>변경 사유와 영향</span></label>
+<label class="choice"><input type="radio" name="q29" value="2"><span class="choice-symbol">②</span><span>확인 역할과 기록 위치</span></label>
+<label class="choice"><input type="radio" name="q29" value="3"><span class="choice-symbol">③</span><span>확인 근거와 다음 조치</span></label>
+<label class="choice"><input type="radio" name="q29" value="4"><span class="choice-symbol">④</span><span>기록의 누락 여부와 보완 대상</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>이행 조건을 바꿀 필요가 생기면 담당자는 변경 사유와 영향을 먼저 기록한다. [근거: 원문 PDF 페이지 6]</p>
+            <p><span>함정</span>확인 근거와 다음 조치는 각 항목의 상태를 변경할 때 함께 기록하는 내용이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 30</span></div>
+          <fieldset>
+            <legend>변경 기록을 유지하는 방법으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q30" value="1"><span class="choice-symbol">①</span><span>최초 기록을 덮어쓰고 새 상태만 남긴다.</span></label>
+<label class="choice"><input type="radio" name="q30" value="2"><span class="choice-symbol">②</span><span>최초 기록을 덮어쓰지 않고 이전 상태와 새 상태를 함께 확인할 수 있게 한다.</span></label>
+<label class="choice"><input type="radio" name="q30" value="3"><span class="choice-symbol">③</span><span>이전 상태를 지우고 변경 사유만 남긴다.</span></label>
+<label class="choice"><input type="radio" name="q30" value="4"><span class="choice-symbol">④</span><span>새 상태를 지우고 최초 기록만 유지한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>변경 기록은 최초 기록을 덮어쓰지 않고 이전 상태와 새 상태를 함께 확인할 수 있도록 유지한다. [근거: 원문 PDF 페이지 6]</p>
+            <p><span>함정</span>변경 후에도 최초 기록을 보존해야 한다. 새 상태만 남기거나 최초 기록만 남기는 방식은 이전 상태와 새 상태를 함께 확인할 수 없다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 31</span></div>
+          <fieldset>
+            <legend>모든 항목이 확인된 뒤 완료 역할이 수행하는 절차는?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q31" value="1"><span class="choice-symbol">①</span><span>이행 확인 항목을 처음 정한다.</span></label>
+<label class="choice"><input type="radio" name="q31" value="2"><span class="choice-symbol">②</span><span>각 항목에 가상 상태를 처음 부여한다.</span></label>
+<label class="choice"><input type="radio" name="q31" value="3"><span class="choice-symbol">③</span><span>기록의 누락 여부를 검토한다.</span></label>
+<label class="choice"><input type="radio" name="q31" value="4"><span class="choice-symbol">④</span><span>최초 기록을 새 상태로 덮어쓴다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>모든 항목이 확인되면 완료 역할이 기록의 누락 여부를 검토한다. [근거: 원문 PDF 페이지 6]</p>
+            <p><span>함정</span>모든 항목이 확인되었다는 사실만으로 바로 완료 처리하는 것이 아니라, 완료 역할이 기록의 누락 여부를 검토한다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 32</span></div>
+          <fieldset>
+            <legend>완료 역할이 기록의 누락을 발견했을 때의 처리로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q32" value="1"><span class="choice-symbol">①</span><span>누락 여부와 관계없이 완료 처리한다.</span></label>
+<label class="choice"><input type="radio" name="q32" value="2"><span class="choice-symbol">②</span><span>최초 기록을 덮어쓴 뒤 완료 처리한다.</span></label>
+<label class="choice"><input type="radio" name="q32" value="3"><span class="choice-symbol">③</span><span>모든 항목을 새 상태로 변경한다.</span></label>
+<label class="choice"><input type="radio" name="q32" value="4"><span class="choice-symbol">④</span><span>완료 처리하지 않고 해당 항목을 보완 대상으로 되돌린다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>기록에 누락이 있으면 완료 처리하지 않고 누락된 해당 항목을 보완 대상으로 되돌린다. [근거: 원문 PDF 페이지 6]</p>
+            <p><span>함정</span>모든 항목이 확인되었더라도 기록에 누락이 있으면 완료 처리할 수 없다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 33</span></div>
+          <fieldset>
+            <legend>제3절에 제시된 절차의 흐름으로 가장 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q33" value="1"><span class="choice-symbol">①</span><span>이행 확인 항목의 사전 설정 → 가상 상태와 확인 근거·다음 조치의 기록 → 변경 사유와 영향의 선행 기록 → 모든 항목 확인 후 누락 여부 검토</span></label>
+<label class="choice"><input type="radio" name="q33" value="2"><span class="choice-symbol">②</span><span>누락 여부 검토 → 최초 기록 덮어쓰기 → 이행 확인 항목의 사전 설정 → 가상 상태 부여</span></label>
+<label class="choice"><input type="radio" name="q33" value="3"><span class="choice-symbol">③</span><span>변경 사유와 영향의 기록 → 모든 항목 완료 처리 → 확인 근거 삭제 → 이행 확인 항목 설정</span></label>
+<label class="choice"><input type="radio" name="q33" value="4"><span class="choice-symbol">④</span><span>가상 상태 부여 → 모든 항목 완료 처리 → 기록 위치 삭제 → 최초 기록 덮어쓰기</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>원문에 제시된 흐름은 이행 확인 항목의 사전 설정, 가상 상태와 확인 근거·다음 조치의 기록, 이행 조건 변경 시 변경 사유와 영향의 선행 기록, 모든 항목 확인 후 누락 여부 검토로 정리된다. [근거: 원문 PDF 페이지 5~6]</p>
+            <p><span>함정</span>최초 기록을 덮어쓰거나 누락 검토 없이 완료 처리하는 절차는 제시되지 않는다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 34</span></div>
+          <fieldset>
+            <legend>다음 사례에 대한 처리로 옳은 것은? 담당자가 한 항목의 상태를 확인 전에서 확인 중으로 변경하려고 한다.</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q34" value="1"><span class="choice-symbol">①</span><span>상태만 확인 중으로 바꾼다.</span></label>
+<label class="choice"><input type="radio" name="q34" value="2"><span class="choice-symbol">②</span><span>상태와 함께 확인 근거와 다음 조치를 기록한다.</span></label>
+<label class="choice"><input type="radio" name="q34" value="3"><span class="choice-symbol">③</span><span>변경 사유와 영향만 기록하고 상태는 남기지 않는다.</span></label>
+<label class="choice"><input type="radio" name="q34" value="4"><span class="choice-symbol">④</span><span>모든 항목의 누락 여부를 먼저 검토한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>한 항목의 상태를 확인 전에서 확인 중으로 변경할 때에는 상태만 바꾸지 않고 확인 근거와 다음 조치를 함께 기록한다. [근거: 원문 PDF 페이지 5]</p>
+            <p><span>함정</span>상태 변경 시 상태만 바꾸는 것은 원문에 제시된 기록 방식이 아니다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 35</span></div>
+          <fieldset>
+            <legend>다음 중 이 가상 예시의 범위에 포함되지 않는 것으로 원문이 명시한 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q35" value="1"><span class="choice-symbol">①</span><span>납품 대상, 확인 역할, 기록 위치</span></label>
+<label class="choice"><input type="radio" name="q35" value="2"><span class="choice-symbol">②</span><span>확인 전, 확인 중, 확인 완료</span></label>
+<label class="choice"><input type="radio" name="q35" value="3"><span class="choice-symbol">③</span><span>실제 기관명, 법령명, 금액, 기한 또는 원본 교재 문장</span></label>
+<label class="choice"><input type="radio" name="q35" value="4"><span class="choice-symbol">④</span><span>변경 사유와 영향</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>이 가상 예시에는 실제 기관명, 법령명, 금액, 기한 또는 원본 교재 문장이 포함되어 있지 않다. [근거: 원문 PDF 페이지 6]</p>
+            <p><span>함정</span>납품 대상·확인 역할·기록 위치, 가상 상태, 변경 사유와 영향은 가상 예시에서 다루는 내용이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제3절 계약 이행 기록 예상문제" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제3절 계약 이행 기록 예상문제</span><span>문제</span><span>문항 36</span></div>
+          <fieldset>
+            <legend>이행 항목과 가상 상태를 올바르게 구분한 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q36" value="1"><span class="choice-symbol">①</span><span>이행 항목은 확인 전·확인 중·확인 완료이고, 가상 상태는 납품 대상·확인 역할·기록 위치이다.</span></label>
+<label class="choice"><input type="radio" name="q36" value="2"><span class="choice-symbol">②</span><span>이행 항목과 가상 상태는 모두 변경 사유와 영향만을 뜻한다.</span></label>
+<label class="choice"><input type="radio" name="q36" value="3"><span class="choice-symbol">③</span><span>이행 항목과 가상 상태는 모두 기록의 누락 여부만을 뜻한다.</span></label>
+<label class="choice"><input type="radio" name="q36" value="4"><span class="choice-symbol">④</span><span>이행 항목은 납품 대상·확인 역할·기록 위치이고, 가상 상태는 확인 전·확인 중·확인 완료이다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>이행 항목은 납품 대상, 확인 역할, 기록 위치처럼 절차를 설명하는 일반 정보이며, 확인 전, 확인 중, 확인 완료는 각 항목에 부여하는 가상 상태이다. [근거: 원문 PDF 페이지 5]</p>
+            <p><span>함정</span>이행 항목을 구성하는 일반 정보와 각 항목에 부여하는 가상 상태의 위치를 서로 바꾸어 묻는 선택지에 주의한다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 37</span></div>
+          <fieldset>
+            <legend>예시 시스템이 품목을 구분하기 위해 기록하는 정보로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q37" value="1"><span class="choice-symbol">①</span><span>품목명, 변경 전 값, 변경 후 값, 변경 사유</span></label>
+<label class="choice"><input type="radio" name="q37" value="2"><span class="choice-symbol">②</span><span>품목명, 분류 역할, 상태와 설명</span></label>
+<label class="choice"><input type="radio" name="q37" value="3"><span class="choice-symbol">③</span><span>품목명, 영향 범위, 변경 사유와 검토 역할</span></label>
+<label class="choice"><input type="radio" name="q37" value="4"><span class="choice-symbol">④</span><span>품목명, 기존 항목, 과거 기록과 변경 후 값</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>품목을 구분하기 위해 기록하는 정보는 품목명, 분류 역할, 상태와 설명이다. [PDF 페이지 7]</p>
+            <p><span>함정</span>변경 전 값·변경 후 값·변경 사유·검토 역할은 품목 정보가 바뀔 때 남기는 변경 이력의 구성이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 38</span></div>
+          <fieldset>
+            <legend>같은 품목을 여러 이름으로 중복 등록하지 않기 위해 신규 등록 전에 해야 할 일은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q38" value="1"><span class="choice-symbol">①</span><span>기존 항목을 검색한다.</span></label>
+<label class="choice"><input type="radio" name="q38" value="2"><span class="choice-symbol">②</span><span>품목을 비활성 상태로 전환한다.</span></label>
+<label class="choice"><input type="radio" name="q38" value="3"><span class="choice-symbol">③</span><span>영향 범위를 확인한다.</span></label>
+<label class="choice"><input type="radio" name="q38" value="4"><span class="choice-symbol">④</span><span>변경 사유를 이력에 남긴다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>같은 품목을 여러 이름으로 중복 등록하지 않도록 신규 등록 전에 기존 항목을 검색한다. [PDF 페이지 7]</p>
+            <p><span>함정</span>영향 범위 확인과 변경 사유 기록은 품목 정보 변경에 관한 절차이지 신규 등록 전 중복 방지 절차가 아니다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 39</span></div>
+          <fieldset>
+            <legend>품목 설명의 작성 방법으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q39" value="1"><span class="choice-symbol">①</span><span>변경 전 값과 변경 후 값만으로 작성한다.</span></label>
+<label class="choice"><input type="radio" name="q39" value="2"><span class="choice-symbol">②</span><span>분류 기준이 불명확해도 임의로 확정하여 작성한다.</span></label>
+<label class="choice"><input type="radio" name="q39" value="3"><span class="choice-symbol">③</span><span>특정 공급자나 실제 제품을 가리키지 않는 가상 문장으로 작성한다.</span></label>
+<label class="choice"><input type="radio" name="q39" value="4"><span class="choice-symbol">④</span><span>과거 기록이 사용한 품목 정보만으로 작성한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>품목 설명은 특정 공급자나 실제 제품을 가리키지 않는 가상 문장으로 작성한다. [PDF 페이지 7]</p>
+            <p><span>함정</span>특정 공급자나 실제 제품을 가리키는 설명은 원문의 작성 원칙과 반대이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 40</span></div>
+          <fieldset>
+            <legend>분류 기준이 불명확한 경우의 처리로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q40" value="1"><span class="choice-symbol">①</span><span>즉시 삭제한다.</span></label>
+<label class="choice"><input type="radio" name="q40" value="2"><span class="choice-symbol">②</span><span>비활성 상태로 전환한다.</span></label>
+<label class="choice"><input type="radio" name="q40" value="3"><span class="choice-symbol">③</span><span>분류 역할을 임의로 확정한다.</span></label>
+<label class="choice"><input type="radio" name="q40" value="4"><span class="choice-symbol">④</span><span>임의로 확정하지 않고 검토 대상으로 표시한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>분류 기준이 불명확하면 임의로 확정하지 않고 검토 대상으로 표시한다. [PDF 페이지 7]</p>
+            <p><span>함정</span>비활성 상태 전환은 더 이상 사용하지 않는 항목의 처리 방법이며, 분류 기준이 불명확한 경우의 처리 방법이 아니다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 41</span></div>
+          <fieldset>
+            <legend>품목 정보가 바뀔 때 이력에 남겨야 할 항목으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q41" value="1"><span class="choice-symbol">①</span><span>품목명, 분류 역할, 상태와 설명</span></label>
+<label class="choice"><input type="radio" name="q41" value="2"><span class="choice-symbol">②</span><span>변경 전 값, 변경 후 값, 변경 사유와 검토 역할</span></label>
+<label class="choice"><input type="radio" name="q41" value="3"><span class="choice-symbol">③</span><span>특정 공급자, 실제 제품, 영향 범위와 상태</span></label>
+<label class="choice"><input type="radio" name="q41" value="4"><span class="choice-symbol">④</span><span>기존 항목, 분류 기준, 과거 기록과 품목명</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>품목 정보가 바뀌면 변경 전 값, 변경 후 값, 변경 사유와 검토 역할을 이력에 남긴다. [PDF 페이지 8]</p>
+            <p><span>함정</span>품목명·분류 역할·상태·설명은 품목을 구분하기 위해 기록하는 품목 정보의 구성이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 42</span></div>
+          <fieldset>
+            <legend>사용 중인 품목 정보를 변경하기 전에 먼저 해야 할 일은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q42" value="1"><span class="choice-symbol">①</span><span>영향 범위를 확인한다.</span></label>
+<label class="choice"><input type="radio" name="q42" value="2"><span class="choice-symbol">②</span><span>기존 항목을 삭제한다.</span></label>
+<label class="choice"><input type="radio" name="q42" value="3"><span class="choice-symbol">③</span><span>품목 설명을 실제 제품명으로 바꾼다.</span></label>
+<label class="choice"><input type="radio" name="q42" value="4"><span class="choice-symbol">④</span><span>분류 기준을 임의로 확정한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>사용 중인 품목 정보는 영향 범위를 확인한 뒤 변경한다. [PDF 페이지 8]</p>
+            <p><span>함정</span>사용 중인 품목 정보를 바로 변경하는 것이 아니라 영향 범위를 먼저 확인해야 한다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 43</span></div>
+          <fieldset>
+            <legend>더 이상 사용하지 않는 항목의 처리 방법으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q43" value="1"><span class="choice-symbol">①</span><span>변경 이력을 삭제한다.</span></label>
+<label class="choice"><input type="radio" name="q43" value="2"><span class="choice-symbol">②</span><span>분류 기준을 임의로 확정한다.</span></label>
+<label class="choice"><input type="radio" name="q43" value="3"><span class="choice-symbol">③</span><span>즉시 삭제하는 대신 비활성 상태로 전환한다.</span></label>
+<label class="choice"><input type="radio" name="q43" value="4"><span class="choice-symbol">④</span><span>여러 이름으로 다시 등록한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>더 이상 사용하지 않는 항목은 즉시 삭제하는 대신 비활성 상태로 전환한다. [PDF 페이지 8]</p>
+            <p><span>함정</span>더 이상 사용하지 않는다는 이유로 즉시 삭제하면 안 되며, 비활성 상태로 전환해야 한다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 44</span></div>
+          <fieldset>
+            <legend>이력을 유지하는 목적으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q44" value="1"><span class="choice-symbol">①</span><span>같은 품목을 여러 이름으로 등록하기 위해서</span></label>
+<label class="choice"><input type="radio" name="q44" value="2"><span class="choice-symbol">②</span><span>분류 기준을 임의로 확정하기 위해서</span></label>
+<label class="choice"><input type="radio" name="q44" value="3"><span class="choice-symbol">③</span><span>특정 공급자나 실제 제품을 표시하기 위해서</span></label>
+<label class="choice"><input type="radio" name="q44" value="4"><span class="choice-symbol">④</span><span>과거 기록이 어떤 품목 정보를 사용했는지 확인하기 위해서</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>이력을 통해 과거 기록이 어떤 품목 정보를 사용했는지 확인할 수 있도록 유지한다. [PDF 페이지 8]</p>
+            <p><span>함정</span>이력 유지의 목적은 중복 등록이나 임의 확정이 아니라 과거 기록이 사용한 품목 정보를 확인하는 데 있다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="1" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 45</span></div>
+          <fieldset>
+            <legend>신규 품목 등록 절차에 관한 설명으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q45" value="1"><span class="choice-symbol">①</span><span>기존 항목을 먼저 검색하고, 같은 품목의 중복 등록을 방지한다.</span></label>
+<label class="choice"><input type="radio" name="q45" value="2"><span class="choice-symbol">②</span><span>품목을 먼저 등록하고, 이후 기존 항목을 검색한다.</span></label>
+<label class="choice"><input type="radio" name="q45" value="3"><span class="choice-symbol">③</span><span>기존 항목을 비활성 상태로 전환한 뒤 같은 품목을 등록한다.</span></label>
+<label class="choice"><input type="radio" name="q45" value="4"><span class="choice-symbol">④</span><span>분류 기준을 임의로 확정한 뒤 기존 항목을 삭제한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ①</strong></p>
+            <p><span>근거</span>신규 품목을 등록하기 전에 기존 항목을 검색하며, 같은 품목이 이미 있다면 여러 이름으로 중복 등록하지 않는다. [PDF 페이지 7]</p>
+            <p><span>함정</span>신규 등록을 먼저 진행한 뒤 검색하는 순서는 원문과 반대이다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="2" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 46</span></div>
+          <fieldset>
+            <legend>품목 정보의 구성과 신규 등록에 관한 설명으로 옳지 않은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q46" value="1"><span class="choice-symbol">①</span><span>상태는 품목을 구분하기 위해 기록하는 정보에 포함된다.</span></label>
+<label class="choice"><input type="radio" name="q46" value="2"><span class="choice-symbol">②</span><span>신규 등록부터 진행하고 나중에 기존 항목을 검색한다.</span></label>
+<label class="choice"><input type="radio" name="q46" value="3"><span class="choice-symbol">③</span><span>품목 설명은 특정 공급자나 실제 제품을 가리키지 않는 가상 문장으로 작성한다.</span></label>
+<label class="choice"><input type="radio" name="q46" value="4"><span class="choice-symbol">④</span><span>분류 기준이 불명확하면 검토 대상으로 표시한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ②</strong></p>
+            <p><span>근거</span>신규 등록 전에 기존 항목을 검색하여 같은 품목을 여러 이름으로 중복 등록하지 않도록 한다. [PDF 페이지 7]</p>
+            <p><span>함정</span>‘신규 등록 전 검색’의 순서를 ‘신규 등록 후 검색’으로 뒤집은 선택지에 주의한다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="4" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 47</span></div>
+          <fieldset>
+            <legend>품목 정보 변경 이력에 남기는 항목에 해당하지 않는 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q47" value="1"><span class="choice-symbol">①</span><span>변경 전 값</span></label>
+<label class="choice"><input type="radio" name="q47" value="2"><span class="choice-symbol">②</span><span>변경 후 값</span></label>
+<label class="choice"><input type="radio" name="q47" value="3"><span class="choice-symbol">③</span><span>변경 사유</span></label>
+<label class="choice"><input type="radio" name="q47" value="4"><span class="choice-symbol">④</span><span>품목 설명</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ④</strong></p>
+            <p><span>근거</span>품목 정보 변경 이력에는 변경 전 값, 변경 후 값, 변경 사유와 검토 역할을 남긴다. 품목 설명은 이 목록에 해당하지 않는다. [PDF 페이지 8]</p>
+            <p><span>함정</span>품목 설명은 품목을 구분하기 위해 기록하는 정보이므로 변경 이력의 필수 항목 목록과 혼동하지 않는다.</p>
+          </div>
+        </article>
+        <article class="question" data-section="제4절 품목 정보 관리 예상문제 및 해설" data-correct="3" data-result="unanswered">
+          <div class="question-meta"><span>제4절 품목 정보 관리 예상문제 및 해설</span><span>예상문제</span><span>문항 48</span></div>
+          <fieldset>
+            <legend>품목 정보 변경 및 미사용 항목 관리에 관한 설명으로 옳은 것은?</legend>
+            <div class="choices"><label class="choice"><input type="radio" name="q48" value="1"><span class="choice-symbol">①</span><span>사용 중인 품목 정보는 영향 범위를 확인하지 않고 바로 변경한다.</span></label>
+<label class="choice"><input type="radio" name="q48" value="2"><span class="choice-symbol">②</span><span>더 이상 사용하지 않는 항목은 이력과 함께 즉시 삭제한다.</span></label>
+<label class="choice"><input type="radio" name="q48" value="3"><span class="choice-symbol">③</span><span>사용 중인 품목 정보는 영향 범위를 확인한 뒤 변경하고, 미사용 항목은 비활성 상태로 전환한다.</span></label>
+<label class="choice"><input type="radio" name="q48" value="4"><span class="choice-symbol">④</span><span>미사용 항목을 비활성 상태로 전환하면 과거 기록을 확인할 수 없도록 이력을 삭제한다.</span></label></div>
+          </fieldset>
+          <div class="actions">
+            <button class="grade" type="button">정답 확인</button>
+            <span class="feedback" role="status" aria-live="polite"></span>
+          </div>
+          <div class="explanation" hidden>
+            <p><strong>정답 ③</strong></p>
+            <p><span>근거</span>사용 중인 품목 정보는 영향 범위를 확인한 뒤 변경하며, 더 이상 사용하지 않는 항목은 즉시 삭제하는 대신 비활성 상태로 전환한다. [PDF 페이지 8]</p>
+            <p><span>함정</span>‘즉시 변경’과 ‘즉시 삭제’는 각각 영향 범위 확인과 비활성 상태 전환을 생략한 잘못된 처리이다.</p>
+          </div>
+        </article></main>
+  <footer>Source: outputs/chapter/questions.md · 검증 스냅샷 2026-09-01 · 외부 네트워크 의존성 없음</footer>
+  <script>
+    (() => {
+      const cards = [...document.querySelectorAll('.question')];
+      const score = document.getElementById('score');
+      const answered = document.getElementById('answered');
+      const filters = [...document.querySelectorAll('.filter')];
+      function updateSummary() {
+        answered.textContent = String(cards.filter(card => card.dataset.result !== 'unanswered').length);
+        score.textContent = String(cards.filter(card => card.dataset.result === 'correct').length);
+      }
+      cards.forEach(card => {
+        card.querySelector('.grade').addEventListener('click', () => {
+          const selected = card.querySelector('input:checked');
+          const feedback = card.querySelector('.feedback');
+          if (!selected) { feedback.textContent = '먼저 답을 선택하세요.'; return; }
+          const correct = selected.value === card.dataset.correct;
+          card.dataset.result = correct ? 'correct' : 'wrong';
+          feedback.textContent = correct ? '정답입니다.' : '오답입니다. 근거를 확인하세요.';
+          feedback.style.color = correct ? 'var(--green)' : 'var(--red)';
+          card.querySelector('.explanation').hidden = false;
+          updateSummary();
+        });
+      });
+      filters.forEach(button => button.addEventListener('click', () => {
+        filters.forEach(item => item.classList.toggle('active', item === button));
+        const target = button.dataset.filter;
+        cards.forEach(card => card.hidden = target !== 'all' && card.dataset.section !== target);
+      }));
+      document.querySelector('.reset').addEventListener('click', () => {
+        cards.forEach(card => {
+          card.querySelectorAll('input').forEach(input => input.checked = false);
+          card.dataset.result = 'unanswered';
+          card.querySelector('.feedback').textContent = '';
+          card.querySelector('.explanation').hidden = true;
+        });
+        updateSummary();
+        document.getElementById('quiz').focus({preventScroll:true});
+      });
+    })();
+  </script>
+</body>
+</html>

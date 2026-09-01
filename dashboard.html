@@ -319,7 +319,7 @@
 
     .command-box { margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-deep); }
     .command-head { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; border-bottom: 1px solid var(--line); color: var(--muted); font-family: var(--mono); font-size: 10px; }
-    .copy-button { min-height: 36px; padding: 0 10px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel); color: var(--ink); cursor: pointer; font-size: 10px; }
+    .copy-button { min-height: 44px; padding: 0 10px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel); color: var(--ink); cursor: pointer; font-size: 10px; }
     pre { margin: 0; padding: 18px; overflow-x: auto; color: var(--accent); font-family: var(--mono); font-size: 12px; line-height: 1.7; }
 
     footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
@@ -347,7 +347,7 @@
       .brand { justify-content: flex-start; padding: 3px 2px 10px; border-bottom: 0; }
       .brand-text { display: block; }
       .nav-list { grid-template-columns: repeat(5, 1fr); }
-      .nav-list a { min-height: 40px; }
+      .nav-list a { min-height: 44px; }
       .sidebar-foot {
         position: static;
         display: grid;
@@ -439,9 +439,9 @@
           <p>숫자는 공개 저장소의 <code>state.json</code>, 테스트 실행, 결과물 README에서 가져왔습니다.</p>
         </div>
         <div class="metrics">
-          <article class="metric"><span class="metric-label">Public bundles</span><strong class="metric-value accent">2</strong><span class="metric-note">1권 1장 · 1권 2장</span></article>
-          <article class="metric"><span class="metric-label">Cited questions</span><strong class="metric-value">84 / 84</strong><span class="metric-note">1장 PDF 페이지 근거 완비</span></article>
-          <article class="metric"><span class="metric-label">Tests</span><strong class="metric-value">29 / 29</strong><span class="metric-note">2026-09-01 검증 스냅샷</span></article>
+          <article class="metric"><span class="metric-label">Public bundles</span><strong class="metric-value accent">3</strong><span class="metric-note">1권 1장 · 1권 2장 · 1권 3장</span></article>
+          <article class="metric"><span class="metric-label">Cited questions</span><strong class="metric-value">132 / 132</strong><span class="metric-note">1장 84 · 3장 48 PDF 페이지 근거 완비</span></article>
+          <article class="metric"><span class="metric-label">Tests</span><strong class="metric-value">31 / 31</strong><span class="metric-note">2026-09-02 검증 스냅샷</span></article>
           <article class="metric"><span class="metric-label">Tracked scripts</span><strong class="metric-value">3</strong><span class="metric-note">pipeline · gate · assemble</span></article>
         </div>
       </section>
@@ -514,7 +514,7 @@
             <div class="bar-row"><span>최대 위치 비율</span><span class="bar"><i style="--value:54.76%"></i></span><strong>27.38%</strong></div>
           </article>
         </div>
-        <div class="test-strip"><div><strong>✓ 29 / 29</strong><br><span>검증 스냅샷: 2026-09-01 전체 테스트 통과</span></div><span>G4 전제 실패와 검수 API 오류 분류를 단위 테스트로 검증</span></div>
+        <div class="test-strip"><div><strong>✓ 31 / 31</strong><br><span>검증 스냅샷: 2026-09-02 전체 테스트 통과</span></div><span>G4 전제 실패·검수 API 오류·3장 공개본 링크·터치 타깃을 단위 테스트로 검증</span></div>
       </section>
 
       <section id="deliverables" aria-labelledby="deliverables-title">
@@ -532,6 +532,11 @@
             <span class="deliverable-code">VOL.1 / CH.2</span>
             <span><h3>공공조달 68문제</h3><p>외부 런타임 의존성 없이 브라우저에서 실행되는 대화형 문제 세트</p></span>
             <span class="file-tags"><span>HTML</span><span>68 Q</span></span>
+          </a>
+          <a class="deliverable" href="deliverables/volume-1-chapter-3/1권_3장_공개용_가상샘플_48문제.html">
+            <span class="deliverable-code">VOL.1 / CH.3</span>
+            <span><h3>공개용 가상 샘플 48문제</h3><p>4개 절 자동 생성 · 3중 독립 검수 · PDF 페이지 근거 48/48 · 모바일 대화형 HTML</p></span>
+            <span class="file-tags"><span>HTML</span><span>48 Q</span></span>
           </a>
           <a class="deliverable" href="https://github.com/markstudio-jh/certification-workbook-automation">
             <span class="deliverable-code">SOURCE</span>

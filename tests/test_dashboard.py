@@ -52,7 +52,11 @@ def test_dashboard_exposes_repository_monitoring_sections():
     assert {"overview", "pipeline", "quality", "deliverables", "architecture"} <= parser.ids
     assert 'data-stage="pending"' in html
     assert "glossary_locked" in html
-    assert "29 / 29" in html
+    assert html.count("31 / 31") == 2
+    assert "30 / 30" not in html
+    assert "2026-09-02" in html
+    assert "2026-09-01" not in html
+    assert "132 / 132" in html
     assert "원문에 원어가 있을 때 병기" in html
     assert "검증 스냅샷" in html
 
@@ -64,10 +68,30 @@ def test_dashboard_links_to_every_public_deliverable_group_and_repository():
     chapter_two = next(
         link for link in parser.links if "volume-1-chapter-2" in link and link.endswith(".html")
     )
+    chapter_three = next(
+        link for link in parser.links if "volume-1-chapter-3" in link and link.endswith(".html")
+    )
     assert chapter_one in parser.links
     assert (ROOT / chapter_one).is_file()
     assert (ROOT / chapter_two).is_file()
+    assert (ROOT / chapter_three).is_file()
     assert "https://github.com/markstudio-jh/certification-workbook-automation" in parser.links
+
+
+def test_chapter_three_public_quiz_is_complete_and_self_contained():
+    html, parser = read_dashboard()
+    chapter_three = next(
+        link for link in parser.links if "volume-1-chapter-3" in link and link.endswith(".html")
+    )
+    chapter_three_html = (ROOT / chapter_three).read_text(encoding="utf-8")
+
+    assert chapter_three_html.count('class="question"') == 48
+    assert chapter_three_html.count('type="radio"') == 192
+    assert chapter_three_html.count('class="explanation"') == 48
+    assert "PDF 페이지" in chapter_three_html
+    assert not re.search(r'<(?:script|link)[^>]+(?:src|href)=["\']https?://', chapter_three_html, re.I)
+    assert "innerHTML" not in chapter_three_html
+    assert chapter_three in html
 
 
 def test_dashboard_is_portable_accessible_and_has_no_remote_runtime_dependency():
@@ -106,6 +130,14 @@ def test_dashboard_keeps_controls_accessible_and_storage_failures_isolated():
         narrow_css,
         re.S,
     )
+
+
+def test_dashboard_touch_targets_remain_at_least_44px():
+    html, _ = read_dashboard()
+
+    assert re.search(r"\.copy-button\s*\{[^}]*min-height:\s*44px", html, re.S)
+    mobile_css = html.split("@media (max-width: 720px)", 1)[1]
+    assert re.search(r"\.nav-list a\s*\{[^}]*min-height:\s*44px", mobile_css, re.S)
 
 
 def test_dashboard_runtime_survives_blocked_local_storage(tmp_path):

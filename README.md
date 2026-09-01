@@ -7,6 +7,7 @@
 - [자동화 대시보드](dashboard.html) — 파이프라인 상태·품질 게이트·공개 결과물을 한 화면에서 확인
 - [1권 1장 공공조달 맞춤 문제집](deliverables/volume-1-chapter-1/README.md) — 대화형 HTML·Markdown·DOCX·PDF
 - [1권 2장 공공조달 68문제](deliverables/volume-1-chapter-2/1권_2장_공공조달_68문제.html) — 외부 의존성이 없는 독립형 대화형 HTML
+- [1권 3장 공개용 가상 샘플 48문제](deliverables/volume-1-chapter-3/1권_3장_공개용_가상샘플_48문제.html) — 4개 절 자동 생성·3중 검수·PDF 페이지 근거를 거친 독립형 대화형 HTML
 
 ## 구현 범위
 
@@ -144,8 +145,10 @@ hermes cron list
 
 ## 포함된 샘플의 검증 이력
 
-- 별도 검증 실행에서 1개 절을 writer → G2 → question writer → G3 → 3중 검수까지 종단간 확인
+- 공개용 가상 샘플 4개 절을 writer → G2 → question writer → G3 → 3중 검수까지 종단간 실행하고 48문항을 장 단위로 조립
 - 수치·근거 검수자가 원문의 “참여 기회를 부여”가 초안의 “실제로 참여”로 바뀐 의미 오류 1건을 발견
 - 수정 에이전트가 해당 문장만 복원한 뒤 G2·G3와 장 조립을 통과
+- 48문항 모두 정답·근거·PDF 페이지·함정을 갖추고 정답 위치는 ①~④ 각 12개로 균등 분포
+- 대화형 HTML은 콘텐츠 384개 필드 전수 대조, Chrome 데스크톱·390px 모바일 렌더링, JavaScript 런타임과 독립 검수를 통과
 - 공개 저장소의 초기 `state.json`은 생성 산출물을 포함하지 않으므로 재실행 가능한 `pending` 상태를 유지
 - LibreOffice가 없는 환경에서 G4 전제 실패를 정상 보고하는 분기를 단위 테스트로 검증
