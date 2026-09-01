@@ -68,9 +68,13 @@ class HermesAgent:
         log_path.parent.mkdir(parents=True, exist_ok=True)
         proc = subprocess.run(self.command(prompt), cwd=cwd, capture_output=True, text=True,
                               encoding="utf-8", errors="replace", timeout=self.timeout)
-        log_path.write_text(proc.stdout + ("\n[stderr]\n" + proc.stderr if proc.stderr else ""), encoding="utf-8")
+        output = proc.stdout + ("\n[stderr]\n" + proc.stderr if proc.stderr else "")
+        log_path.write_text(output, encoding="utf-8")
         if proc.returncode != 0:
             raise AgentError(f"Hermes 실패(exit={proc.returncode}); 로그: {log_path}")
+        if proc.stdout.lstrip().startswith("API call failed after"):
+            first_line = proc.stdout.strip().splitlines()[0]
+            raise AgentError(f"Hermes API 실패({first_line}); 로그: {log_path}")
         return proc.stdout.strip()
 
 

@@ -65,6 +65,27 @@ def test_atomic_state_save_leaves_valid_json(tmp_path):
     assert json.loads((tmp_path / "state.json").read_text(encoding="utf-8"))["sections"][0]["stage"] == "writing"
 
 
+def test_hermes_agent_treats_nested_api_failure_as_agent_error(tmp_path, monkeypatch):
+    completed = pipeline.subprocess.CompletedProcess(
+        args=["hermes"],
+        returncode=0,
+        stdout="API call failed after 3 retries: HTTP 429: The usage limit has been reached\n",
+        stderr="",
+    )
+    monkeypatch.setattr(pipeline.subprocess, "run", lambda *args, **kwargs: completed)
+    log_path = tmp_path / "agent.log"
+
+    try:
+        pipeline.HermesAgent().run("검수", tmp_path, log_path)
+    except pipeline.AgentError as exc:
+        assert "API call failed" in str(exc)
+        assert str(log_path) in str(exc)
+    else:
+        raise AssertionError("nested API failure must not be accepted as review output")
+
+    assert "HTTP 429" in log_path.read_text(encoding="utf-8")
+
+
 def test_question_writer_prompt_requires_pdf_page_evidence(tmp_path):
     make_project(tmp_path)
     runner = pipeline.Pipeline(tmp_path, agent=pipeline.DryRunAgent())
