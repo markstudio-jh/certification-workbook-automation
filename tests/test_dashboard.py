@@ -52,7 +52,8 @@ def test_dashboard_exposes_repository_monitoring_sections():
     assert {"overview", "pipeline", "quality", "deliverables", "architecture"} <= parser.ids
     assert 'data-stage="pending"' in html
     assert "glossary_locked" in html
-    assert "26 / 26" in html
+    assert "28 / 28" in html
+    assert "원문에 원어가 있을 때 병기" in html
     assert "검증 스냅샷" in html
 
 

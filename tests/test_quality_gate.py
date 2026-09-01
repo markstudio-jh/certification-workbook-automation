@@ -50,6 +50,18 @@ def test_g2_passes_complete_document(tmp_path):
     assert report["metrics"]["numeric_source_rate"] == 1.0
 
 
+def test_g2_allows_no_original_term_when_source_does_not_support_one():
+    text = GOOD_G2.replace(
+        "위험기반자본 (Risk-Based Capital, RBC)은 자본 규제다. ",
+        "자본 규제를 설명한다. ",
+    ).replace("RBC의 의미", "자본 규제의 의미")
+
+    report = quality_gate.gate_g2(text, require_original_terms=False)
+
+    assert report["passed"] is True
+    assert report["metrics"]["original_term_count"] == 0
+
+
 def test_g2_reports_only_machine_checkable_failures(tmp_path):
     p = tmp_path / "bad.md"
     p.write_text("# 교재\n## 학습목표\nTODO 60%", encoding="utf-8")

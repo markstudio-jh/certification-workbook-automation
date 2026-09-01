@@ -132,8 +132,15 @@ class Pipeline:
 
     def _gate_with_repair(self, state: dict[str, Any], section: dict[str, Any], paths: dict[str, Path], gate: str) -> dict[str, Any]:
         target = paths["material"] if gate == "G2" else paths["questions"]
+        gate_options: dict[str, Any] = {}
+        if gate == "G2":
+            source_text = paths["source"].read_text(encoding="utf-8")
+            gate_options["require_original_terms"] = bool(
+                quality_gate.ORIGINAL_RE.search(source_text)
+                or quality_gate.TABLE_ORIGINAL_RE.search(source_text)
+            )
         for attempt in range(self.max_retries + 1):
-            report = quality_gate.evaluate(target, gate)
+            report = quality_gate.evaluate(target, gate, **gate_options)
             (paths["out"] / f"{gate.lower()}-attempt-{attempt}.json").write_text(
                 json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
             if report["passed"]:

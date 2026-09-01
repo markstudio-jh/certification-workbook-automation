@@ -85,6 +85,30 @@ def test_answer_review_prompt_verifies_pdf_page_evidence(tmp_path):
     assert "원문" in prompt
 
 
+def test_g2_requires_original_term_only_when_the_source_supports_one(tmp_path, monkeypatch):
+    make_project(tmp_path)
+    runner = pipeline.Pipeline(tmp_path, agent=pipeline.DryRunAgent())
+    state = runner.store.load()
+    section = state["sections"][0]
+    paths = runner._context(state, section)
+    observed = []
+
+    def fake_evaluate(path, gate, **options):
+        observed.append(options["require_original_terms"])
+        return {"passed": True, "failures": []}
+
+    monkeypatch.setattr(pipeline.quality_gate, "evaluate", fake_evaluate)
+
+    runner._gate_with_repair(state, section, paths, "G2")
+    paths["source"].write_text(
+        "위험기반자본 (Risk-Based Capital, RBC)을 설명한다.",
+        encoding="utf-8",
+    )
+    runner._gate_with_repair(state, section, paths, "G2")
+
+    assert observed == [False, True]
+
+
 def test_review_findings_are_repaired_and_independently_rechecked_before_publish(tmp_path, monkeypatch):
     make_project(tmp_path)
 
@@ -177,4 +201,5 @@ def test_public_section_samples_are_complete_synthetic_and_registered():
     dashboard = (ROOT / "dashboard.html").read_text(encoding="utf-8")
     assert "3-1~3-4" in readme
     assert "공개용 가상 샘플" in readme
+    assert "원문에 원어가 있을 때 병기" in readme
     assert all(f"inputs/sections/{section_id}.md" in dashboard for section_id in expected_ids)

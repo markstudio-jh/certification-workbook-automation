@@ -76,7 +76,7 @@ def _question_text(text: str) -> str:
     return text[match.start():] if match else text
 
 
-def gate_g2(text: str) -> dict[str, Any]:
+def gate_g2(text: str, require_original_terms: bool = True) -> dict[str, Any]:
     failures = []
     found_blocks = {
         key: any(re.search(rf"(?mi)^\s*#{{1,6}}\s*{re.escape(alias)}\s*$", text) for alias in aliases)
@@ -105,7 +105,7 @@ def gate_g2(text: str) -> dict[str, Any]:
         failures.append(failure("numeric_sources", "통계성 수치의 출처 병기율이 60% 미만", round(source_rate, 4), 0.60))
 
     original_terms = len(ORIGINAL_RE.findall(text)) + len(TABLE_ORIGINAL_RE.findall(text))
-    if original_terms == 0:
+    if require_original_terms and original_terms == 0:
         failures.append(failure("original_terms", "용어 원어 병기를 찾지 못함", 0, ">=1"))
     if not found_blocks["exam_points"]:
         failures.append(failure("exam_points", "출제포인트 블록 누락"))
@@ -192,7 +192,12 @@ def gate_g4(path: Path, soffice: str = "soffice") -> dict[str, Any]:
             "metrics": {"converted": converted, "pages_generated": pages_generated}}
 
 
-def evaluate(path: str | Path, gate: str, soffice: str = "soffice") -> dict[str, Any]:
+def evaluate(
+    path: str | Path,
+    gate: str,
+    soffice: str = "soffice",
+    require_original_terms: bool = True,
+) -> dict[str, Any]:
     path = Path(path)
     gate = gate.upper()
     if gate == "G4":
@@ -202,7 +207,7 @@ def evaluate(path: str | Path, gate: str, soffice: str = "soffice") -> dict[str,
             return {"gate": gate, "passed": False,
                     "failures": [failure("input_exists", f"입력 파일 없음: {path}")], "metrics": {}}
         text = path.read_text(encoding="utf-8")
-        report = gate_g2(text) if gate == "G2" else gate_g3(text)
+        report = gate_g2(text, require_original_terms=require_original_terms) if gate == "G2" else gate_g3(text)
     report["file"] = str(path)
     return report
 
