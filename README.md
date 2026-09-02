@@ -6,8 +6,9 @@
 
 - [자동화 대시보드](dashboard.html) — 파이프라인 상태·품질 게이트·공개 결과물을 한 화면에서 확인
 - [1권 1장 공공조달 맞춤 문제집](deliverables/volume-1-chapter-1/README.md) — 대화형 HTML·Markdown·DOCX·PDF
-- [1권 2장 공공조달 68문제](deliverables/volume-1-chapter-2/1권_2장_공공조달_68문제.html) — 외부 의존성이 없는 독립형 대화형 HTML
-- [1권 3장 공개용 가상 샘플 48문제](deliverables/volume-1-chapter-3/1권_3장_공개용_가상샘플_48문제.html) — 4개 절 자동 생성·3중 검수·PDF 페이지 근거를 거친 독립형 대화형 HTML
+- [1권 2장 공공조달 맞춤 문제집](deliverables/volume-1-chapter-2/README.md) — 대화형 HTML·Markdown, 3개 절 68문항
+- [1권 3장 공개용 가상 샘플 문제집](deliverables/volume-1-chapter-3/README.md) — 대화형 HTML·Markdown, 4개 절 48문항
+- [1권 4장 공공조달 맞춤 문제집](deliverables/volume-1-chapter-4/README.md) — 대화형 HTML·Markdown, 5개 절 108문항
 
 ## 구현 범위
 

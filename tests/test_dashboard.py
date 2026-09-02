@@ -52,38 +52,71 @@ def test_dashboard_exposes_repository_monitoring_sections():
     assert {"overview", "pipeline", "quality", "deliverables", "architecture"} <= parser.ids
     assert 'data-stage="pending"' in html
     assert "glossary_locked" in html
-    assert html.count("31 / 31") == 2
-    assert "30 / 30" not in html
+    assert html.count("33 / 33") == 2
+    assert "31 / 31" not in html
     assert "2026-09-02" in html
     assert "2026-09-01" not in html
-    assert "132 / 132" in html
+    assert "308 / 308" in html
     assert "원문에 원어가 있을 때 병기" in html
     assert "검증 스냅샷" in html
+
+
+CHAPTER_DIRS = (
+    "deliverables/volume-1-chapter-1",
+    "deliverables/volume-1-chapter-2",
+    "deliverables/volume-1-chapter-3",
+    "deliverables/volume-1-chapter-4",
+)
+
+
+def quiz_html(chapter_dir: str) -> str:
+    """장 폴더에서 대화형 HTML 문제집 한 개를 찾아 내용을 돌려준다."""
+    candidates = sorted((ROOT / chapter_dir).glob("*.html"))
+    assert len(candidates) == 1, chapter_dir
+    return candidates[0].read_text(encoding="utf-8")
 
 
 def test_dashboard_links_to_every_public_deliverable_group_and_repository():
     _, parser = read_dashboard()
 
-    chapter_one = "deliverables/volume-1-chapter-1/README.md"
-    chapter_two = next(
-        link for link in parser.links if "volume-1-chapter-2" in link and link.endswith(".html")
-    )
-    chapter_three = next(
-        link for link in parser.links if "volume-1-chapter-3" in link and link.endswith(".html")
-    )
-    assert chapter_one in parser.links
-    assert (ROOT / chapter_one).is_file()
-    assert (ROOT / chapter_two).is_file()
-    assert (ROOT / chapter_three).is_file()
+    for chapter_dir in CHAPTER_DIRS:
+        readme = f"{chapter_dir}/README.md"
+        assert readme in parser.links
+        assert (ROOT / readme).is_file()
+        assert sorted((ROOT / chapter_dir).glob("*.html"))
+        assert sorted((ROOT / chapter_dir).glob("*.md")) != [ROOT / readme]
     assert "https://github.com/markstudio-jh/certification-workbook-automation" in parser.links
+
+
+def test_every_public_chapter_ships_readme_markdown_and_interactive_html():
+    for chapter_dir in CHAPTER_DIRS:
+        directory = ROOT / chapter_dir
+        readme = directory / "README.md"
+        markdown = [path for path in directory.glob("*.md") if path.name != "README.md"]
+        assert readme.is_file()
+        assert len(markdown) == 1, chapter_dir
+        assert markdown[0].stat().st_size > 10_000
+        assert "## 검증 결과" in readme.read_text(encoding="utf-8")
+        assert quiz_html(chapter_dir)
+
+
+def test_chapter_four_public_quiz_is_complete_and_self_contained():
+    chapter_four_html = quiz_html("deliverables/volume-1-chapter-4")
+
+    assert chapter_four_html.count('class="question-card"') == 108
+    assert chapter_four_html.count('class="option"') == 432
+    assert chapter_four_html.count('class="explanation"') == 108
+    assert "PDF 페이지" in chapter_four_html
+    assert not re.search(
+        r'<(?:script|link)[^>]+(?:src|href)=["\']https?://', chapter_four_html, re.I
+    )
+    assert "innerHTML" not in chapter_four_html
 
 
 def test_chapter_three_public_quiz_is_complete_and_self_contained():
     html, parser = read_dashboard()
-    chapter_three = next(
-        link for link in parser.links if "volume-1-chapter-3" in link and link.endswith(".html")
-    )
-    chapter_three_html = (ROOT / chapter_three).read_text(encoding="utf-8")
+    chapter_three = "deliverables/volume-1-chapter-3/README.md"
+    chapter_three_html = quiz_html("deliverables/volume-1-chapter-3")
 
     assert chapter_three_html.count('class="question"') == 48
     assert chapter_three_html.count('type="radio"') == 192
